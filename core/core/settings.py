@@ -40,6 +40,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'projects',
     'accounts',
+    'discussions',
+    'notifications',
 ]
 
 MIDDLEWARE = [
