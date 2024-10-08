@@ -15,6 +15,14 @@ class User(models.Model):
     def __str__(self):
         return self.name
 
+class UserStack(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    stack_name = models.CharField(max_length=50)
+    stack_description = models.TextField()
+
+    def __str__(self):
+        return self.stack_name
+
 class UserProjects(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     project_name = models.CharField(max_length=50)
@@ -23,3 +31,11 @@ class UserProjects(models.Model):
 
     def __str__(self):
         return self.project_name
+    
+class UserContributions(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    project = models.ForeignKey(UserProjects, on_delete=models.CASCADE)
+    contribution_date = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return self.contribution_amount
