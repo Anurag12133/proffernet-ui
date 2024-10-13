@@ -1,0 +1,5 @@
+# .gitignore at the root of the project
+
+# Ignore migrations in all apps
+*/migrations/
+venv/
