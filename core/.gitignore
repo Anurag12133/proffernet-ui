@@ -3,3 +3,4 @@
 # Ignore migrations in all apps
 */migrations/
 venv/
+*/__pycache__/
