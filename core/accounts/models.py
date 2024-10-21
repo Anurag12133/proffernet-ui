@@ -1,9 +1,20 @@
 from django.db import models
 
 # Create your models here.
+# your_app/models.py
+from django.db import models
+
 class User(models.Model):
+    VOLUNTEER = 'volunteer'
+    CONTRIBUTOR = 'contributor'
+    
+    USER_TYPES = (
+        (VOLUNTEER, 'Volunteer'),
+        (CONTRIBUTOR, 'Contributor'),
+    )
+
     name = models.CharField(max_length=50)
-    email = models.EmailField(max_length=100)
+    email = models.EmailField(max_length=100, unique=True)
     password = models.CharField(max_length=50)
     phone = models.CharField(max_length=50)
     address = models.CharField(max_length=100)
@@ -12,8 +23,17 @@ class User(models.Model):
     is_active = models.BooleanField(default=True)
     is_deleted = models.BooleanField(default=False)
 
+    user_type = models.CharField(max_length=20, choices=USER_TYPES, default=VOLUNTEER)
+    
     def __str__(self):
-        return self.name
+        return f"{self.name} ({self.user_type})"
+    
+    def is_volunteer(self):
+        return self.user_type == self.VOLUNTEER
+    
+    def is_contributor(self):
+        return self.user_type == self.CONTRIBUTOR
+
 
 class UserStack(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
@@ -23,19 +43,5 @@ class UserStack(models.Model):
     def __str__(self):
         return self.stack_name
 
-class UserProjects(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
-    project_name = models.CharField(max_length=50)
-    project_description = models.TextField()
-    project_quantity = models.IntegerField()
 
-    def __str__(self):
-        return self.project_name
-    
-class UserContributions(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
-    project = models.ForeignKey(UserProjects, on_delete=models.CASCADE)
-    contribution_date = models.DateTimeField(auto_now_add=True)
 
-    def __str__(self):
-        return self.contribution_amount
