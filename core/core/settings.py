@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'accounts',
     'discussions',
     'notifications',
+    'contributors'
 ]
 
 MIDDLEWARE = [
