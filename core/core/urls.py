@@ -16,9 +16,14 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 
-from accounts.views import home
+from accounts.views import (
+    UserCreateView,
+    UserStackCreateView
+)
+
 
 urlpatterns = [
-    path('', home, name='home'),
     path('admin/', admin.site.urls),
+    path('users/create/', UserCreateView.as_view(), name='user_create'),
+    path('userstacks/create/', UserStackCreateView.as_view(), name='userstack_create'),
 ]
