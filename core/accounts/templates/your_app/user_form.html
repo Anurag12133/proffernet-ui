@@ -1,0 +1,7 @@
+<!-- your_app/templates/your_app/user_form.html -->
+<h2>{{ form.instance.pk|yesno:"Edit User,Create User" }}</h2>
+<form method="post">
+  {% csrf_token %} {{ form.as_p }}
+  <!-- This will display the form fields -->
+  <button type="submit">Submit</button>
+</form>
