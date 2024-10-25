@@ -1,0 +1,7 @@
+<!-- project_confirm_delete.html -->
+<h1>Are you sure you want to delete "{{ project.title }}"?</h1>
+<form method="post">
+  {% csrf_token %}
+  <button type="submit">Yes, delete</button>
+  <a href="{% url 'project-list' %}">Cancel</a>
+</form>

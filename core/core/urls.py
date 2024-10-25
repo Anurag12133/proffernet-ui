@@ -20,10 +20,20 @@ from accounts.views import (
     UserCreateView,
     UserStackCreateView
 )
+from projects.views import (
+    ProjectListView,
+    ProjectCreateView,
+    ProjectUpdateView,
+    ProjectDeleteView
+)
 
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('users/create/', UserCreateView.as_view(), name='user_create'),
     path('userstacks/create/', UserStackCreateView.as_view(), name='userstack_create'),
+    path('projects/', ProjectListView.as_view(), name='project_list'),
+    path('create/', ProjectCreateView.as_view(), name='project-create'),
+    path('update/<int:pk>/', ProjectUpdateView.as_view(), name='project-update'),
+    path('delete/<int:pk>/', ProjectDeleteView.as_view(), name='project-delete')
 ]
