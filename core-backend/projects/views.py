@@ -1,8 +1,22 @@
 # views.py
-from rest_framework.viewsets import ModelViewSet
+from rest_framework.decorators import api_view
+from rest_framework.response import Response
+from rest_framework import status
 from .models import Project
 from .serializers import ProjectSerializer
 
-class ProjectViewSet(ModelViewSet):
-    queryset = Project.objects.all()
-    serializer_class = ProjectSerializer
+
+@api_view(['GET'])
+def get_projects(request):
+    projects_list = Project.objects.all()
+    data = ProjectSerializer(projects_list, many = True).data
+    return Response(data)
+
+@api_view(['POST'])
+def create_project(request):
+    response = request.data
+    serilized_data = ProjectSerializer(response).data
+    if serilized_data.isvalid():
+        serilized_data.save()
+        return Response(serilized_data.data, status=status.HTTP_201_CREATED)
+    return Response(serilized_data.errors, status=status.HTTP_400_BAD_REQUEST)
