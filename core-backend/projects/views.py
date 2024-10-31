@@ -14,9 +14,8 @@ def get_projects(request):
 
 @api_view(['POST'])
 def create_project(request):
-    response = request.data
-    serilized_data = ProjectSerializer(response).data
-    if serilized_data.isvalid():
+    serilized_data = ProjectSerializer(data=request.data)  
+    if serilized_data.is_valid():
         serilized_data.save()
         return Response(serilized_data.data, status=status.HTTP_201_CREATED)
     return Response(serilized_data.errors, status=status.HTTP_400_BAD_REQUEST)
