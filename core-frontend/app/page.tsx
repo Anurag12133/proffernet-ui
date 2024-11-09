@@ -17,7 +17,7 @@ export default function Home() {
         </h2>
         <br />
         <div>
-          <Button />
+          <Button>Click Me</Button>
         </div>
       </BackgroundLines>
     </div>
