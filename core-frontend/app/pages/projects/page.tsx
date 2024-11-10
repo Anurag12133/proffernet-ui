@@ -1,9 +1,10 @@
 "use client";
-import React, { useState } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import { MdCloudUpload } from "react-icons/md";
+import { AiOutlineClose } from "react-icons/ai";
 
 const InputField = ({ placeholder, value, onChange, onKeyPress }: any) => (
-  <div className="flex items-center justify-center h-10 space-x-4 mb-4">
+  <div className="flex items-center justify-center h-10 space-x-4 mb-4 w-full">
     <input
       className="border rounded-3xl bg-black placeholder-stone-300 text-white px-4 py-2 w-full max-w-lg placeholder:text-lg"
       placeholder={placeholder}
@@ -15,7 +16,7 @@ const InputField = ({ placeholder, value, onChange, onKeyPress }: any) => (
 );
 
 const ProjectCard = ({ index }: any) => {
-  const [image, setImage] = React.useState<string | null>(null);
+  const [image, setImage] = useState<string | null>(null);
 
   const handleImageChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
@@ -64,7 +65,13 @@ const ProjectCard = ({ index }: any) => {
 
 const Projects = () => {
   const [title, setTitle] = useState("");
-  const [isEditing, setIsEditing] = useState(true); // Start with input field visible
+  const [isEditing, setIsEditing] = useState(true);
+  const [description, setDescription] = useState("");
+  const [isDescriptionEditing, setIsDescriptionEditing] = useState(true);
+  const [techStack, setTechStack] = useState("");
+  const [techStackList, setTechStackList] = useState<string[]>([]);
+
+  const textareaRef = useRef<HTMLTextAreaElement>(null);
 
   const handleTitleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setTitle(event.target.value);
@@ -74,12 +81,33 @@ const Projects = () => {
     event: React.KeyboardEvent<HTMLInputElement>
   ) => {
     if (event.key === "Enter") {
-      setIsEditing(false); // Switch to display title after pressing Enter
+      setIsEditing(false);
     }
   };
 
-  const handleTitleClick = () => {
-    setIsEditing(true); // Switch to input mode if title is clicked
+  const handleDescriptionChange = (
+    event: React.ChangeEvent<HTMLTextAreaElement>
+  ) => {
+    setDescription(event.target.value);
+  };
+
+  const handleTechStackChange = (
+    event: React.ChangeEvent<HTMLInputElement>
+  ) => {
+    setTechStack(event.target.value);
+  };
+
+  const handleTechStackKeyPress = (
+    event: React.KeyboardEvent<HTMLInputElement>
+  ) => {
+    if (event.key === "Enter" && techStack.trim()) {
+      setTechStackList([...techStackList, techStack.trim()]);
+      setTechStack("");
+    }
+  };
+
+  const handleTagRemove = (tagToRemove: string) => {
+    setTechStackList(techStackList.filter((tag) => tag !== tagToRemove));
   };
 
   return (
@@ -99,18 +127,67 @@ const Projects = () => {
             />
           ) : (
             <h1
-              className="font-bold text-white font-mono text-3xl cursor-pointer "
-              onClick={handleTitleClick}
+              className="font-bold text-white font-mono text-4xl cursor-pointer"
+              onClick={() => setIsEditing(true)}
             >
-              {title || "Project Title"} {/* Default text if title is empty */}
+              {title || "Project Title"}
             </h1>
           )}
         </div>
 
-        <div className="flex items-center space-x-4">
+        <div className="flex items-center space-x-4 mt-10">
+          <h1 className="font-bold text-white font-mono text-3xl">
+            Tech Stack:
+          </h1>
+          <input
+            className="border rounded-3xl bg-black placeholder-gray-500 text-white px-4 py-2 w-full max-w-lg placeholder:text-lg"
+            placeholder="e.g. Python, React"
+            value={techStack}
+            onChange={handleTechStackChange}
+            onKeyPress={handleTechStackKeyPress}
+          />
+        </div>
+        <div className="flex flex-wrap mt-4 space-x-2">
+          {techStackList.map((stack, index) => (
+            <div
+              key={index}
+              className="bg-gray-700 text-white px-3 py-1 rounded-full flex items-center space-x-2"
+            >
+              <span>{stack}</span>
+              <AiOutlineClose
+                className="cursor-pointer"
+                onClick={() => handleTagRemove(stack)}
+              />
+            </div>
+          ))}
+        </div>
+
+        <hr className="mt-10 " />
+
+        <div className="flex items-center space-x-4 mt-10">
           <h1 className="font-bold text-white font-mono text-3xl">
             Description:
           </h1>
+        </div>
+        <div className="mt-5">
+          {isDescriptionEditing ? (
+            <textarea
+              ref={textareaRef}
+              className="border rounded-xl bg-black placeholder-gray-500 text-white px-4 py-2 w-1/2 pb-96 placeholder:text-lg overflow-hidden "
+              placeholder="Write briefly about the project.."
+              value={description}
+              onChange={handleDescriptionChange}
+              onBlur={() => setIsDescriptionEditing(false)}
+              rows={1}
+            />
+          ) : (
+            <p
+              className="text-white text-lg cursor-pointer"
+              onClick={() => setIsDescriptionEditing(true)}
+            >
+              {description || "Write briefly about the project..."}
+            </p>
+          )}
         </div>
       </div>
 
