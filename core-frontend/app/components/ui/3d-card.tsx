@@ -98,6 +98,7 @@ export const CardBody = ({
 export const CardItem = ({
   as: Tag = "div",
   children,
+  type: string,
   className,
   translateX = 0,
   translateY = 0,
