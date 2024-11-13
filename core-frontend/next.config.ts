@@ -2,7 +2,7 @@ import type { NextConfig } from "next";
 
 module.exports = {
   images: {
-    domains: ["images.unsplash.com"],
+    domains: ["images.unsplash.com", "assets.aceternity.com"],
   },
 };
 

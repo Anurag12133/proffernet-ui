@@ -22,6 +22,7 @@ const config: Config = {
       colors: {
         background: "var(--background)",
         foreground: "var(--foreground)",
+        "custom-gray": "rgb(38 38 38 )",
       },
       keyframes: {
         shimmer: {
