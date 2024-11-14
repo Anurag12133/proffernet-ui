@@ -3,7 +3,7 @@ import Image from "next/image";
 import React from "react";
 import { Carousel, Card } from "@/app/components/ui/apple-cards-carousel";
 
-const CardsForProject = () => {
+const CardsForProject = ({ TechStack }: { TechStack: string }) => {
   const cards = data.map((card, index) => (
     <Card key={card.src} card={card} index={index} layout={true} />
   ));
@@ -11,7 +11,7 @@ const CardsForProject = () => {
   return (
     <div className="w-full h-full py-20">
       <h2 className="max-w-7xl pl-4 mx-auto text-xl md:text-5xl font-bold text-neutral-800 dark:text-neutral-200 font-sans">
-        Get to know your iSad.
+        {TechStack}
       </h2>
       <Carousel items={cards} />
     </div>

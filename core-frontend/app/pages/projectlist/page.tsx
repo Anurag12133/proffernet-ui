@@ -3,8 +3,8 @@ import { IoIosArrowForward } from "react-icons/io";
 
 const projectList = () => {
   return (
-    <div className="bg-black min-h-screen flex">
-      <aside className="w-1/5 bg-black p-4 text-white h-screen sticky top-0 border-r border-gray-600 flex flex-col items-center justify-center">
+    <div className="bg-black min-h-screen flex relative">
+      <aside className="w-1/5 bg-black p-4 text-white h-screen sticky top-0 flex flex-col items-center justify-center z-10">
         <ul className="space-y-5 text-left animate-fadeIn">
           {["Frontend", "Backend", "Full Stack", "DevOps"].map(
             (item, index) => (
@@ -20,13 +20,14 @@ const projectList = () => {
         </ul>
       </aside>
 
+      {/* Decorative border */}
+      <div className="absolute top-0 bottom-0 left-[20%] w-1 bg-gradient-to-b from-transparent via-gray-600 to-transparent z-0" />
+
       <main className="w-4/5 p-4 h-screen overflow-y-auto">
-        <CardsForProject />
-        <CardsForProject />
-        <CardsForProject />
-        <CardsForProject />
-        <CardsForProject />
-        <CardsForProject />
+        <CardsForProject TechStack="Frontend" />
+        <CardsForProject TechStack="Backend" />
+        <CardsForProject TechStack="Devops" />
+        <CardsForProject TechStack="Full Stack" />
       </main>
     </div>
   );
