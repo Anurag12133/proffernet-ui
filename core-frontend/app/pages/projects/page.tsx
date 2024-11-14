@@ -2,6 +2,8 @@
 import React, { useState, useRef, useEffect } from "react";
 import { MdCloudUpload } from "react-icons/md";
 import { AiOutlineClose } from "react-icons/ai";
+import UploadFile from "@/app/components/FileUpload";
+import ProjectGrid from "@/app/components/ProjectGrid";
 
 const InputField = ({ placeholder, value, onChange, onKeyPress }: any) => (
   <div className="flex items-center justify-center h-10 space-x-4 mb-4 w-full">
@@ -112,83 +114,11 @@ const Projects = () => {
 
   return (
     <div className="grid grid-cols-4 h-screen bg-black gap-1 relative">
-      <div className="col-span-3 m-4 border rounded-xl px-10 py-10 mb-10 mt-8 relative">
+      <div className="col-span-3 m-4 rounded-xl px-10 py-10 mb-10 mt-8 relative">
         <button className="absolute top-5 right-5 w-24 h-10 bg-white rounded-full font-bold transform transition duration-300 hover:scale-105 hover:shadow-lg mt-4">
           Publish
         </button>
-
-        <div className="flex justify-center items-center space-x-4 mb-4">
-          {isEditing ? (
-            <InputField
-              placeholder="Write Title..."
-              value={title}
-              onChange={handleTitleChange}
-              onKeyPress={handleTitleKeyPress}
-            />
-          ) : (
-            <h1
-              className="font-bold text-white font-mono text-4xl cursor-pointer"
-              onClick={() => setIsEditing(true)}
-            >
-              {title || "Project Title"}
-            </h1>
-          )}
-        </div>
-
-        <div className="flex items-center space-x-4 mt-10">
-          <h1 className="font-bold text-white font-mono text-3xl">
-            Tech Stack:
-          </h1>
-          <input
-            className="border rounded-3xl bg-black placeholder-gray-500 text-white px-4 py-2 w-full max-w-lg placeholder:text-lg"
-            placeholder="e.g. Python, React"
-            value={techStack}
-            onChange={handleTechStackChange}
-            onKeyPress={handleTechStackKeyPress}
-          />
-        </div>
-        <div className="flex flex-wrap mt-4 space-x-2">
-          {techStackList.map((stack, index) => (
-            <div
-              key={index}
-              className="bg-gray-700 text-white px-3 py-1 rounded-full flex items-center space-x-2"
-            >
-              <span>{stack}</span>
-              <AiOutlineClose
-                className="cursor-pointer"
-                onClick={() => handleTagRemove(stack)}
-              />
-            </div>
-          ))}
-        </div>
-
-        <hr className="mt-10 " />
-
-        <div className="flex items-center space-x-4 mt-10">
-          <h1 className="font-bold text-white font-mono text-3xl">
-            Description:
-          </h1>
-        </div>
-        <div className="mt-5">
-          {isDescriptionEditing ? (
-            <textarea
-              ref={textareaRef}
-              className="border rounded-xl bg-black placeholder-gray-500 text-white px-4 py-2 w-1/2 pb-96 placeholder:text-lg overflow-hidden "
-              placeholder="Write briefly about the project.."
-              value={description}
-              onChange={handleDescriptionChange}
-              onBlur={() => setIsDescriptionEditing(false)}
-              rows={1}
-            />
-          ) : (
-            <p
-              className="text-white text-lg cursor-pointer"
-              onClick={() => setIsDescriptionEditing(true)}
-            >
-              {description || "Write briefly about the project..."}
-            </p>
-          )}
-        </div>
+        <ProjectGrid />
       </div>
 
       <div
@@ -196,7 +126,7 @@ const Projects = () => {
         style={{ maxHeight: "100vh" }}
       >
         {[...Array(8)].map((_, index) => (
-          <ProjectCard key={index} index={index + 1} />
+          <UploadFile />
         ))}
       </div>
     </div>
