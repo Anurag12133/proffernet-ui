@@ -6,50 +6,9 @@ import { motion } from "framer-motion";
 import { cn } from "@/app/lib/utils";
 
 const ProjectGrid = () => {
-  const [title, setTitle] = useState("");
-  const [editingTitle, setEditingTitle] = useState(true);
-
-  const handleTitleSubmit = (event: React.KeyboardEvent<HTMLInputElement>) => {
-    if (event.key === "Enter") {
-      event.preventDefault();
-      setEditingTitle(false);
-    }
-  };
-
-  const handleTitleClick = () => {
-    setEditingTitle(true);
-  };
-
   return (
     <div>
-      <div className="relative flex justify-center items-center h-[3rem]">
-        {/* Title Input or Display */}
-        <div className="text-center">
-          {editingTitle ? (
-            <motion.input
-              type="text"
-              placeholder="Enter project title..."
-              value={title}
-              onChange={(e) => setTitle(e.target.value)}
-              onKeyDown={handleTitleSubmit}
-              className="text-center text-3xl font-semibold p-3 rounded-lg shadow-lg border border-neutral-500 dark:border-neutral-600 bg-white dark:bg-black text-black dark:text-white outline-none w-[20rem]"
-              initial={{ opacity: 0, y: -10 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -10 }}
-            />
-          ) : (
-            <motion.h1
-              onClick={handleTitleClick}
-              className="text-3xl font-bold cursor-pointer text-black dark:text-white transition-all"
-              whileHover={{ scale: 1.05 }}
-            >
-              {title || "Untitled Project"}
-            </motion.h1>
-          )}
-        </div>
-      </div>
-
-      <BentoGrid className="max-w-4xl mx-auto md:auto-rows-[20rem] mt-10">
+      <BentoGrid className="max-w-4xl mx-auto md:auto-rows-[20rem] mt-20">
         {items.map((item, i) => (
           <BentoGridItem
             key={i}
@@ -113,7 +72,7 @@ const SkeletonOne = () => {
     },
   };
 
-  const inputs = [0, 1, 2, 3, 4, 5]; // Representing the total number of input boxes
+  const inputs = [0, 2, 4, 6, 8, 10];
 
   return (
     <div className="grid grid-cols-2 gap-4 w-full h-full">
@@ -142,7 +101,7 @@ const SkeletonOne = () => {
             onKeyDown={(e) => handleKeyDown(e, index)}
             className="w-full h-4 rounded-full dark:bg-black text-white placeholder:text-lg placeholder:pl-2 focus:outline-none"
           />
-          {index % 2 !== 0 && (
+          {index % 2 === 1 && (
             <div className="h-6 w-6 rounded-full bg-gradient-to-r from-pink-500 to-violet-500 flex-shrink-0" />
           )}
         </motion.div>

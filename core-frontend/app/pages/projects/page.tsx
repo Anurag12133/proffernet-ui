@@ -1,132 +1,74 @@
 "use client";
-import React, { useState, useRef, useEffect } from "react";
-import { MdCloudUpload } from "react-icons/md";
-import { AiOutlineClose } from "react-icons/ai";
 import UploadFile from "@/app/components/FileUpload";
 import ProjectGrid from "@/app/components/ProjectGrid";
-
-const InputField = ({ placeholder, value, onChange, onKeyPress }: any) => (
-  <div className="flex items-center justify-center h-10 space-x-4 mb-4 w-full">
-    <input
-      className="border rounded-3xl bg-black placeholder-stone-300 text-white px-4 py-2 w-full max-w-lg placeholder:text-lg"
-      placeholder={placeholder}
-      value={value}
-      onChange={onChange}
-      onKeyPress={onKeyPress}
-    />
-  </div>
-);
-
-const ProjectCard = ({ index }: any) => {
-  const [image, setImage] = useState<string | null>(null);
-
-  const handleImageChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const file = event.target.files?.[0];
-    if (file) {
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        if (typeof reader.result === "string") {
-          setImage(reader.result);
-        }
-      };
-      reader.readAsDataURL(file);
-    }
-  };
-
-  return (
-    <div className="p-4 mb-5 mx-auto">
-      <div
-        className={`h-64 mr-5 flex items-center justify-center text-black font-bold relative overflow-hidden transition-transform duration-300 transform hover:scale-105 hover:shadow-2xl rounded-xl ${
-          image ? "" : "border-2 border-dashed border-gray-50"
-        }`}
-      >
-        {image ? (
-          <img
-            src={image}
-            alt={`Uploaded for project ${index}`}
-            className="w-full h-full object-cover rounded-xl"
-          />
-        ) : (
-          <div className="absolute inset-0 flex items-center justify-center">
-            <div className="w-16 h-16 rounded-full flex items-center justify-center hover:scale-110 transform transition duration-300">
-              <MdCloudUpload className="text-white font-bold text-5xl" />
-            </div>
-          </div>
-        )}
-
-        <input
-          type="file"
-          accept="image/*"
-          className="absolute inset-0 opacity-0 cursor-pointer"
-          onChange={handleImageChange}
-        />
-      </div>
-    </div>
-  );
-};
+import { useState } from "react";
+import { motion } from "framer-motion";
 
 const Projects = () => {
   const [title, setTitle] = useState("");
-  const [isEditing, setIsEditing] = useState(true);
-  const [description, setDescription] = useState("");
-  const [isDescriptionEditing, setIsDescriptionEditing] = useState(true);
-  const [techStack, setTechStack] = useState("");
-  const [techStackList, setTechStackList] = useState<string[]>([]);
+  const [editingTitle, setEditingTitle] = useState(true);
 
-  const textareaRef = useRef<HTMLTextAreaElement>(null);
-
-  const handleTitleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setTitle(event.target.value);
-  };
-
-  const handleTitleKeyPress = (
-    event: React.KeyboardEvent<HTMLInputElement>
-  ) => {
+  const handleTitleSubmit = (event: React.KeyboardEvent<HTMLInputElement>) => {
     if (event.key === "Enter") {
-      setIsEditing(false);
+      event.preventDefault();
+      setEditingTitle(false);
     }
   };
 
-  const handleDescriptionChange = (
-    event: React.ChangeEvent<HTMLTextAreaElement>
-  ) => {
-    setDescription(event.target.value);
-  };
-
-  const handleTechStackChange = (
-    event: React.ChangeEvent<HTMLInputElement>
-  ) => {
-    setTechStack(event.target.value);
-  };
-
-  const handleTechStackKeyPress = (
-    event: React.KeyboardEvent<HTMLInputElement>
-  ) => {
-    if (event.key === "Enter" && techStack.trim()) {
-      setTechStackList([...techStackList, techStack.trim()]);
-      setTechStack("");
-    }
-  };
-
-  const handleTagRemove = (tagToRemove: string) => {
-    setTechStackList(techStackList.filter((tag) => tag !== tagToRemove));
+  const handleTitleClick = () => {
+    setEditingTitle(true);
   };
 
   return (
     <div className="grid grid-cols-4 h-screen bg-black gap-1 relative">
-      <div className="col-span-3 m-4 rounded-xl px-10 py-10 mb-10 mt-8 relative">
-        <button className="absolute top-5 right-5 w-24 h-10 bg-white rounded-full font-bold transform transition duration-300 hover:scale-105 hover:shadow-lg mt-4">
-          Publish
-        </button>
-        <ProjectGrid />
+      <div className="col-span-3 m-4 rounded-xl px-10 mt-10 relative">
+        {/* Flex container for title and button */}
+        <div className="flex items-center justify-between  w-full ">
+          {/* Title Input or Display */}
+          <div className="flex-grow text-center ">
+            {editingTitle ? (
+              <motion.input
+                type="text"
+                placeholder="Enter project title..."
+                value={title}
+                onChange={(e) => setTitle(e.target.value)}
+                onKeyDown={handleTitleSubmit}
+                className="text-center text-xl font-semibold p-3 rounded-3xl shadow-lg border border-neutral-500 dark:border-neutral-600 bg-white dark:bg-black text-black dark:text-white outline-none w-[20rem]"
+                initial={{ opacity: 0, y: -10 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -10 }}
+              />
+            ) : (
+              <motion.h1
+                onClick={handleTitleClick}
+                className="text-3xl font-bold cursor-pointer text-black dark:text-white transition-all"
+                whileHover={{ scale: 1.05 }}
+              >
+                {title || "Untitled Project"}
+              </motion.h1>
+            )}
+          </div>
+
+          {/* Publish Button */}
+          <button className="px-6 py-2 bg-white border-2 border-transparent bg-clip-border text-black rounded-lg font-bold transform hover:-translate-y-1 transition duration-400 ">
+            Publish
+          </button>
+        </div>
+
+        {/* Project Grid */}
+        <div>
+          <ProjectGrid />
+        </div>
       </div>
+
+      <div className="absolute top-0 bottom-0 left-[74%] w-1 bg-gradient-to-b from-transparent via-gray-600 to-transparent z-0" />
 
       <div
         className="col-span-1 m-5 overflow-y-auto"
         style={{ maxHeight: "100vh" }}
       >
         {[...Array(8)].map((_, index) => (
-          <UploadFile />
+          <UploadFile key={index} />
         ))}
       </div>
     </div>
