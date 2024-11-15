@@ -1,36 +1,87 @@
 "use client";
-import { cn } from "@/app/lib/utils";
-import React from "react";
+import React, { useRef, useState } from "react";
 import { BentoGrid, BentoGridItem } from "@/app/components/ui/bento-grid";
-import {
-  IconBoxAlignRightFilled,
-  IconClipboardCopy,
-  IconFileBroken,
-  IconSignature,
-  IconTableColumn,
-} from "@tabler/icons-react";
+import { IconClipboardCopy } from "@tabler/icons-react";
 import { motion } from "framer-motion";
-import Image from "next/image";
-import { Input } from "./ui/input";
+import { cn } from "@/app/lib/utils";
 
 const ProjectGrid = () => {
+  const [title, setTitle] = useState("");
+  const [editingTitle, setEditingTitle] = useState(true);
+
+  const handleTitleSubmit = (event: React.KeyboardEvent<HTMLInputElement>) => {
+    if (event.key === "Enter") {
+      event.preventDefault();
+      setEditingTitle(false);
+    }
+  };
+
+  const handleTitleClick = () => {
+    setEditingTitle(true);
+  };
+
   return (
-    <BentoGrid className="max-w-4xl mx-auto md:auto-rows-[20rem]">
-      {items.map((item, i) => (
-        <BentoGridItem
-          key={i}
-          title={item.title}
-          description={item.description}
-          header={item.header}
-          className={cn("[&>p:text-lg]", item.className)}
-          icon={item.icon}
-        />
-      ))}
-    </BentoGrid>
+    <div>
+      <div className="relative flex justify-center items-center h-[3rem]">
+        {/* Title Input or Display */}
+        <div className="text-center">
+          {editingTitle ? (
+            <motion.input
+              type="text"
+              placeholder="Enter project title..."
+              value={title}
+              onChange={(e) => setTitle(e.target.value)}
+              onKeyDown={handleTitleSubmit}
+              className="text-center text-3xl font-semibold p-3 rounded-lg shadow-lg border border-neutral-500 dark:border-neutral-600 bg-white dark:bg-black text-black dark:text-white outline-none w-[20rem]"
+              initial={{ opacity: 0, y: -10 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -10 }}
+            />
+          ) : (
+            <motion.h1
+              onClick={handleTitleClick}
+              className="text-3xl font-bold cursor-pointer text-black dark:text-white transition-all"
+              whileHover={{ scale: 1.05 }}
+            >
+              {title || "Untitled Project"}
+            </motion.h1>
+          )}
+        </div>
+      </div>
+
+      <BentoGrid className="max-w-4xl mx-auto md:auto-rows-[20rem] mt-10">
+        {items.map((item, i) => (
+          <BentoGridItem
+            key={i}
+            title={item.title}
+            description={item.description}
+            header={item.header}
+            className={cn("[&>p:text-lg]", item.className)}
+          />
+        ))}
+      </BentoGrid>
+    </div>
   );
 };
 
 const SkeletonOne = () => {
+  const inputRefs = useRef<(HTMLInputElement | null)[]>([]);
+  const [focusedInput, setFocusedInput] = useState<number | null>(null);
+
+  const handleKeyDown = (
+    event: React.KeyboardEvent<HTMLInputElement>,
+    index: number
+  ) => {
+    if (event.key === "Enter") {
+      event.preventDefault(); // Prevent form submission or default behavior
+      const nextInput = inputRefs.current[index + 1];
+      if (nextInput) {
+        nextInput.focus();
+        setFocusedInput(index + 1);
+      }
+    }
+  };
+
   const variants = {
     initial: {
       x: 0,
@@ -42,108 +93,60 @@ const SkeletonOne = () => {
         duration: 0.2,
       },
     },
-  };
-  const variantsSecond = {
-    initial: {
-      x: 0,
-    },
-    animate: {
-      x: -10,
-      rotate: -5,
+    focused: {
+      scale: 1.1,
       transition: {
         duration: 0.2,
       },
     },
   };
 
+  const focusedVariant = {
+    initial: {
+      scale: 1,
+    },
+    animate: {
+      scale: 1.1,
+      transition: {
+        duration: 0.2,
+      },
+    },
+  };
+
+  const inputs = [0, 1, 2, 3, 4, 5]; // Representing the total number of input boxes
+
   return (
     <div className="grid grid-cols-2 gap-4 w-full h-full">
-      {/* Column 1 */}
-      <div className="space-y-2">
+      {inputs.map((_, index) => (
         <motion.div
-          variants={variants}
+          key={index}
+          variants={index === focusedInput ? focusedVariant : variants}
           initial="initial"
           whileHover="animate"
-          className="flex flex-row rounded-full border border-neutral-100 dark:border-white/[0.2] p-2 items-center space-x-2 bg-white dark:bg-black"
+          animate={index === focusedInput ? "animate" : "initial"}
+          className={`flex flex-row rounded-full border border-neutral-100 dark:border-white/[0.2] p-2 items-center space-x-2 ${
+            index % 2 === 0
+              ? "bg-white dark:bg-black"
+              : "w-3/4 ml-auto bg-white dark:bg-black"
+          }`}
         >
-          <div className="h-6 w-6 rounded-full bg-gradient-to-r from-pink-500 to-violet-500 flex-shrink-0" />
+          {index % 2 === 0 && (
+            <div className="h-6 w-6 rounded-full bg-gradient-to-r from-pink-500 to-violet-500 flex-shrink-0" />
+          )}
           <input
+            ref={(el) => {
+              inputRefs.current[index] = el;
+            }} // Assign ref
             type="text"
             placeholder="Enter text..."
-            className="w-full h-4 rounded-full dark:bg-black text-white placeholder:text-lg focus:outline-none placeholder:pl-2"
-          />
-        </motion.div>
-        <motion.div
-          variants={variantsSecond}
-          initial="initial"
-          whileHover="animate"
-          className="flex flex-row rounded-full border border-neutral-100 dark:border-white/[0.2] p-2 items-center space-x-2 w-3/4 ml-auto bg-white dark:bg-black"
-        >
-          <input
-            type="text"
-            placeholder="Enter text..."
-            className="w-full  h-4 rounded-full dark:bg-black text-white placeholder:text-lg  placeholder:pl-2 focus:outline-none"
-          />
-          <div className="h-6 w-6 rounded-full bg-gradient-to-r from-pink-500 to-violet-500 flex-shrink-0" />
-        </motion.div>
-        <motion.div
-          variants={variants}
-          initial="initial"
-          whileHover="animate"
-          className="flex flex-row rounded-full border border-neutral-100 dark:border-white/[0.2] p-2 items-center space-x-2 bg-white dark:bg-black"
-        >
-          <div className="h-6 w-6 rounded-full bg-gradient-to-r from-pink-500 to-violet-500 flex-shrink-0" />
-          <input
-            type="text"
-            placeholder="Enter text..."
+            onKeyDown={(e) => handleKeyDown(e, index)}
             className="w-full h-4 rounded-full dark:bg-black text-white placeholder:text-lg placeholder:pl-2 focus:outline-none"
           />
+          {index % 2 !== 0 && (
+            <div className="h-6 w-6 rounded-full bg-gradient-to-r from-pink-500 to-violet-500 flex-shrink-0" />
+          )}
         </motion.div>
-      </div>
-
-      {/* Column 2 */}
-      <div className="space-y-2">
-        <motion.div
-          variants={variants}
-          initial="initial"
-          whileHover="animate"
-          className="flex flex-row rounded-full border border-neutral-100 dark:border-white/[0.2] p-2 items-center space-x-2 bg-white dark:bg-black"
-        >
-          <div className="h-6 w-6 rounded-full bg-gradient-to-r from-pink-500 to-violet-500 flex-shrink-0" />
-          <input
-            type="text"
-            placeholder="Enter text..."
-            className="w-full bg-gray-100 h-4 rounded-full dark:bg-black text-white placeholder:text-lg focus:outline-none placeholder:pl-2"
-          />
-        </motion.div>
-
-        <motion.div
-          variants={variantsSecond}
-          initial="initial"
-          whileHover="animate"
-          className="flex flex-row rounded-full border border-neutral-100 dark:border-white/[0.2] p-2 items-center space-x-2 w-3/4 ml-auto bg-white dark:bg-black"
-        >
-          <input
-            type="text"
-            placeholder="Enter text..."
-            className="w-full bg-gray-100 h-4 rounded-full  dark:bg-black text-white placeholder:pl-2 placeholder:text-lg focus:outline-none"
-          />
-          <div className="h-6 w-6 rounded-full bg-gradient-to-r from-pink-500 to-violet-500 flex-shrink-0" />
-        </motion.div>
-        <motion.div
-          variants={variants}
-          initial="initial"
-          whileHover="animate"
-          className="flex flex-row rounded-full border border-neutral-100 dark:border-white/[0.2] p-2 items-center space-x-2 bg-white dark:bg-black"
-        >
-          <div className="h-6 w-6 rounded-full bg-gradient-to-r from-pink-500 to-violet-500 flex-shrink-0" />
-          <input
-            type="text"
-            placeholder="Enter text..."
-            className="w-full bg-gray-100 h-4 rounded-full dark:bg-black text-white placeholder:pl-2 placeholder:text-lg focus:outline-none"
-          />
-        </motion.div>
-      </div>
+      ))}
     </div>
   );
 };
@@ -157,19 +160,18 @@ const items = [
       </span>
     ),
     header: <SkeletonOne />,
-    className: "md:col-span-3",
-    icon: <IconClipboardCopy className="h-4 w-4 text-neutral-500" />,
+    className: "md:col-span-3 border-none",
   },
-
   {
     title: "Description",
     description: (
       <textarea
         placeholder="Write here..."
-        className="w-full h-[15rem] p-4 bg-transparent outline-none  text-white placeholder:text-lg placeholder:text-gray-400 text-lg"
+        className="w-full h-[20rem] p-1 bg-transparent outline-none text-white placeholder:text-lg placeholder:text-gray-400 text-lg"
       />
     ),
-    className: "md:col-span-3 h-[30rem] ",
+    className: "md:col-span-3 h-[25rem]",
   },
 ];
+
 export default ProjectGrid;
