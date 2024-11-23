@@ -12,6 +12,7 @@
     "@radix-ui/react-label": "^2.1.0",
     "clsx": "^2.1.1",
     "framer-motion": "^11.11.17",
+    "mini-svg-data-uri": "^1.4.4",
     "motion": "^11.11.17",
     "next": "15.0.2",
     "overlay-navbar": "^1.2.3",
