@@ -9,13 +9,18 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@radix-ui/react-hover-card": "^1.1.2",
     "@radix-ui/react-label": "^2.1.0",
+    "@tsparticles/engine": "^3.6.0",
+    "@tsparticles/react": "^3.0.0",
+    "@tsparticles/slim": "^3.6.0",
     "clsx": "^2.1.1",
     "framer-motion": "^11.11.17",
     "mini-svg-data-uri": "^1.4.4",
     "motion": "^11.11.17",
     "next": "15.0.2",
     "overlay-navbar": "^1.2.3",
+    "qss": "^3.0.0",
     "react": "19.0.0-rc-02c0e824-20241028",
     "react-dom": "19.0.0-rc-02c0e824-20241028",
     "react-dropzone": "^14.3.5",

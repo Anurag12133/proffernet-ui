@@ -7,6 +7,7 @@ module.exports = {
       "assets.aceternity.com",
       "pbs.twimg.com",
       "aceternity.com",
+      "api.microlink.io",
     ],
   },
 };
