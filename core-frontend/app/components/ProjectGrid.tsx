@@ -126,10 +126,10 @@ const items = [
     description: (
       <textarea
         placeholder="Write here..."
-        className="w-full h-[20rem] p-1 bg-transparent outline-none text-white placeholder:text-lg placeholder:text-gray-400 text-lg"
+        className="w-full h-[15rem] p-1 bg-transparent outline-none text-white placeholder:text-lg placeholder:text-gray-400 text-lg"
       />
     ),
-    className: "md:col-span-3 h-[25rem]",
+    className: "md:col-span-3 h-[20rem]",
   },
 ];
 
