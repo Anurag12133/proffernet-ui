@@ -16,7 +16,7 @@ const TextLink = () => {
         >
           Django
         </LinkPreview>{" "}
-        &{" "}
+        &{"     "}
         <LinkPreview
           url="https://nodejs.org/docs/latest/api/"
           className="font-bold"
