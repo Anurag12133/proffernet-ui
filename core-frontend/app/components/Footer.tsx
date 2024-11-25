@@ -1,7 +1,9 @@
+import ConnectCompo from "./ConnectComp";
+
 const Footer = () => {
   return (
     <div>
-      <div className="border-t border-neutral-100 dark:border-white/[0.1] px-8 py-20  dark:bg-brand">
+      <div className="border-t border-neutral-100 dark:border-white/[0.1] px-8 py-10  dark:bg-brand">
         <div className="max-w-7xl mx-auto text-sm text-neutral-500 flex sm:flex-row flex-col justify-between items-start">
           {/* Logo and Information Section */}
           <div>
