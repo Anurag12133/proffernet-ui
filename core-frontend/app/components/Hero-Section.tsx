@@ -10,6 +10,7 @@ import StackText from "./StackText";
 
 import Features from "./Features";
 import Button from "./Button";
+import BackgroundBoxes from "./Backgroundlight";
 
 const HeroSection = () => {
   return (
@@ -78,13 +79,8 @@ const HeroSection = () => {
       <div className="flex justify-center items-center mt-[10rem]">
         <AiIndex />
       </div>
-      <div className="h-[40rem] w-full rounded-md flex flex-col items-center justify-center bg-black/[0.96] antialiased bg-grid-white/[0.03] relative overflow-hidden">
-        <div className=" flex items-center justify-center">
-          <StackText />
-        </div>
-        <div className="mt-5">
-          <Button />
-        </div>
+      <div className="h-[40rem] w-full rounded-md flex flex-col items-center justify-center bg-black/[0.96] relative overflow-hidden">
+        <BackgroundBoxes />
       </div>
 
       <div className=" mx-10">
