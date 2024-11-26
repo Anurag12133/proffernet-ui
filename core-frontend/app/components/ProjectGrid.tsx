@@ -1,14 +1,13 @@
 "use client";
 import React, { useRef, useState } from "react";
 import { BentoGrid, BentoGridItem } from "@/app/components/ui/bento-grid";
-import { IconClipboardCopy } from "@tabler/icons-react";
 import { motion } from "framer-motion";
 import { cn } from "@/app/lib/utils";
 
 const ProjectGrid = () => {
   return (
     <div>
-      <BentoGrid className="max-w-4xl mx-auto md:auto-rows-[20rem] mt-20">
+      <BentoGrid className="max-w-4xl mx-auto md:auto-rows-[20rem] mt-4">
         {items.map((item, i) => (
           <BentoGridItem
             key={i}
@@ -32,7 +31,7 @@ const SkeletonOne = () => {
     index: number
   ) => {
     if (event.key === "Enter") {
-      event.preventDefault(); // Prevent form submission or default behavior
+      event.preventDefault();
       const nextInput = inputRefs.current[index + 1];
       if (nextInput) {
         nextInput.focus();
@@ -90,7 +89,7 @@ const SkeletonOne = () => {
           }`}
         >
           {index % 2 === 0 && (
-            <div className="h-6 w-6 rounded-full bg-gradient-to-r from-pink-500 to-violet-500 flex-shrink-0" />
+            <div className="h-6 w-6 rounded-full bg-gradient-to-r from-blue-500 to-blue-900 flex-shrink-0" />
           )}
           <input
             ref={(el) => {
@@ -102,7 +101,7 @@ const SkeletonOne = () => {
             className="w-full h-4 rounded-full dark:bg-black text-white placeholder:text-lg placeholder:pl-2 focus:outline-none"
           />
           {index % 2 === 1 && (
-            <div className="h-6 w-6 rounded-full bg-gradient-to-r from-pink-500 to-violet-500 flex-shrink-0" />
+            <div className="h-6 w-6 rounded-full bg-gradient-to-r from-blue-900 to-blue-500 flex-shrink-0" />
           )}
         </motion.div>
       ))}
@@ -126,10 +125,10 @@ const items = [
     description: (
       <textarea
         placeholder="Write here..."
-        className="w-full h-[15rem] p-1 bg-transparent outline-none text-white placeholder:text-lg placeholder:text-gray-400 text-lg"
+        className="w-full h-[10rem] p-1 bg-transparent outline-none text-white placeholder:text-lg placeholder:text-gray-400 text-lg"
       />
     ),
-    className: "md:col-span-3 h-[20rem]",
+    className: "md:col-span-3 h-[15rem]",
   },
 ];
 
