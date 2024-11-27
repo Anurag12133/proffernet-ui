@@ -20,10 +20,9 @@ const projectList = () => {
         </ul>
       </aside>
 
-      {/* Decorative border */}
       <div className="absolute top-0 bottom-0 left-[20%] w-1 bg-gradient-to-b from-transparent via-gray-600 to-transparent z-0" />
 
-      <main className="w-4/5 p-4 h-screen overflow-y-auto">
+      <main className="w-4/5 h-screen overflow-y-auto">
         <CardsForProject TechStack="Frontend" />
         <CardsForProject TechStack="Backend" />
         <CardsForProject TechStack="Devops" />

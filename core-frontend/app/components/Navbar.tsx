@@ -100,7 +100,7 @@ const Navbar = () => {
         >
           Github
         </a>
-        <button className="py-2 px-4 ml-2 rounded-md bg-blue-500 text-white text-sm font-medium ring-offset-background hover:bg-gray-600 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2">
+        <button className="py-2 px-4 ml-2 rounded-md bg-blue-500 text-white text-sm font-medium ring-offset-background hover:bg-[#323238] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2">
           Create Account
         </button>
       </div>

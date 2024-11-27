@@ -41,12 +41,12 @@ interface Item {
 }
 
 const ITEMS: Item[] = [
-  { x: "19%", y: "19%", label: "Reliable" },
-  { x: "67.5%", y: "25%", label: "Scalability" },
-  { x: "9%", y: "41%", label: "High compatibility" },
-  { x: "71.5%", y: "41%", label: "Blazingly fast search" },
-  { x: "17%", y: "76%", label: "Works with PGVECTOR" },
-  { x: "68%", y: "81%", label: "Works with langchain" },
+  { x: "19%", y: "19%", label: "Collaboration" },
+  { x: "67.5%", y: "25%", label: "Contribution" },
+  { x: "9%", y: "41%", label: "Teamwork" },
+  { x: "71.5%", y: "41%", label: "Synergy" },
+  { x: "17%", y: "76%", label: "Learning" },
+  { x: "68%", y: "81%", label: "Networking" },
 ].map((item) => ({ ...item, defaultAnimation: generateRandomAnimation() }));
 
 const useDynamicSpring = (
@@ -167,7 +167,7 @@ const ParallaxVocabulary: React.FC<ParallaxVocabularyProps> = ({
     >
       <LazyMotion features={domAnimation}>
         <svg
-          className="w-full"
+          className="w-full mt-[60rem]"
           width="1280"
           height="768"
           viewBox="0 0 1280 768"

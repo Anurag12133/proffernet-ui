@@ -3,6 +3,9 @@ import UploadFile from "@/app/components/FileUpload";
 import ProjectGrid from "@/app/components/ProjectGrid";
 import { useState } from "react";
 import { motion } from "framer-motion";
+import { Background } from "@tsparticles/engine";
+import { BackgroundBeams } from "@/app/components/ui/background-beams";
+import EditableTitle from "@/app/components/EditableTitle";
 
 const Projects = () => {
   const [title, setTitle] = useState("");
@@ -20,40 +23,22 @@ const Projects = () => {
   };
 
   return (
-    <div className="grid grid-cols-4 h-screen bg-black gap-2 p-4 relative">
+    <div className="grid grid-cols-4 h-screen bg-black  p-4 relative">
+      <BackgroundBeams />
       {/* Main Project Section */}
       <div className="col-span-3 flex flex-col rounded-xl p-6 overflow-hidden shadow-lg">
         {/* Title and Publish Button */}
-        <div className="flex items-center justify-between mb-4">
-          <div className="flex-grow text-center">
-            {editingTitle ? (
-              <motion.input
-                type="text"
-                placeholder="Enter project title..."
-                value={title}
-                onChange={(e) => setTitle(e.target.value)}
-                onKeyDown={handleTitleSubmit}
-                className="text-center text-xl font-semibold p-3 rounded-3xl shadow-md border  bg-black text-white outline-none w-[20rem]"
-                initial={{ opacity: 0, y: -10 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -10 }}
-              />
-            ) : (
-              <motion.h1
-                onClick={handleTitleClick}
-                className="text-3xl font-bold cursor-pointer text-white transition-transform hover:scale-105"
-              >
-                {title || "Untitled Project"}
-              </motion.h1>
-            )}
+        <div className="flex items-center justify-between mb-2 ">
+          <div className="">
+            {" "}
+            <EditableTitle />
           </div>
-          <button className="px-6 py-2 bg-white text-black rounded-lg font-bold transition-transform transform hover:scale-105">
-            Publish
-          </button>
+
+          <button className="px-6 py-2 ">Publish</button>
         </div>
 
         {/* Project Grid */}
-        <div className="flex-grow rounded-lg p-4 ">
+        <div className="rounded-lg p-4  h-[20rem]">
           <ProjectGrid />
         </div>
       </div>
