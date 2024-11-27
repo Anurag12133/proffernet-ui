@@ -5,6 +5,7 @@ import { useState } from "react";
 import { motion } from "framer-motion";
 import { Background } from "@tsparticles/engine";
 import { BackgroundBeams } from "@/app/components/ui/background-beams";
+import EditableTitle from "@/app/components/EditableTitle";
 
 const Projects = () => {
   const [title, setTitle] = useState("");
@@ -27,44 +28,12 @@ const Projects = () => {
       {/* Main Project Section */}
       <div className="col-span-3 flex flex-col rounded-xl p-6 overflow-hidden shadow-lg">
         {/* Title and Publish Button */}
-        <div className="flex items-center justify-between mb-2">
-          {" "}
-          {/* Reduced bottom margin */}
-          <div className="flex-grow text-center">
-            {editingTitle ? (
-              <motion.input
-                type="text"
-                placeholder="Enter project title..."
-                value={title}
-                onChange={(e) => setTitle(e.target.value)}
-                onKeyDown={(e) => {
-                  if (e.key === "Enter") {
-                    setEditingTitle(false); // Switch to title view
-                  }
-                }}
-                className="text-center text-2xl font-semibold p-2 w-[24rem] mx-auto bg-transparent text-white outline-none 
-                 border-b-[3px] border-b-transparent bg-gradient-to-r from-transparent via-gray-500 to-transparent"
-                style={{
-                  backgroundImage:
-                    "linear-gradient(to right, #888888, #ffffff, #888888)",
-                  WebkitBackgroundClip: "text",
-                  WebkitTextFillColor: "transparent",
-                }}
-                initial={{ opacity: 0, y: -10 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -10 }}
-              />
-            ) : (
-              <motion.h1
-                onClick={() => setEditingTitle(true)} // Switch back to input view
-                className="text-4xl font-bold cursor-pointer text-white inline-block relative 
-                 after:content-[''] after:absolute after:bottom-0 after:left-0 after:w-full after:h-[3px] 
-                 after:bg-gradient-to-r from-gray-300 via-white to-gray-300"
-              >
-                {title || "Untitled Project"}
-              </motion.h1>
-            )}
+        <div className="flex items-center justify-between mb-2 ">
+          <div className="">
+            {" "}
+            <EditableTitle />
           </div>
+
           <button className="px-6 py-2 ">Publish</button>
         </div>
 
