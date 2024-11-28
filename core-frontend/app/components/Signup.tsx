@@ -1,17 +1,50 @@
 "use client";
-import React from "react";
+import React, { useState } from "react";
 import { Label } from "@/app/components/ui/label";
 import { Input } from "@/app/components/ui/input";
 import { cn } from "@/app/lib/utils";
 import { IconBrandGithub, IconBrandGoogle } from "@tabler/icons-react";
 import { useRouter } from "next/navigation";
+import { signupUser } from "../services/api";
+import { setAuthToken } from "../services/auth";
 
 const SignupComponent = () => {
   const router = useRouter();
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");
+
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    setLoading(true);
+    setError("");
     console.log("Form submitted");
+    const formData = new FormData(e.currentTarget);
+    const data = {
+      username: formData.get("username") as string,
+      email: formData.get("email") as string,
+      password: formData.get("password") as string,
+    };
+
+    console.log(data);
+
+    try {
+      const response = await signupUser(data);
+      setAuthToken(response.token);
+      router.push("/pages/selection");
+    } catch (err: any) {
+      setError(err.message);
+    } finally {
+      setLoading(false);
+    }
   };
+
+  const handleGithubLogin = () => {
+    const GITHUB_CLIENT_ID = "Ov23liHT4Mrz0DOyBt4a";
+    const REDIRECT_URI = "http://127.0.0.1:8000/api/auth/github/callback";
+    const GITHUB_AUTH_URI = `https://github.com/login/oauth/authorize?client_id=${GITHUB_CLIENT_ID}&redirect_uri=${REDIRECT_URI}&scope=user:email`;
+    window.location.href = GITHUB_AUTH_URI;
+  };
+
   return (
     <div className="w-full mt-10">
       <div className="max-w-md w-full mx-auto rounded-none md:rounded-2xl p-4 md:p-8 shadow-input  dark:bg-black bg-black border border-gray-700 ">
@@ -32,16 +65,31 @@ const SignupComponent = () => {
           <div className="flex flex-col md:flex-row space-y-2 md:space-y-0 md:space-x-2 mb-2">
             <LabelInputContainer>
               <Label htmlFor="Username">Username</Label>
-              <Input id="username" placeholder="Tyler" type="text" />
+              <Input
+                id="username"
+                name="username"
+                placeholder="Tyler"
+                type="text"
+              />
             </LabelInputContainer>
           </div>
           <LabelInputContainer className="mb-2">
             <Label htmlFor="email">Email Address</Label>
-            <Input id="email" placeholder="projectmayhem@fc.com" type="email" />
+            <Input
+              id="email"
+              name="email"
+              placeholder="projectmayhem@fc.com"
+              type="email"
+            />
           </LabelInputContainer>
           <LabelInputContainer className="mb-2">
             <Label htmlFor="password">Password</Label>
-            <Input id="password" placeholder="••••••••" type="password" />
+            <Input
+              id="password"
+              name="password"
+              placeholder="••••••••"
+              type="password"
+            />
           </LabelInputContainer>
 
           <button
@@ -58,6 +106,7 @@ const SignupComponent = () => {
             <button
               className=" relative group/btn flex space-x-2 items-center justify-start px-4 w-full text-black rounded-md h-10 font-medium shadow-input bg-gray-50 dark:bg-zinc-900 dark:shadow-[0px_0px_1px_1px_var(--neutral-800)]"
               type="submit"
+              onClick={handleGithubLogin}
             >
               <IconBrandGithub className="h-4 w-4 text-neutral-800 dark:text-neutral-300" />
               <span className="text-neutral-700 dark:text-neutral-300 text-sm">
