@@ -44,12 +44,35 @@ INSTALLED_APPS = [
     'notifications',
     'contributors',
     'rest_framework',
+    'rest_framework_simplejwt',
     'corsheaders',
+    'users',
+    'dj_rest_auth',
+    'allauth',
+    'allauth.account',
+    'allauth.socialaccount',
+    'allauth.socialaccount.providers.google',
+    'allauth.socialaccount.providers.github',
+    'rest_framework.authtoken'
 
 
 ]
+AUTHENTICATION_BACKENDS = [
+    'django.contrib.auth.backends.ModelBackend',
+    'allauth.account.auth_backends.AuthenticationBackend',
+]
 
-CORS_ALLOWED_ORIGINS = ["http://localhost:5173"]
+SOCIALACCOUNT_PROVIDERS = {
+    
+    'github': {
+        'APP': {
+            'client_id': 'Ov23liHT4Mrz0DOyBt4a',
+            'secret': 'd4c675dc084f6ba600f9b65d5e743a34c8acbfb3',
+        }
+    }
+}
+
+CORS_ALLOW_ALL_ORIGINS = True
 
 
 
@@ -62,6 +85,7 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'corsheaders.middleware.CorsMiddleware',
+    'allauth.account.middleware.AccountMiddleware'
 ]
 
 ROOT_URLCONF = 'core.urls'
@@ -84,6 +108,11 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'core.wsgi.application'
 
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
+    ),
+}
 
 # Database
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
