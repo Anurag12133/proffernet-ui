@@ -3,12 +3,12 @@ from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from django.contrib.auth.models import User
-from django.contrib.auth import login
 import requests
 from .serializers import UserSerializer
 
 class GithubOAuthView(APIView):
-    def post(self, request):
+    @staticmethod
+    def post(request):
        
         code = request.data.get('code')
         if not code:
@@ -59,7 +59,8 @@ class GithubOAuthView(APIView):
 
 
 class SignupView(APIView):
-    def post(self, request):
+    @staticmethod
+    def post(request):
         serializer = UserSerializer(data=request.data)
         if serializer.is_valid():
             serializer.save()  # Calls the create method in the serializer

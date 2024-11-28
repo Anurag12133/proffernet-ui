@@ -8,7 +8,8 @@ class UserSerializer(serializers.ModelSerializer):
         model = User
         fields = ('email', 'username', 'password')  # Fields exposed via the API
 
-    def create(self, validated_data):
+    @staticmethod
+    def create(validated_data):
         # Use custom user manager to create a user
         user = User.objects.create_user(
             email=validated_data['email'],
