@@ -1,7 +1,23 @@
+"use client"
+import {useRouter} from "next/navigation";
+import {useState} from "react";
+import "../css/Loader.css"
 const Navbar = () => {
+
+
+  const router = useRouter();
+  const [loading, setLoading] = useState(false);
+
+  const handleSubmit = () => {
+    setLoading(true);
+
+    setTimeout(() => {
+      router.push("http://localhost:3000/pages/signup");
+    }, 500);
+  };
   return (
     <div className="px-8 flex h-16 items-center max-w-[88rem] mx-auto">
-      {/* Left side: Logo and Title */}
+
       <div className="mr-4 hidden md:flex">
         <a
           className="flex items-center justify-center space-x-2 text-2xl font-bold py-6 text-center text-neutral-600 dark:text-gray-100 selection:bg-emerald-500 mr-10"
@@ -48,7 +64,7 @@ const Navbar = () => {
       <nav className="flex items-center space-x-6 text-sm font-medium xl:flex">
         <a
           className="transition-colors hover:text-foreground/80 text-foreground/60 hidden sm:flex space-x-1 text-gray-400"
-          href="/components"
+          href="/"
         >
           Home
         </a>
@@ -62,17 +78,20 @@ const Navbar = () => {
 
         <a
           className="transition-colors hover:text-foreground/80 text-foreground/60 hidden sm:flex space-x-1 text-gray-400"
-          href="/showcase"
+          href="/pages/dashboard"
         >
+
           Contributions
+
         </a>
+
       </nav>
 
       <div className="flex flex-1 items-center justify-end gap-2 sm:gap-2 md:justify-end">
         <a
           target="__blank"
           className="transition-colors hover:text-foreground/80 text-foreground/60 mr-3 text-sm font-medium text-gray-400"
-          href="https://discord.gg/ftZbQvCdN7"
+          href="https://discord.gg/KnaPA4gX"
         >
           <span className="hidden sm:block">Discord</span>
           <svg
@@ -96,13 +115,18 @@ const Navbar = () => {
         <a
           target="__blank"
           className="transition-colors hover:text-foreground/80 text-foreground/60 text-sm font-medium text-gray-400"
-          href="https://twitter.com/mannupaaji"
+          href="https://github.com/Anurag12133"
         >
           Github
         </a>
-        <button className="py-2 px-4 ml-2 rounded-md bg-blue-500 text-white text-sm font-medium ring-offset-background hover:bg-[#323238] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2">
+        <button className="py-2 px-4 ml-2 rounded-md bg-blue-500 text-white text-sm font-medium ring-offset-background hover:bg-[#323238] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2" onClick={handleSubmit}>
           Create Account
         </button>
+        {loading && (
+            <div className="fixed inset-0 flex items-center justify-center bg-black from-black to-grey-100 bg-opacity-75 z-50">
+              <div className="loader"></div>
+            </div>
+        )}
       </div>
     </div>
   );
