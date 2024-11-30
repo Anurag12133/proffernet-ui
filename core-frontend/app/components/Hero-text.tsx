@@ -16,12 +16,10 @@ const HeroText = () => {
         a seamless, collaborative environment.
       </p>
       <div className="flex flex-col md:flex-row space-y-4 md:space-y-0 md:space-x-4 mt-6">
-        <button className="w-40 h-10 rounded-xl bg-black dark:border-white border text-white text-sm">
-          Join now
+        <button className="w-40 h-10 rounded-xl bg-black dark:border-white border text-white text-sm hover:bg-white hover:text-black">
+          Get Started
         </button>
-        <button className="w-40 h-10 rounded-xl bg-white text-black border border-black text-sm">
-          Signup
-        </button>
+
       </div>
       <div
         className="flex  justify-start items-center mb-4 overflow-x-auto relative z-20 no-visible-scrollbar  mt-5 "
