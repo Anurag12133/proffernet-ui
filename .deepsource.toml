@@ -5,3 +5,19 @@ name = "python"
 
   [analyzers.meta]
   runtime_version = "3.x.x"
+
+[[analyzers]]
+name = "javascript"
+  [analyzers.meta]
+  framework = "react"
+  runtime_version = "16.x.x"
+
+[[analyzers]]
+name = "typescript"
+  [analyzers.meta]
+  runtime_version = "4.x.x"
+
+[[analyzers]]
+name = "css"
+  [analyzers.meta]
+  framework = "tailwindcss"
