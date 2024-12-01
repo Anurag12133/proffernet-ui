@@ -10,6 +10,13 @@ module.exports = {
       "api.microlink.io",
     ],
   },
+
+  env: {
+    GITHUB_CLIENT_ID: process.env.GITHUB_CLIENT_ID,
+    GITHUB_SECRET_KEY: process.env.GITHUB_SECRET_KEY,
+    JWT_SECRET: process.env.JWT_SECRET,
+    NEXTAUTH_URL: process.env.NEXTAUTH_URL,
+  },
 };
 
 const nextConfig: NextConfig = {
