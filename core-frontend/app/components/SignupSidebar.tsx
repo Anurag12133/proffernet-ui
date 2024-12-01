@@ -1,5 +1,5 @@
 "use client";
-import { WorldMap } from "@/app/components/ui/world-map";
+import { WorldMap }  from "@/app/components/WorldMapcomponent/Worldmap"
 import { motion } from "motion/react";
 
 const SignupWorldMap = () => {

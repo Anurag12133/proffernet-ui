@@ -11,9 +11,11 @@ const Navbar = () => {
   const handleSubmit = () => {
     setLoading(true);
 
-    setTimeout(() => {
+    requestAnimationFrame(() => {
       router.push("http://localhost:3000/pages/signup");
-    }, 500);
+    })
+
+
   };
   return (
     <div className="px-8 flex h-16 items-center max-w-[88rem] mx-auto">
