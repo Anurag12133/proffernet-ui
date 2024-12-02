@@ -5,7 +5,7 @@ import { Carousel, Card } from "@/app/components/ui/apple-cards-carousel";
 
 const CardsForProject = ({ TechStack }: { TechStack: string }) => {
   const cards = data.map((card, index) => (
-    <Card key={card.src} card={card} index={index} layout={true} />
+    <Card key={card.src} card={card} index={index} layout />
   ));
 
   return (
