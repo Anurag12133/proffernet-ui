@@ -1,45 +1,82 @@
 "use client";
+import { useState } from "react"; // Import useState to manage state
 import UploadFile from "@/app/components/FileUpload";
-import ProjectGrid from "@/app/components/ProjectGrid";
-import { useState } from "react";
-import { motion } from "framer-motion";
-import { Background } from "@tsparticles/engine";
 import { BackgroundBeams } from "@/app/components/ui/background-beams";
 import EditableTitle from "@/app/components/EditableTitle";
+import "@/app/css/Input.css";
 
 const Projects = () => {
-  const [title, setTitle] = useState("");
-  const [editingTitle, setEditingTitle] = useState(true);
+  const [techStack, setTechStack] = useState(""); // State for input value
+  const [techStacks, setTechStacks] = useState<string[]>([]); // State to store added tech stacks
 
-  const handleTitleSubmit = (event: React.KeyboardEvent<HTMLInputElement>) => {
-    if (event.key === "Enter") {
-      event.preventDefault();
-      setEditingTitle(false);
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setTechStack(e.target.value); // Update the input field value
+  };
+
+  const handleKeyPress = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === "Enter" && techStack.trim() !== "") {
+      // Prevent adding empty or whitespace tech stack
+      setTechStacks((prevStacks) => [...prevStacks, techStack]);
+      setTechStack(""); // Clear the input field
     }
   };
 
-  const handleTitleClick = () => {
-    setEditingTitle(true);
+  const removeTechStack = (stackToRemove: string) => {
+    setTechStacks((prevStacks) =>
+      prevStacks.filter((stack) => stack !== stackToRemove)
+    );
   };
 
   return (
-    <div className="grid grid-cols-4 h-screen bg-black  p-4 relative">
+    <div className="grid grid-cols-4 h-screen bg-black p-4 relative">
       <BackgroundBeams />
       {/* Main Project Section */}
       <div className="col-span-3 flex flex-col rounded-xl p-6 overflow-hidden shadow-lg">
         {/* Title and Publish Button */}
-        <div className="flex items-center justify-between mb-2 ">
-          <div className="">
-            {" "}
+        <div className="flex items-center justify-between mb-2">
+          <div>
             <EditableTitle />
           </div>
 
-          <button className="px-6 py-2 ">Publish</button>
+          <button className="px-6 py-2">Publish</button>
         </div>
 
         {/* Project Grid */}
-        <div className="rounded-lg p-4  h-[20rem]">
-          <ProjectGrid />
+        <div className="rounded-lg p-4 h-full ml-20">
+          <div className="card card--inverted">
+            {/* Input Box for Tech Stack */}
+            <div className="relative">
+              <label className="input">
+                <input
+                  className="input__field"
+                  type="text"
+                  placeholder=""
+                  value={techStack}
+                  onChange={handleInputChange}
+                  onKeyDown={handleKeyPress} // Add key press handler to capture Enter key
+                />
+                <span className="input__label"> Tech Stack</span>
+              </label>
+            </div>
+
+            {/* Display Tech Stacks Below the Input Box */}
+            <div className="flex flex-wrap gap-2 mt-4">
+              {techStacks.map((stack, index) => (
+                <div
+                  key={index}
+                  className="relative flex items-center gap-2 px-3 py-1 border rounded-lg text-sm transition-all duration-300"
+                >
+                  {stack}
+                  <span
+                    className="text-gray-800 dark:text-gray-200 group-hover:text-white  cursor-pointer "
+                    onClick={() => removeTechStack(stack)}
+                  >
+                    x
+                  </span>
+                </div>
+              ))}
+            </div>
+          </div>
         </div>
       </div>
 
