@@ -62,15 +62,7 @@ AUTHENTICATION_BACKENDS = [
     'allauth.account.auth_backends.AuthenticationBackend',
 ]
 
-SOCIALACCOUNT_PROVIDERS = {
-    
-    'github': {
-        'APP': {
-            'client_id': 'Ov23liHT4Mrz0DOyBt4a',
-            'secret': 'd4c675dc084f6ba600f9b65d5e743a34c8acbfb3',
-        }
-    }
-}
+
 
 CORS_ALLOW_ALL_ORIGINS = True
 
