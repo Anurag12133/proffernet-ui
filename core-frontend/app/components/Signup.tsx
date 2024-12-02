@@ -1,11 +1,11 @@
 "use client";
-import React, { useState } from "react";
+import React, { useCallback, useState } from "react";
 import { Label } from "@/app/components/ui/label";
 import { Input } from "@/app/components/ui/input";
 import { cn } from "@/app/lib/utils";
 import { IconBrandGithub, IconBrandGoogle } from "@tabler/icons-react";
 import { useRouter } from "next/navigation";
-import { useSession, signIn, signOut } from "next-auth/react";
+import { useSession, signIn } from "next-auth/react";
 import { signupUser } from "../services/api";
 import { setAuthToken } from "../services/auth";
 
@@ -44,6 +44,10 @@ const SignupComponent = () => {
       setLoading(false);
     }
   };
+
+  const handleGitHubSignIn = useCallback(() => {
+    signIn("github");
+  }, []);
 
   return (
     <div className="w-full mt-10">
@@ -106,7 +110,7 @@ const SignupComponent = () => {
             <button
               className=" relative group/btn flex space-x-2 items-center justify-start px-4 w-full text-black rounded-md h-10 font-medium shadow-input bg-gray-50 dark:bg-zinc-900 dark:shadow-[0px_0px_1px_1px_var(--neutral-800)]"
               type="submit"
-              onClick={() => signIn()}
+              onClick={handleGitHubSignIn}
             >
               <IconBrandGithub className="h-4 w-4 text-neutral-800 dark:text-neutral-300" />
               <span className="text-neutral-700 dark:text-neutral-300 text-sm">
