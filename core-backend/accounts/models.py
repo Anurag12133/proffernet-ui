@@ -1,9 +1,5 @@
 from django.db import models
 
-# Create your models here.
-# your_app/models.py
-from django.db import models
-
 class User(models.Model):
     VOLUNTEER = 'volunteer'
     CONTRIBUTOR = 'contributor'
