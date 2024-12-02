@@ -5,6 +5,7 @@ import { Input } from "@/app/components/ui/input";
 import { cn } from "@/app/lib/utils";
 import { IconBrandGithub, IconBrandGoogle } from "@tabler/icons-react";
 import { useRouter } from "next/navigation";
+import { useSession, signIn, signOut } from "next-auth/react";
 import { signupUser } from "../services/api";
 import { setAuthToken } from "../services/auth";
 
@@ -12,6 +13,12 @@ const SignupComponent = () => {
   const router = useRouter();
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
+
+  const { data: session } = useSession();
+  if (session) {
+    console.log("You have signed in");
+    router.push("http://localhost:3000/pages/selection");
+  }
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -36,13 +43,6 @@ const SignupComponent = () => {
     } finally {
       setLoading(false);
     }
-  };
-
-  const handleGithubLogin = () => {
-    const GITHUB_CLIENT_ID = "Ov23liHT4Mrz0DOyBt4a";
-    const REDIRECT_URI = "http://127.0.0.1:8000/api/auth/github/callback";
-    const GITHUB_AUTH_URI = `https://github.com/login/oauth/authorize?client_id=${GITHUB_CLIENT_ID}&redirect_uri=${REDIRECT_URI}&scope=user:email`;
-    window.location.href = GITHUB_AUTH_URI;
   };
 
   return (
@@ -106,7 +106,7 @@ const SignupComponent = () => {
             <button
               className=" relative group/btn flex space-x-2 items-center justify-start px-4 w-full text-black rounded-md h-10 font-medium shadow-input bg-gray-50 dark:bg-zinc-900 dark:shadow-[0px_0px_1px_1px_var(--neutral-800)]"
               type="submit"
-              onClick={handleGithubLogin}
+              onClick={() => signIn()}
             >
               <IconBrandGithub className="h-4 w-4 text-neutral-800 dark:text-neutral-300" />
               <span className="text-neutral-700 dark:text-neutral-300 text-sm">
