@@ -1,51 +1,29 @@
-/* Inverted Card Styles */
-.card--inverted {
-  color: white; /* White text */
-  padding: 1.5rem; /* Inner padding */
-  border-radius: 8px; /* Rounded corners */
-  box-shadow: 0.5rem 0.5rem 0 #2971dd; /* Border-like shadow effect */
-}
-
-/* Input Container */
 .input {
   position: relative;
-  width: 100%; /* Full-width container */
+  width: 100%;
 }
 
-/* Input Field Styles */
 .input__field {
-  width: 100%; /* Full-width input */
-  padding: 0.75rem; /* Inner padding */
-  background: transparent; /* Transparent background */
-  color: white; /* Text color */
-  border: none; /* Remove default border */
-  outline: none; /* Remove focus outline */
-  box-shadow: 0.5rem 0.5rem 0 #6669706c; /* Custom shadow simulating the border */
-  border-radius: 8px; /* Rounded corners */
-  transition: transform 0.2s ease-in-out; /* Smooth transform effect */
+  width: 100%;
+  padding: 0.75rem;
+  background: transparent;
+  color: white;
+  border-radius: 8px;
+  outline: none;
+  box-shadow:
+    5px 5px 10px rgba(255, 255, 255, 0.25),
+    inset 5px 5px 10px rgba(255, 255, 255, 0.25);
+
+  transition: transform 0.2s ease-in-out;
 }
 
-/* Label inside the input box */
 .input__label {
   position: absolute;
-  top: 0.75rem; /* Position label */
-  left: 1rem; /* Padding from the left */
-  color: white; /* Label color */
-  transition: all 0.3s ease; /* Smooth transition */
-}
-
-/* Input field focus or not em/* General Styles */
-.card {
-  /* Inverted color */
-  padding: 2rem;
-  border-radius: 4px;
-  border: 1px solid #fafafa; /* Accent color */
-  box-shadow:
-    0.5rem 0.5rem 0 0 rgba(75, 174, 255, 0.8),
-    /* Blue shadow */ -0.5rem -0.5rem 0 0 rgba(138, 43, 226, 0.8); /* Violet shadow */
+  top: 0.75rem;
+  left: 1rem;
   color: white;
+  transition: all 0.3s ease;
 }
-
 h2 {
   font-weight: bold;
   display: flex;
@@ -59,7 +37,6 @@ h2 {
   fill: currentColor;
 }
 
-/* Input Styles */
 .input {
   position: relative;
   display: block;
@@ -69,7 +46,8 @@ h2 {
 .input__field {
   width: 100%;
   padding: 1rem;
-  border: 1px solid white;
+  border: 1px solid rgb(255, 255, 255);
+  border-radius: 1rem;
   border-radius: 4px;
   background: transparent;
   color: white;
@@ -77,36 +55,35 @@ h2 {
   font-size: 1rem;
 }
 
+.input__field:hover {
+  border: none;
+}
 .input__label {
   position: absolute;
   left: 1rem;
   top: 1rem;
   transition: transform 0.2s ease;
-  background: #050505; /* Match inverted card background */
+  background: #050505;
   padding: 0 0.5rem;
-  color: white;
+  color: rgb(102, 102, 102);
   font-weight: bold;
+}
+.description {
+  box-shadow:
+    5px 5px 10px rgba(255, 255, 255, 0.25),
+    inset 5px 5px 10px rgba(255, 255, 255, 0.25);
+  width: 100%;
+  display: flex;
+  max-width: 100%;
+  margin-top: 5rem;
+  border: 1px solid #000;
+  border-radius: 1rem;
 }
 
 .input__field:focus + .input__label,
 .input__field:not(:placeholder-shown) + .input__label {
   transform: translate(0, -1.5rem) scale(0.9);
-  color: linear-gradient(to right, #4baeff, #8a2be2); /* Accent color */
-}
-
-/* Button Group */
-.button-group {
-  display: flex;
-  gap: 1rem;
-  margin-top: 1.5rem;
-}
-
-button {
-  padding: 0.75rem 1.5rem;
-  border: none;
-  border-radius: 4px;
-  font-weight: bold;
-  cursor: pointer;
+  color: linear-gradient(to right, #4baeff, #8a2be2);
 }
 
 pty */ .input__field:focus + .input__label,

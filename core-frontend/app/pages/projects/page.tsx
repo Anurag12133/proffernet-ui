@@ -1,9 +1,11 @@
 "use client";
-import { useState } from "react"; // Import useState to manage state
+import React, { useState } from "react"; // Import useState to manage state
 import UploadFile from "@/app/components/FileUpload";
 import { BackgroundBeams } from "@/app/components/ui/background-beams";
 import EditableTitle from "@/app/components/EditableTitle";
 import "@/app/css/Input.css";
+import { Textarea } from "@nextui-org/input";
+import Button from "@/app/components/Button";
 
 const Projects = () => {
   const [techStack, setTechStack] = useState(""); // State for input value
@@ -12,6 +14,8 @@ const Projects = () => {
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setTechStack(e.target.value); // Update the input field value
   };
+
+  const [value, setValue] = React.useState("");
 
   const handleKeyPress = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === "Enter" && techStack.trim() !== "") {
@@ -30,20 +34,19 @@ const Projects = () => {
   return (
     <div className="grid grid-cols-4 h-screen bg-black p-4 relative">
       <BackgroundBeams />
-      {/* Main Project Section */}
+
       <div className="col-span-3 flex flex-col rounded-xl p-6 overflow-hidden shadow-lg">
-        {/* Title and Publish Button */}
         <div className="flex items-center justify-between mb-2">
           <div>
             <EditableTitle />
           </div>
 
-          <button className="px-6 py-2">Publish</button>
+          <Button label="Submit" />
         </div>
 
         {/* Project Grid */}
-        <div className="rounded-lg p-4 h-full ml-20">
-          <div className="card card--inverted">
+        <div className="rounded-lg p-4 h-full ml-20 text-white">
+          <div className="  ">
             {/* Input Box for Tech Stack */}
             <div className="relative">
               <label className="input">
@@ -59,7 +62,6 @@ const Projects = () => {
               </label>
             </div>
 
-            {/* Display Tech Stacks Below the Input Box */}
             <div className="flex flex-wrap gap-2 mt-4">
               {techStacks.map((stack, index) => (
                 <div
@@ -76,6 +78,18 @@ const Projects = () => {
                 </div>
               ))}
             </div>
+          </div>
+          <div className="description">
+            <Textarea
+              variant="bordered"
+              placeholder="Enter your description"
+              disableAnimation
+              disableAutosize
+              classNames={{
+                base: "max-w-full",
+                input: "resize-y min-h-[300px]",
+              }}
+            />
           </div>
         </div>
       </div>
