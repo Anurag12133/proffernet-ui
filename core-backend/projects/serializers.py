@@ -1,7 +1,6 @@
 # serializers.py
 from rest_framework import serializers
 from .models import Project, ProjectImage
-from .models import Project
 
 
 class ProjectImageSerializer(serializers.ModelSerializer):
@@ -28,7 +27,8 @@ class ProjectCreateSerializer(serializers.ModelSerializer):
         model = Project
         fields = ['title', 'description', 'tech_stack', 'images']
 
-    def create(self, validated_data):
+    @staticmethod
+    def create(validated_data):
         images = validated_data.pop('images')
         project = Project.objects.create(**validated_data)
         for image in images:

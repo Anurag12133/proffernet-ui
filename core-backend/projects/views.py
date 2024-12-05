@@ -6,7 +6,8 @@ from .serializers import ProjectCreateSerializer
 class ProjectCreateView(APIView):
     parser_classes = (MultiPartParser, FormParser)
 
-    def post(self, request, *args, **kwargs):
+    @staticmethod
+    def post(request, *args, **kwargs):
         serializer = ProjectCreateSerializer(data=request.data)
         if serializer.is_valid():
             serializer.save()
