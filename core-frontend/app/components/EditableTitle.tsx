@@ -1,12 +1,13 @@
 import { useState, useRef, useEffect } from "react";
 import { motion } from "framer-motion";
+import {useProjectContext} from "@/app/contexts/ProjectContext";
 
 const EditableTitle = () => {
   const [editingTitle, setEditingTitle] = useState(false);
-  const [title, setTitle] = useState("");
+  const { title, setTitle } = useProjectContext();
   const inputRef = useRef<HTMLInputElement>(null);
 
-  // Auto-focus the input when editing
+
   useEffect(() => {
     if (editingTitle && inputRef.current) {
       inputRef.current.focus();
@@ -22,7 +23,7 @@ const EditableTitle = () => {
       <div className="flex flex-col items-center relative">
         {editingTitle ? (
           <div className="relative flex items-center">
-            {/* Vertical Line */}
+
             <div className="absolute left-1 h-[150%] w-[1px] bg-gray-300 -translate-x-2" />
 
             <motion.input
@@ -59,7 +60,7 @@ const EditableTitle = () => {
               WebkitTextFillColor: "transparent",
             }}
           >
-            {title || "Title..."}
+            {title || "Write Title..."}
           </motion.h1>
         )}
       </div>

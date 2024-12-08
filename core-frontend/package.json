@@ -41,6 +41,7 @@
     "tailwind-merge": "^2.5.4"
   },
   "devDependencies": {
+    "@gravity-ui/uikit": "^6.37.0",
     "@tabler/icons": "^3.21.0",
     "@tabler/icons-react": "^3.22.0",
     "@types/node": "^20",
