@@ -1,8 +1,6 @@
 from django.urls import path
-from .views import get_projects, create_project
-
+from .views import ProjectCreateAPIView
 
 urlpatterns = [
-    path('projects/', get_projects, name='get_projects'),
-    path('projects/create', create_project, name='create_project')
+    path('create/', ProjectCreateAPIView.as_view(), name='project-create'),
 ]

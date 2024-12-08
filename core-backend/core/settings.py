@@ -114,11 +114,11 @@ REST_FRAMEWORK = {
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'core_profferDB',         # The name of your database
-        'USER': 'postgres',       # Your PostgreSQL username
-        'PASSWORD': 'yourpassword',   # Your PostgreSQL password
-        'HOST': 'localhost',          # Default is 'localhost' for local database
-        'PORT': '5432',               # Default PostgreSQL port
+        'NAME': 'core_profferDB',
+        'USER': 'postgres',
+        'PASSWORD': 'yourpassword',
+        'HOST': 'localhost',
+        'PORT': '5432',
     }
 }
 

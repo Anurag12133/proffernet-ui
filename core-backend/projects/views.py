@@ -1,15 +1,13 @@
 from rest_framework.views import APIView
 from rest_framework.response import Response
-from rest_framework.parsers import MultiPartParser, FormParser
-from .serializers import ProjectCreateSerializer
+from rest_framework import status
+from .models import Project
+from .serializers import ProjectSerializer
 
-class ProjectCreateView(APIView):
-    parser_classes = (MultiPartParser, FormParser)
-
-    @staticmethod
-    def post(request, *args, **kwargs):
-        serializer = ProjectCreateSerializer(data=request.data)
+class ProjectCreateAPIView(APIView):
+    def post(self, request, *args, **kwargs):
+        serializer = ProjectSerializer(data=request.data)
         if serializer.is_valid():
             serializer.save()
-            return Response(serializer.data, status=201)
-        return Response(serializer.errors, status=400)
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
