@@ -1,12 +1,11 @@
 import { useState, useRef, useEffect } from "react";
 import { motion } from "framer-motion";
-import {useProjectContext} from "@/app/contexts/ProjectContext";
+import { useProjectContext } from "@/app/contexts/ProjectContext";
 
 const EditableTitle = () => {
   const [editingTitle, setEditingTitle] = useState(false);
   const { title, setTitle } = useProjectContext();
   const inputRef = useRef<HTMLInputElement>(null);
-
 
   useEffect(() => {
     if (editingTitle && inputRef.current) {
@@ -18,12 +17,40 @@ const EditableTitle = () => {
     setEditingTitle(false);
   };
 
+  const handleSave = async () => {
+    try {
+      const response = await fetch("http://127.0.0.1:8000/project/create/", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(title),
+      });
+      console.log(response);
+
+      if (response.ok) {
+        console.log("Project created successfully");
+      } else {
+        console.error("Failed to create project");
+      }
+    } catch (error) {
+      console.error("An error occurred:", error);
+    }
+  };
+
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLDivElement>) => {
+    if (e.key === "Enter") {
+      e.preventDefault();
+      setEditingTitle(false);
+      handleSave();
+    }
+  };
+
   return (
     <div className="flex items-center justify-center pl-[7rem]">
       <div className="flex flex-col items-center relative">
         {editingTitle ? (
           <div className="relative flex items-center">
-
             <div className="absolute left-1 h-[150%] w-[1px] bg-gray-300 -translate-x-2" />
 
             <motion.input
@@ -31,11 +58,7 @@ const EditableTitle = () => {
               type="text"
               value={title}
               onChange={(e) => setTitle(e.target.value)}
-              onKeyDown={(e) => {
-                if (e.key === "Enter") {
-                  setEditingTitle(false);
-                }
-              }}
+              onKeyDown={handleKeyDown}
               onBlur={handleBlur}
               className="text-4xl font-['Poppins'] w-[24rem] bg-transparent text-white outline-none pl-4 text-opacity-1"
               style={{
@@ -60,7 +83,7 @@ const EditableTitle = () => {
               WebkitTextFillColor: "transparent",
             }}
           >
-            {title || "Write Title..."}
+            {title}
           </motion.h1>
         )}
       </div>
