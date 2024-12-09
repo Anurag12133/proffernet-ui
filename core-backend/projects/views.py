@@ -6,7 +6,8 @@ from .serializers import ProjectSerializer, ProjectCreateSerializer
 
 
 class ProjectCreateAPIView(APIView):
-    def post(self, request, *args, **kwargs):
+    @staticmethod
+    def post(request, *args, **kwargs):
         serializer = ProjectCreateSerializer(data=request.data)
         if serializer.is_valid():
             serializer.save()
@@ -15,7 +16,8 @@ class ProjectCreateAPIView(APIView):
 
 
 class ProjectListAPIView(APIView):
-    def get(self, request, *args, **kwargs):
+    @staticmethod
+    def get(request, *args, **kwargs):
         projects = Project.objects.prefetch_related('files').all()
         serializer = ProjectSerializer(projects, many=True)
         return Response(serializer.data)

@@ -26,7 +26,8 @@ class ProjectCreateSerializer(serializers.ModelSerializer):
         model = Project
         fields = ['title', 'description', 'tech_stack', 'files']
 
-    def create(self, validated_data):
+    @staticmethod
+    def create(validated_data):
         files = validated_data.pop('files')  # Extract files from validated data
         tech_stack = validated_data.pop('tech_stack')  # Extract tech stack strings
 
