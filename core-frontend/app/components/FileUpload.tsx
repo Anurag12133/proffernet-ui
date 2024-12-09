@@ -5,6 +5,7 @@ import { ProjectProvider } from "../contexts/ProjectContext";
 
 const UploadFile = () => {
   const [files, setFiles] = useState<File[]>([]);
+
   const handleFileUpload = (files: File[]) => {
     setFiles(files);
   };

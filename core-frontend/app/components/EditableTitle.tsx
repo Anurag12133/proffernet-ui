@@ -24,18 +24,25 @@ const EditableTitle = () => {
     }
   };
 
+  const handleClickTitle = () => {
+    setEditingTitle(true);
+  };
+
+  const handleChangeTitle = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setTitle(e.target.value);
+  };
+
   return (
     <div className="flex items-center justify-center pl-[7rem]">
       <div className="flex flex-col items-center relative">
         {editingTitle ? (
           <div className="relative flex items-center">
             <div className="absolute left-1 h-[150%] w-[1px] bg-gray-300 -translate-x-2" />
-
             <motion.input
               ref={inputRef}
               type="text"
               value={title}
-              onChange={(e) => setTitle(e.target.value)}
+              onChange={handleChangeTitle}
               onKeyDown={handleKeyDown}
               onBlur={handleBlur}
               className="text-4xl font-['Poppins'] w-[24rem] bg-transparent text-white outline-none pl-4 text-opacity-1"
@@ -52,8 +59,8 @@ const EditableTitle = () => {
           </div>
         ) : (
           <motion.h1
-            onClick={() => setEditingTitle(true)}
-            className="text-4xl font-['Poppins']  cursor-pointer text-center"
+            onClick={handleClickTitle}
+            className="text-4xl font-['Poppins'] cursor-pointer text-center"
             style={{
               backgroundImage:
                 "linear-gradient(to right, #888888, #ffffff, #888888)",

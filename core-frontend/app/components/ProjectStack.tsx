@@ -22,6 +22,33 @@ const ProjectStack = () => {
     );
   };
 
+  const TechStackItem = ({
+    stack,
+    onRemove,
+  }: {
+    stack: string;
+    onRemove: () => void;
+  }) => (
+    <button
+      type="button"
+      className="relative flex items-center gap-2 px-3 py-1 border rounded-lg text-sm transition-all duration-300"
+      onClick={onRemove}
+      onKeyDown={(e) => {
+        if (e.key === "Enter" || e.key === " ") {
+          e.preventDefault();
+          onRemove();
+        }
+      }}
+      role="button"
+      tabIndex={0}
+    >
+      {stack}
+      <span className="text-gray-800 dark:text-gray-200 group-hover:text-white cursor-pointer">
+        x
+      </span>
+    </button>
+  );
+
   return (
     <div>
       <div>
@@ -40,19 +67,12 @@ const ProjectStack = () => {
         </div>
 
         <div className="flex flex-wrap gap-2 mt-4">
-          {techStacks.map((stack, index) => (
-            <div
-              key={index}
-              className="relative flex items-center gap-2 px-3 py-1 border rounded-lg text-sm transition-all duration-300"
-            >
-              {stack}
-              <span
-                className="text-gray-800 dark:text-gray-200 group-hover:text-white cursor-pointer"
-                onClick={() => removeTechStack(stack)}
-              >
-                x
-              </span>
-            </div>
+          {techStacks.map((stack) => (
+            <TechStackItem
+              key={stack}
+              stack={stack}
+              onRemove={() => removeTechStack(stack)}
+            />
           ))}
         </div>
       </div>

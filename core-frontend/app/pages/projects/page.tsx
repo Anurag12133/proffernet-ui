@@ -11,16 +11,18 @@ import {
 } from "@/app/contexts/ProjectContext";
 import ProjectDescription from "@/app/components/ProjectDescription";
 
-const Projects = () => {
-  const SubmitButton = () => {
-    const { handleSave } = useProjectContext();
+// Move SubmitButton outside of Projects component
+const SubmitButton = () => {
+  const { handleSave } = useProjectContext();
 
-    const handleSubmit = () => {
-      handleSave();
-    };
-
-    return <Button label="Submit" onClick={handleSubmit} />;
+  const handleSubmit = () => {
+    handleSave();
   };
+
+  return <Button label="Submit" onClick={handleSubmit} />;
+};
+
+const Projects = () => {
   return (
     <ProjectProvider>
       <div className="grid grid-cols-4 h-screen bg-black p-4 relative">
@@ -46,7 +48,7 @@ const Projects = () => {
           style={{ maxHeight: "100vh" }}
         >
           {[...Array(5)].map((_, index) => (
-            <UploadFile key={index} />
+            <UploadFile key={`upload-file-${index}`} />
           ))}
         </div>
       </div>
