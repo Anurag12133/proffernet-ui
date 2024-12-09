@@ -30,8 +30,6 @@ const FileUpload = ({ onChange }: { onChange?: (files: File[]) => void }) => {
   const { files, setFiles } = useProjectContext();
   const fileInputRef = useRef<HTMLInputElement>(null);
 
-  console.log(files);
-
   const handleFileChange = (newFiles: File[]) => {
     setFiles((prevFiles: File[]) => [...prevFiles, ...newFiles]);
     onChange && onChange(newFiles);

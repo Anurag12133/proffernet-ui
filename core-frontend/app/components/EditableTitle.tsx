@@ -17,32 +17,10 @@ const EditableTitle = () => {
     setEditingTitle(false);
   };
 
-  const handleSave = async () => {
-    try {
-      const response = await fetch("http://127.0.0.1:8000/project/create/", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(title),
-      });
-      console.log(response);
-
-      if (response.ok) {
-        console.log("Project created successfully");
-      } else {
-        console.error("Failed to create project");
-      }
-    } catch (error) {
-      console.error("An error occurred:", error);
-    }
-  };
-
   const handleKeyDown = (e: React.KeyboardEvent<HTMLDivElement>) => {
     if (e.key === "Enter") {
       e.preventDefault();
       setEditingTitle(false);
-      handleSave();
     }
   };
 
