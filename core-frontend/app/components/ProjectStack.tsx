@@ -22,11 +22,14 @@ const ProjectStack = () => {
     []
   );
 
-  const removeTechStack = React.useCallback((stackToRemove: string) => {
-    setTechStacks((prevStacks: string[]) =>
-      prevStacks.filter((stack: string) => stack !== stackToRemove)
-    );
-  }, []);
+  const removeTechStack = React.useCallback(
+    (stackToRemove: string) => {
+      setTechStacks((prevStacks: string[]) =>
+        prevStacks.filter((stack: string) => stack !== stackToRemove)
+      );
+    },
+    [setTechStacks]
+  );
 
   const TechStackItem = ({
     stack,
@@ -46,7 +49,7 @@ const ProjectStack = () => {
             onRemove();
           }
         },
-        []
+        [onRemove]
       )}
       tabIndex={0}
     >
