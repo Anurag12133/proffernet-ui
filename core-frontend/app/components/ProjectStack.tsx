@@ -5,9 +5,12 @@ const ProjectStack = () => {
   const { techStacks, setTechStacks } = useProjectContext();
   const [techStack, setTechStack] = useState("");
 
-  const handleInputChange = React.useCallback(e: React.ChangeEvent<HTMLInputElement>) => {
-    setTechStack(e.target.value);
-  };
+  const handleInputChange = React.useCallback(
+    (e: React.ChangeEvent<HTMLInputElement>) => {
+      setTechStack(e.target.value);
+    },
+    []
+  );
 
   const handleKeyPress = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === "Enter" && techStack.trim() !== "") {
