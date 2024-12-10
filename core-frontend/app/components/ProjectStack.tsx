@@ -22,11 +22,11 @@ const ProjectStack = () => {
     []
   );
 
-  const removeTechStack = (stackToRemove: string) => {
+  const removeTechStack = React.useCallback((stackToRemove: string) => {
     setTechStacks((prevStacks: string[]) =>
       prevStacks.filter((stack: string) => stack !== stackToRemove)
     );
-  };
+  }, []);
 
   const TechStackItem = ({
     stack,
