@@ -31,7 +31,11 @@ const FileUpload = ({ onChange }: { onChange?: (files: File[]) => void }) => {
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   const handleFileChange = (newFiles: File[]) => {
+
     setFiles((prevFiles: File[]) => [...prevFiles, ...newFiles]);
+
+    setFiles((prevFiles) => [...prevFiles, ...newFiles]);
+
     onChange?.(newFiles);
   };
 
