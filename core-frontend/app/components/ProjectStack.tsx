@@ -12,12 +12,15 @@ const ProjectStack = () => {
     []
   );
 
-  const handleKeyPress = (e: React.KeyboardEvent<HTMLInputElement>) => {
-    if (e.key === "Enter" && techStack.trim() !== "") {
-      setTechStacks((prevStacks: string[]) => [...prevStacks, techStack]);
-      setTechStack("");
-    }
-  };
+  const handleKeyPress = React.useCallback(
+    (e: React.KeyboardEvent<HTMLInputElement>) => {
+      if (e.key === "Enter" && techStack.trim() !== "") {
+        setTechStacks((prevStacks: string[]) => [...prevStacks, techStack]);
+        setTechStack("");
+      }
+    },
+    []
+  );
 
   const removeTechStack = (stackToRemove: string) => {
     setTechStacks((prevStacks: string[]) =>
@@ -36,12 +39,15 @@ const ProjectStack = () => {
       type="button"
       className="relative flex items-center gap-2 px-3 py-1 border rounded-lg text-sm transition-all duration-300"
       onClick={onRemove}
-      onKeyDown={(e) => {
-        if (e.key === "Enter" || e.key === " ") {
-          e.preventDefault();
-          onRemove();
-        }
-      }}
+      onKeyDown={React.useCallback(
+        (e: React.KeyboardEvent<HTMLButtonElement>) => {
+          if (e.key === "Enter" || e.key === " ") {
+            e.preventDefault();
+            onRemove();
+          }
+        },
+        []
+      )}
       tabIndex={0}
     >
       {stack}
