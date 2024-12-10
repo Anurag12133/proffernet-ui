@@ -1,12 +1,12 @@
-import { useState, useRef, useEffect } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import { motion } from "framer-motion";
+import { useProjectContext } from "@/app/contexts/ProjectContext";
 
 const EditableTitle = () => {
   const [editingTitle, setEditingTitle] = useState(false);
-  const [title, setTitle] = useState("");
+  const { title, setTitle } = useProjectContext();
   const inputRef = useRef<HTMLInputElement>(null);
 
-  // Auto-focus the input when editing
   useEffect(() => {
     if (editingTitle && inputRef.current) {
       inputRef.current.focus();
@@ -17,24 +17,39 @@ const EditableTitle = () => {
     setEditingTitle(false);
   };
 
+  const handleKeyDown = React.useCallback(
+    (e: React.KeyboardEvent<HTMLDivElement>) => {
+      if (e.key === "Enter") {
+        e.preventDefault();
+        setEditingTitle(false);
+      }
+    },
+    []
+  );
+
+  const handleClickTitle = React.useCallback(() => {
+    setEditingTitle(true);
+  }, []);
+
+  const handleChangeTitle = React.useCallback(
+    (e: React.ChangeEvent<HTMLInputElement>) => {
+      setTitle(e.target.value);
+    },
+    []
+  );
+
   return (
     <div className="flex items-center justify-center pl-[7rem]">
       <div className="flex flex-col items-center relative">
         {editingTitle ? (
           <div className="relative flex items-center">
-            {/* Vertical Line */}
             <div className="absolute left-1 h-[150%] w-[1px] bg-gray-300 -translate-x-2" />
-
             <motion.input
               ref={inputRef}
               type="text"
               value={title}
-              onChange={(e) => setTitle(e.target.value)}
-              onKeyDown={(e) => {
-                if (e.key === "Enter") {
-                  setEditingTitle(false);
-                }
-              }}
+              onChange={handleChangeTitle}
+              onKeyDown={handleKeyDown}
               onBlur={handleBlur}
               className="text-4xl font-['Poppins'] w-[24rem] bg-transparent text-white outline-none pl-4 text-opacity-1"
               style={{
@@ -50,8 +65,8 @@ const EditableTitle = () => {
           </div>
         ) : (
           <motion.h1
-            onClick={() => setEditingTitle(true)}
-            className="text-4xl font-['Poppins']  cursor-pointer text-center"
+            onClick={handleClickTitle}
+            className="text-4xl font-['Poppins'] cursor-pointer text-center"
             style={{
               backgroundImage:
                 "linear-gradient(to right, #888888, #ffffff, #888888)",
@@ -59,7 +74,7 @@ const EditableTitle = () => {
               WebkitTextFillColor: "transparent",
             }}
           >
-            {title || "Title..."}
+            {title}
           </motion.h1>
         )}
       </div>
