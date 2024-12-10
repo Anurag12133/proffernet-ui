@@ -5,22 +5,31 @@ const ProjectStack = () => {
   const { techStacks, setTechStacks } = useProjectContext();
   const [techStack, setTechStack] = useState("");
 
-  const handleInputChange = React.useCallback(e: React.ChangeEvent<HTMLInputElement>) => {
-    setTechStack(e.target.value);
-  };
+  const handleInputChange = React.useCallback(
+    (e: React.ChangeEvent<HTMLInputElement>) => {
+      setTechStack(e.target.value);
+    },
+    []
+  );
 
-  const handleKeyPress = (e: React.KeyboardEvent<HTMLInputElement>) => {
-    if (e.key === "Enter" && techStack.trim() !== "") {
-      setTechStacks((prevStacks: string[]) => [...prevStacks, techStack]);
-      setTechStack("");
-    }
-  };
+  const handleKeyPress = React.useCallback(
+    (e: React.KeyboardEvent<HTMLInputElement>) => {
+      if (e.key === "Enter" && techStack.trim() !== "") {
+        setTechStacks((prevStacks: string[]) => [...prevStacks, techStack]);
+        setTechStack("");
+      }
+    },
+    []
+  );
 
-  const removeTechStack = (stackToRemove: string) => {
-    setTechStacks((prevStacks: string[]) =>
-      prevStacks.filter((stack: string) => stack !== stackToRemove)
-    );
-  };
+  const removeTechStack = React.useCallback(
+    (stackToRemove: string) => {
+      setTechStacks((prevStacks: string[]) =>
+        prevStacks.filter((stack: string) => stack !== stackToRemove)
+      );
+    },
+    [setTechStacks]
+  );
 
   const TechStackItem = ({
     stack,
@@ -33,12 +42,15 @@ const ProjectStack = () => {
       type="button"
       className="relative flex items-center gap-2 px-3 py-1 border rounded-lg text-sm transition-all duration-300"
       onClick={onRemove}
-      onKeyDown={(e) => {
-        if (e.key === "Enter" || e.key === " ") {
-          e.preventDefault();
-          onRemove();
-        }
-      }}
+      onKeyDown={React.useCallback(
+        (e: React.KeyboardEvent<HTMLButtonElement>) => {
+          if (e.key === "Enter" || e.key === " ") {
+            e.preventDefault();
+            onRemove();
+          }
+        },
+        [onRemove]
+      )}
       tabIndex={0}
     >
       {stack}
