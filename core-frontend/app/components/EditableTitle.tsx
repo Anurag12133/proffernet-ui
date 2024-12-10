@@ -1,4 +1,4 @@
-import { useState, useRef, useEffect } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import { motion } from "framer-motion";
 import { useProjectContext } from "@/app/contexts/ProjectContext";
 
@@ -17,20 +17,26 @@ const EditableTitle = () => {
     setEditingTitle(false);
   };
 
-  const handleKeyDown = (e: React.KeyboardEvent<HTMLDivElement>) => {
-    if (e.key === "Enter") {
-      e.preventDefault();
-      setEditingTitle(false);
-    }
-  };
+  const handleKeyDown = React.useCallback(
+    (e: React.KeyboardEvent<HTMLDivElement>) => {
+      if (e.key === "Enter") {
+        e.preventDefault();
+        setEditingTitle(false);
+      }
+    },
+    []
+  );
 
-  const handleClickTitle = () => {
+  const handleClickTitle = React.useCallback(() => {
     setEditingTitle(true);
-  };
+  }, []);
 
-  const handleChangeTitle = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setTitle(e.target.value);
-  };
+  const handleChangeTitle = React.useCallback(
+    (e: React.ChangeEvent<HTMLInputElement>) => {
+      setTitle(e.target.value);
+    },
+    []
+  );
 
   return (
     <div className="flex items-center justify-center pl-[7rem]">

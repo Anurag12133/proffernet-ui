@@ -1,4 +1,5 @@
 "use client";
+import React from "react";
 import UploadFile from "@/app/components/FileUpload";
 import { BackgroundBeams } from "@/app/components/ui/background-beams";
 import EditableTitle from "@/app/components/EditableTitle";
@@ -10,19 +11,21 @@ import {
   useProjectContext,
 } from "@/app/contexts/ProjectContext";
 import ProjectDescription from "@/app/components/ProjectDescription";
+import { v4 as uuidv4 } from "uuid";
 
-// Move SubmitButton outside of Projects component
 const SubmitButton = () => {
   const { handleSave } = useProjectContext();
 
-  const handleSubmit = () => {
+  const handleSubmit = React.useCallback(() => {
     handleSave();
-  };
+  }, [handleSave]);
 
   return <Button label="Submit" onClick={handleSubmit} />;
 };
 
 const Projects = () => {
+  const uploadFileKeys = [...Array(5)].map(() => uuidv4());
+
   return (
     <ProjectProvider>
       <div className="grid grid-cols-4 h-screen bg-black p-4 relative">
@@ -47,8 +50,8 @@ const Projects = () => {
           className="col-span-1 rounded-xl p-4 overflow-y-auto"
           style={{ maxHeight: "100vh" }}
         >
-          {[...Array(5)].map((_, index) => (
-            <UploadFile key={`upload-file-${index}`} />
+          {uploadFileKeys.map((key) => (
+            <UploadFile key={key} />
           ))}
         </div>
       </div>

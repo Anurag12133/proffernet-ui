@@ -5,7 +5,7 @@ const ProjectStack = () => {
   const { techStacks, setTechStacks } = useProjectContext();
   const [techStack, setTechStack] = useState("");
 
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleInputChange = React.useCallback(e: React.ChangeEvent<HTMLInputElement>) => {
     setTechStack(e.target.value);
   };
 
@@ -39,7 +39,6 @@ const ProjectStack = () => {
           onRemove();
         }
       }}
-      role="button"
       tabIndex={0}
     >
       {stack}
@@ -51,30 +50,28 @@ const ProjectStack = () => {
 
   return (
     <div>
-      <div>
-        <div className="relative">
-          <label className="input">
-            <input
-              className="input__field"
-              type="text"
-              placeholder=""
-              value={techStack}
-              onChange={handleInputChange}
-              onKeyDown={handleKeyPress}
-            />
-            <span className="input__label">Tech Stack</span>
-          </label>
-        </div>
+      <div className="relative">
+        <label className="input">
+          <input
+            className="input__field"
+            type="text"
+            placeholder=""
+            value={techStack}
+            onChange={handleInputChange}
+            onKeyDown={handleKeyPress}
+          />
+          <span className="input__label">Tech Stack</span>
+        </label>
+      </div>
 
-        <div className="flex flex-wrap gap-2 mt-4">
-          {techStacks.map((stack) => (
-            <TechStackItem
-              key={stack}
-              stack={stack}
-              onRemove={() => removeTechStack(stack)}
-            />
-          ))}
-        </div>
+      <div className="flex flex-wrap gap-2 mt-4">
+        {techStacks.map((stack) => (
+          <TechStackItem
+            key={stack}
+            stack={stack}
+            onRemove={() => removeTechStack(stack)}
+          />
+        ))}
       </div>
     </div>
   );
