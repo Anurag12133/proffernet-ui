@@ -32,7 +32,7 @@ const FileUpload = ({ onChange }: { onChange?: (files: File[]) => void }) => {
 
   const handleFileChange = (newFiles: File[]) => {
     setFiles((prevFiles: File[]) => [...prevFiles, ...newFiles]);
-    onChange && onChange(newFiles);
+    onChange?.(newFiles);
   };
 
   const handleClick = () => {
