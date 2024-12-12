@@ -1,12 +1,10 @@
 from django.db import models
-
-
-
+from django.contrib.postgres.fields import ArrayField
 
 class Project(models.Model):
     title = models.CharField(max_length=50)
     description = models.TextField()
-    tech_stack = models.JSONField(default=list, blank=True)
+    tech_stacks = ArrayField(models.CharField(max_length=50), size=20, null=True, blank=True)
 
     def __str__(self):
         return self.title

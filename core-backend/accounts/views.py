@@ -34,6 +34,5 @@ class UserStackCreateView(View):
     def post(request):
         form = UserStackForm(request.POST)
         if form.is_valid():
-            stack = form.save()
             return redirect('userstack_list') 
         return render(request, 'your_app/userstack_form.html', {'form': form})
