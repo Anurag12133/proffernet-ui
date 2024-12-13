@@ -15,11 +15,11 @@ const ProjectStack = () => {
   const handleKeyPress = React.useCallback(
     (e: React.KeyboardEvent<HTMLInputElement>) => {
       if (e.key === "Enter" && techStack.trim() !== "") {
-        setTechStacks((prevStacks: string[]) => [...prevStacks, techStack]);
+        setTechStacks((prevStacks) => [...prevStacks, techStack.trim()]);
         setTechStack("");
       }
     },
-    []
+    [techStack, setTechStacks]
   );
 
   const removeTechStack = React.useCallback(
@@ -77,9 +77,9 @@ const ProjectStack = () => {
       </div>
 
       <div className="flex flex-wrap gap-2 mt-4">
-        {techStacks.map((stack) => (
+        {techStacks.map((stack, index) => (
           <TechStackItem
-            key={stack}
+            key={`${stack}-${index}`}
             stack={stack}
             onRemove={() => removeTechStack(stack)}
           />
