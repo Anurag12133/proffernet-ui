@@ -79,11 +79,11 @@ const ProjectStack = () => {
       <div className="flex flex-wrap gap-2 mt-4">
         {techStacks.map((stack, index) => (
           <TechStackItem
-            key={`${stack}-${index}`}
+            key={stack}
             stack={stack}
             onRemove={() => removeTechStack(stack)}
           />
-        ))} 
+        ))}
       </div>
     </div>
   );
