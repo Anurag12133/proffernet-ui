@@ -26,13 +26,14 @@ SECRET_KEY = 'django-insecure-dm$r$@l(4+^e4ax)1j*mf=i@4#4+=gwav0=9a#4ehvv(u!8fge
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
 
 INSTALLED_APPS = [
     'django.contrib.admin',
+    'django.contrib.postgres',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',

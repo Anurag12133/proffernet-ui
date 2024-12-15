@@ -9,7 +9,6 @@ import AiIndex from "./Ai-index";
 import StackText from "./StackText";
 
 import Features from "./Features";
-import Button from "./Button";
 import BackgroundBoxes from "./Backgroundlight";
 
 const HeroSection = () => {

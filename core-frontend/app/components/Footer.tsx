@@ -1,5 +1,3 @@
-import ConnectCompo from "./ConnectComp";
-
 const Footer = () => {
   return (
     <div>

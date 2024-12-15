@@ -15,11 +15,11 @@ const ProjectStack = () => {
   const handleKeyPress = React.useCallback(
     (e: React.KeyboardEvent<HTMLInputElement>) => {
       if (e.key === "Enter" && techStack.trim() !== "") {
-        setTechStacks((prevStacks: string[]) => [...prevStacks, techStack]);
+        setTechStacks((prevStacks) => [...prevStacks, techStack.trim()]);
         setTechStack("");
       }
     },
-    []
+    [techStack, setTechStacks]
   );
 
   const removeTechStack = React.useCallback(

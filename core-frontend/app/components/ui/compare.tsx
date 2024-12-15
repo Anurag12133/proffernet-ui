@@ -207,7 +207,7 @@ export const Compare = ({
               transition={{ duration: 0 }}
             >
               <img
-                alt="first image"
+                alt="Comparison of the first image"
                 src={firstImage}
                 className={cn(
                   "absolute inset-0  z-20 rounded-2xl flex-shrink-0 w-full h-full select-none",
