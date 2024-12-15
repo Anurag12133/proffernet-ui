@@ -11,7 +11,6 @@ import Image from "next/image";
 import Link from "next/link";
 import Button from "../Button";
 import { TypewriterEffectSmooth } from "./typewriter-effect";
-import HeroSlider from "../Hero-Slider";
 
 export const HeroParallax = ({
   products,
@@ -119,7 +118,7 @@ export const Header = () => {
           love to build amazing products.
         </p>
         <div>
-          <Button />
+          <Button label={"Get started"} />
         </div>
       </div>
     </div>

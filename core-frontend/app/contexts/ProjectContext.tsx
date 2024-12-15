@@ -42,6 +42,8 @@ export const ProjectProvider: React.FC<{ children: React.ReactNode }> = ({
         formData.append("files", file); // Ensure this matches the key expected in Django
       });
 
+      console.log(formData);
+
       const response = await fetch("http://127.0.0.1:8000/project/create/", {
         method: "POST",
         body: formData,

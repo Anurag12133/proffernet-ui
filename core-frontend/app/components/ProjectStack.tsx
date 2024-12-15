@@ -83,7 +83,7 @@ const ProjectStack = () => {
             stack={stack}
             onRemove={() => removeTechStack(stack)}
           />
-        ))}
+        ))} 
       </div>
     </div>
   );
