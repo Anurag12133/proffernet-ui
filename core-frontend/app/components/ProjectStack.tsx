@@ -77,7 +77,7 @@ const ProjectStack = () => {
       </div>
 
       <div className="flex flex-wrap gap-2 mt-4">
-        {techStacks.map((stack, index) => (
+        {techStacks.map((stack) => (
           <TechStackItem
             key={stack}
             stack={stack}
