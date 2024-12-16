@@ -1,6 +1,6 @@
 "use client";
 import React from "react";
-import UploadFile from "@/app/components/FileUpload";
+// import UploadFile from "@/app/components/FileUpload";
 import { BackgroundBeams } from "@/app/components/ui/background-beams";
 import EditableTitle from "@/app/components/EditableTitle";
 import "@/app/css/Input.css";
@@ -24,7 +24,7 @@ const SubmitButton = () => {
 };
 
 const Projects = () => {
-  const uploadFileKeys = [...Array(5)].map(() => uuidv4());
+  // const uploadFileKeys = [...Array(5)].map(() => uuidv4());
 
   return (
     <ProjectProvider>
@@ -46,14 +46,14 @@ const Projects = () => {
 
         <div className="absolute top-0 bottom-0 left-[74%] w-1 bg-gradient-to-b from-transparent via-gray-600 to-transparent z-0" />
 
-        <div
+        {/* <div
           className="col-span-1 rounded-xl p-4 overflow-y-auto"
           style={{ maxHeight: "100vh" }}
         >
           {uploadFileKeys.map((key) => (
             <UploadFile key={key} />
           ))}
-        </div>
+        </div> */}
       </div>
     </ProjectProvider>
   );

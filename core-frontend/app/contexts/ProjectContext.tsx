@@ -1,14 +1,13 @@
 import React, { createContext, useContext, useState } from "react";
+import axios from "axios";
 
 interface ProjectContextType {
   title: string;
   setTitle: (value: string) => void;
   description: string;
   setDescription: (value: string) => void;
-  techStacks: string[];
+  tech_stacks: string[];
   setTechStacks: React.Dispatch<React.SetStateAction<string[]>>;
-  files: File[];
-  setFiles: React.Dispatch<React.SetStateAction<File[]>>;
   handleSave: () => Promise<void>;
 }
 
@@ -27,34 +26,38 @@ export const ProjectProvider: React.FC<{ children: React.ReactNode }> = ({
 }) => {
   const [title, setTitle] = useState("Title Here..");
   const [description, setDescription] = useState("");
-  const [techStacks, setTechStacks] = useState<string[]>([]);
-  const [files, setFiles] = useState<File[]>([]);
+  const [tech_stacks, setTechStacks] = useState<string[]>([]);
 
   const handleSave = async () => {
+    if (tech_stacks.length === 0) {
+      console.error("Tech stacks are required.");
+      return; // Prevent submission if techStacks is empty
+    }
+
     try {
-      const formData = new FormData();
+      const payload = {
+        title,
+        description,
+        tech_stacks,
+      };
 
-      formData.append("title", title);
-      formData.append("description", description);
-      formData.append("techStacks", JSON.stringify(techStacks));
+      console.log("Payload being sent:", payload); // Debugging line
 
-      files.forEach((file) => {
-        formData.append("files", file); // Ensure this matches the key expected in Django
-      });
+      const response = await axios.post(
+        "http://127.0.0.1:8000/project/create/",
+        payload,
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
 
-      console.log(formData);
-
-      const response = await fetch("http://127.0.0.1:8000/project/create/", {
-        method: "POST",
-        body: formData,
-      });
-
-      if (response.ok) {
+      if (response.status === 200) {
         console.log("Project created successfully");
         setTitle(""); // Reset title
         setDescription(""); // Reset description
         setTechStacks([]); // Reset techStacks
-        setFiles([]); // Reset files
       } else {
         console.error("Failed to create project");
       }
@@ -70,10 +73,8 @@ export const ProjectProvider: React.FC<{ children: React.ReactNode }> = ({
         setTitle,
         description,
         setDescription,
-        techStacks,
+        tech_stacks,
         setTechStacks,
-        files,
-        setFiles,
         handleSave,
       }}
     >
