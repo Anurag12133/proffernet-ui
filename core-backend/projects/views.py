@@ -1,10 +1,12 @@
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
-from .models import Project
+from rest_framework.parsers import MultiPartParser, FormParser
 from .serializers import ProjectCreateSerializer
 
 class ProjectCreateAPIView(APIView):
+    parser_classes = (MultiPartParser, FormParser)  
+
     @staticmethod
     def post(request, *args, **kwargs):
         serializer = ProjectCreateSerializer(data=request.data)
