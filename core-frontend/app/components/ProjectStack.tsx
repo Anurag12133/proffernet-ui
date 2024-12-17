@@ -56,7 +56,7 @@ const ProjectStack = () => {
           <input
             className="input__field"
             type="text"
-            placeholder="Add a tech stack"
+            placeholder=" "
             value={techStack}
             onChange={handleInputChange}
             onKeyDown={handleKeyPress}

@@ -8,6 +8,8 @@ interface ProjectContextType {
   setDescription: (value: string) => void;
   tech_stacks: string[];
   setTechStacks: React.Dispatch<React.SetStateAction<string[]>>;
+  files: File[];
+  setFiles: React.Dispatch<React.SetStateAction<File[]>>;
   handleSave: () => Promise<void>;
 }
 
@@ -27,37 +29,42 @@ export const ProjectProvider: React.FC<{ children: React.ReactNode }> = ({
   const [title, setTitle] = useState("Title Here..");
   const [description, setDescription] = useState("");
   const [tech_stacks, setTechStacks] = useState<string[]>([]);
+  const [files, setFiles] = useState<File[]>([]);
 
   const handleSave = async () => {
     if (tech_stacks.length === 0) {
       console.error("Tech stacks are required.");
-      return; // Prevent submission if techStacks is empty
+      return;
     }
 
     try {
-      const payload = {
-        title,
-        description,
-        tech_stacks,
-      };
+      const formData = new FormData();
+      formData.append("title", title);
+      formData.append("description", description);
+      formData.append("tech_stacks", JSON.stringify(tech_stacks));
 
-      console.log("Payload being sent:", payload); // Debugging line
+      files.forEach((file) => {
+        formData.append("files", file);
+      });
+
+      console.log("FormData being sent:", formData);
 
       const response = await axios.post(
         "http://127.0.0.1:8000/project/create/",
-        payload,
+        formData,
         {
           headers: {
-            "Content-Type": "application/json",
+            "Content-Type": "multipart/form-data",
           },
         }
       );
 
-      if (response.status === 200) {
+      if (response.status === 201) {
         console.log("Project created successfully");
-        setTitle(""); // Reset title
-        setDescription(""); // Reset description
-        setTechStacks([]); // Reset techStacks
+        setTitle("");
+        setDescription("");
+        setTechStacks([]);
+        setFiles([]);
       } else {
         console.error("Failed to create project");
       }
@@ -75,6 +82,8 @@ export const ProjectProvider: React.FC<{ children: React.ReactNode }> = ({
         setDescription,
         tech_stacks,
         setTechStacks,
+        files,
+        setFiles,
         handleSave,
       }}
     >
