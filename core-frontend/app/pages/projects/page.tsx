@@ -20,21 +20,23 @@ interface SubmitButtonProps {
   setLoading: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-const handleSubmit = async (
+const handleSubmit = (
   handleSave: () => Promise<void>,
   setLoading: React.Dispatch<React.SetStateAction<boolean>>,
   router: ReturnType<typeof useRouter>
 ) => {
   setLoading(true);
-  try {
-    await handleSave();
-    console.log("Project saved successfully!");
-    router.push("/pages/projectlist");
-  } catch (error) {
-    console.error("Error saving project:", error);
-  } finally {
-    setLoading(false);
-  }
+  handleSave()
+    .then(() => {
+      console.log("Project saved successfully!");
+      router.push("/pages/projectlist");
+    })
+    .catch((error) => {
+      console.error("Error saving project:", error);
+    })
+    .finally(() => {
+      setLoading(false);
+    });
 };
 
 const SubmitButton = ({ loading, setLoading }: SubmitButtonProps) => {
@@ -42,7 +44,7 @@ const SubmitButton = ({ loading, setLoading }: SubmitButtonProps) => {
   const router = useRouter();
 
   const onClick = useCallback(() => {
-    void handleSubmit(handleSave, setLoading, router);
+    handleSubmit(handleSave, setLoading, router);
   }, [handleSave, setLoading, router]);
 
   return <Button label={loading ? "Saving..." : "Submit"} onClick={onClick} />;
