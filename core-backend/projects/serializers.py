@@ -1,42 +1,31 @@
 from rest_framework import serializers
-from .models import Project, ProjectFile
-
-class ProjectFileSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = ProjectFile
-        fields = ['id', 'file']
-
-class ProjectSerializer(serializers.ModelSerializer):
-    files = ProjectFileSerializer(many=True, read_only=True)
-
-    class Meta:
-        model = Project
-        fields = ['id', 'title', 'description', 'tech_stack', 'files']
+from .models import Project, File
 
 class ProjectCreateSerializer(serializers.ModelSerializer):
-    files = serializers.ListField(
-        child=serializers.FileField(max_length=100, allow_empty_file=False, use_url=False),
-        write_only=True
+    tech_stacks = serializers.ListField(
+        child=serializers.CharField(max_length=100),
+        allow_empty=True
     )
-    tech_stack = serializers.ListField(
-        child=serializers.CharField(max_length=100),  # A list of strings (tech stack)
+    files = serializers.ListField(
+        child=serializers.FileField(),
+        write_only=True,
+        allow_empty=True
     )
 
     class Meta:
         model = Project
-        fields = ['title', 'description', 'tech_stack', 'files']
+        fields = ['title', 'description', 'tech_stacks', 'files']  
 
     @staticmethod
-    def create(validated_data):
-        files = validated_data.pop('files')  # Extract files from validated data
-        tech_stack = validated_data.pop('tech_stack')  # Extract tech stack strings
-
-        # Create the project
+    def create(validated_data): 
+        tech_stacks = validated_data.pop('tech_stacks')
+        files_data = validated_data.pop('files', [])
+    
         project = Project.objects.create(**validated_data)
-        project.tech_stack = tech_stack
-
-        # Handle the file uploads and associate with the project
-        for file in files:
-            ProjectFile.objects.create(project=project, file=file)
-
+        project.tech_stacks = tech_stacks  
+        project.save() 
+        
+        for file in files_data:
+            File.objects.create(project=project, file=file)
+        
         return project

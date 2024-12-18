@@ -17,6 +17,5 @@ export const authOptions = {
   secret: jwtSecret,
 };
 const handler = NextAuth(authOptions);
-console.log("GITHUB_CLIENT_ID:", process.env.GITHUB_CLIENT_ID);
 
 export { handler as GET, handler as POST };

@@ -1,63 +1,52 @@
-import React, { useState } from "react";
+import React, { useState, useCallback } from "react";
 import { useProjectContext } from "@/app/contexts/ProjectContext";
 
 const ProjectStack = () => {
-  const { techStacks, setTechStacks } = useProjectContext();
+  const { tech_stacks, setTechStacks } = useProjectContext();
   const [techStack, setTechStack] = useState("");
 
-  const handleInputChange = React.useCallback(
+  const handleInputChange = useCallback(
     (e: React.ChangeEvent<HTMLInputElement>) => {
       setTechStack(e.target.value);
     },
     []
   );
 
-  const handleKeyPress = React.useCallback(
+  const handleKeyPress = useCallback(
     (e: React.KeyboardEvent<HTMLInputElement>) => {
       if (e.key === "Enter" && techStack.trim() !== "") {
         setTechStacks((prevStacks) => [...prevStacks, techStack.trim()]);
+        console.log("Updated techStacks:", [...tech_stacks, techStack.trim()]);
         setTechStack("");
       }
     },
     [techStack, setTechStacks]
   );
 
-  const removeTechStack = React.useCallback(
+  const removeTechStack = useCallback(
     (stackToRemove: string) => {
-      setTechStacks((prevStacks: string[]) =>
-        prevStacks.filter((stack: string) => stack !== stackToRemove)
+      setTechStacks((prevStacks) =>
+        prevStacks.filter((stack) => stack !== stackToRemove)
       );
+      console.log("Updated techStacks after removal:", tech_stacks);
     },
-    [setTechStacks]
+    [setTechStacks, tech_stacks]
   );
 
-  const TechStackItem = ({
-    stack,
-    onRemove,
-  }: {
-    stack: string;
-    onRemove: () => void;
-  }) => (
-    <button
-      type="button"
-      className="relative flex items-center gap-2 px-3 py-1 border rounded-lg text-sm transition-all duration-300"
-      onClick={onRemove}
-      onKeyDown={React.useCallback(
-        (e: React.KeyboardEvent<HTMLButtonElement>) => {
-          if (e.key === "Enter" || e.key === " ") {
-            e.preventDefault();
-            onRemove();
-          }
-        },
-        [onRemove]
-      )}
-      tabIndex={0}
-    >
-      {stack}
-      <span className="text-gray-800 dark:text-gray-200 group-hover:text-white cursor-pointer">
-        x
-      </span>
-    </button>
+  const TechStackItem = React.memo(
+    ({ stack, onRemove }: { stack: string; onRemove: () => void }) => (
+      <button
+        type="button"
+        className="relative flex items-center gap-2 px-3 py-1 border rounded-lg text-sm transition-all duration-300"
+        onClick={onRemove}
+        tabIndex={0}
+      >
+        {stack}
+        <span className="text-gray-800 dark:text-gray-200 group-hover:text-white cursor-pointer">
+          x
+        </span>
+      </button>
+    )
   );
 
   return (
@@ -67,7 +56,7 @@ const ProjectStack = () => {
           <input
             className="input__field"
             type="text"
-            placeholder=""
+            placeholder=" "
             value={techStack}
             onChange={handleInputChange}
             onKeyDown={handleKeyPress}
@@ -77,7 +66,7 @@ const ProjectStack = () => {
       </div>
 
       <div className="flex flex-wrap gap-2 mt-4">
-        {techStacks.map((stack) => (
+        {tech_stacks.map((stack) => (
           <TechStackItem
             key={stack}
             stack={stack}

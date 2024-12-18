@@ -1,9 +1,8 @@
 import { cn } from "@/app/lib/utils";
-import React, { useRef } from "react";
+import React, { useRef, useState } from "react";
 import { motion } from "framer-motion";
 import { IconUpload } from "@tabler/icons-react";
 import { useDropzone } from "react-dropzone";
-import { useProjectContext } from "@/app/contexts/ProjectContext";
 
 const mainVariant = {
   initial: {
@@ -26,16 +25,16 @@ const secondaryVariant = {
   },
 };
 
-const FileUpload = ({ onChange }: { onChange?: (files: File[]) => void }) => {
-  const { files, setFiles } = useProjectContext();
+export const FileUpload = ({
+  onChange,
+}: {
+  onChange?: (files: File[]) => void;
+}) => {
+  const [files, setFiles] = useState<File[]>([]);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   const handleFileChange = (newFiles: File[]) => {
-
-    setFiles((prevFiles: File[]) => [...prevFiles, ...newFiles]);
-
     setFiles((prevFiles) => [...prevFiles, ...newFiles]);
-
     onChange?.(newFiles);
   };
 
@@ -192,5 +191,3 @@ export function GridPattern() {
     </div>
   );
 }
-
-export default FileUpload;
