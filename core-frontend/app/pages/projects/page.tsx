@@ -42,7 +42,7 @@ const SubmitButton = ({ loading, setLoading }: SubmitButtonProps) => {
   const router = useRouter();
 
   const onClick = useCallback(() => {
-    handleSubmit(handleSave, setLoading, router);
+    void handleSubmit(handleSave, setLoading, router);
   }, [handleSave, setLoading, router]);
 
   return <Button label={loading ? "Saving..." : "Submit"} onClick={onClick} />;
