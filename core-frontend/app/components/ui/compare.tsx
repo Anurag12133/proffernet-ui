@@ -49,7 +49,7 @@ export const Compare = ({
       const percentage = progress <= 1 ? progress * 100 : (2 - progress) * 100;
 
       setSliderXPercent(percentage);
-      autoplayRef.current = setTimeout(animate, 16); // ~60fps
+      autoplayRef.current = setTimeout(animate, 16);
     };
 
     animate();
@@ -84,7 +84,7 @@ export const Compare = ({
   }
 
   const handleStart = useCallback(
-    (clientX: number) => {
+    (_clientX: number) => {
       if (slideMode === "drag") {
         setIsDragging(true);
       }

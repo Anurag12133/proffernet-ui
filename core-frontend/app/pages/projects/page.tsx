@@ -1,5 +1,5 @@
 "use client";
-import React from "react";
+import React, { useCallback } from "react";
 import UploadFile from "@/app/components/FileUpload";
 import { BackgroundBeams } from "@/app/components/ui/background-beams";
 import EditableTitle from "@/app/components/EditableTitle";
@@ -20,24 +20,32 @@ interface SubmitButtonProps {
   setLoading: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
+const handleSubmit = async (
+  handleSave: () => Promise<void>,
+  setLoading: React.Dispatch<React.SetStateAction<boolean>>,
+  router: ReturnType<typeof useRouter>
+) => {
+  setLoading(true);
+  try {
+    await handleSave();
+    console.log("Project saved successfully!");
+    router.push("/pages/projectlist");
+  } catch (error) {
+    console.error("Error saving project:", error);
+  } finally {
+    setLoading(false);
+  }
+};
+
 const SubmitButton = ({ loading, setLoading }: SubmitButtonProps) => {
   const { handleSave } = useProjectContext();
   const router = useRouter();
 
-  const handleSubmit = async () => {
-    setLoading(true);
-    try {
-      await handleSave();
-      console.log("Project saved successfully!");
-      router.push("/pages/projectlist");
-    } catch (error) {
-      console.error("Error saving project:", error);
-    } finally {
-      setLoading(false);
-    }
-  };
+  const onClick = useCallback(() => {
+    handleSubmit(handleSave, setLoading, router);
+  }, [handleSave, setLoading, router]);
 
-  return <Button label="Submit" onClick={handleSubmit} />;
+  return <Button label={loading ? "Saving..." : "Submit"} onClick={onClick} />;
 };
 
 const Projects = () => {

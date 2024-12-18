@@ -1,15 +1,17 @@
 "use client";
-import React, { useState } from "react";
+import React, { useCallback } from "react";
 import { FileUpload } from "@/app/components/ui/file-upload";
 import { useProjectContext } from "../contexts/ProjectContext";
 
 const UploadFile = () => {
   const { setFiles } = useProjectContext();
 
-  const handleFileUpload = (files: File[]) => {
-    setFiles(files);
-    console.log(files);
-  };
+  const handleFileUpload = useCallback(
+    (files: File[]) => {
+      setFiles(files);
+    },
+    [setFiles]
+  );
 
   return (
     <div className="w-full max-w-4xl mx-auto min-h-96 border border-dashed bg-white dark:bg-black border-neutral-200 dark:border-neutral-800 rounded-lg">
