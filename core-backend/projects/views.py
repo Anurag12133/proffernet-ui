@@ -17,7 +17,8 @@ class ProjectCreateAPIView(APIView):
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
     
 class ProjectListAPIView(APIView):
-    def get(self, request, *args, **kwargs):
+    @staticmethod
+    def get(request, *args, **kwargs):
         projects = Project.objects.all()  
         serializer = ProjectListSerializer(projects, many=True)  
         return Response(serializer.data, status=status.HTTP_200_OK) 
