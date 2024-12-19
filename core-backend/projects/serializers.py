@@ -29,3 +29,21 @@ class ProjectCreateSerializer(serializers.ModelSerializer):
             File.objects.create(project=project, file=file)
         
         return project
+    
+class FileSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = File
+        fields = ['id', 'file', 'uploaded_at'] 
+    
+
+class ProjectListSerializer(serializers.ModelSerializer):
+    tech_stacks = serializers.ListField(
+        child=serializers.CharField(max_length=100),
+        allow_empty=True
+    )
+    files = FileSerializer(many=True, read_only=True)  
+
+    class Meta:
+        model = Project
+        fields = ['id', 'title', 'description', 'tech_stacks', 'files']
+    
