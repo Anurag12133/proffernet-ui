@@ -20,13 +20,13 @@ interface SubmitButtonProps {
   setLoading: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-const handleSubmit = (
+const handleSubmit = async (
   handleSave: () => Promise<void>,
   setLoading: React.Dispatch<React.SetStateAction<boolean>>,
   router: ReturnType<typeof useRouter>
 ) => {
   setLoading(true);
-  handleSave()
+  await handleSave()
     .then(() => {
       console.log("Project saved successfully!");
       router.push("/pages/projectlist");
