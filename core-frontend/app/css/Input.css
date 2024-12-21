@@ -8,12 +8,8 @@
   padding: 0.75rem;
   background: transparent;
   color: white;
-  border-radius: 8px;
   outline: none;
-  box-shadow:
-    5px 5px 10px rgba(255, 255, 255, 0.25),
-    inset 5px 5px 10px rgba(255, 255, 255, 0.25);
-
+  border: 1px solid transparent;
   transition: transform 0.2s ease-in-out;
 }
 
@@ -28,13 +24,6 @@ h2 {
   font-weight: bold;
   display: flex;
   align-items: center;
-}
-
-.icon {
-  width: 1em;
-  height: 1em;
-  margin-right: 0.5em;
-  fill: currentColor;
 }
 
 .input {
@@ -54,9 +43,6 @@ h2 {
   font-size: 1rem;
 }
 
-.input__field:hover {
-  border: none;
-}
 .input__label {
   position: absolute;
   left: 1rem;
@@ -65,11 +51,10 @@ h2 {
   background: #050505;
   padding: 0 0.5rem;
   color: rgb(102, 102, 102);
-  font-weight: bold;
+  font-weight: 500;
 }
 .description {
-  box-shadow:
-    5px 5px 10px rgba(255, 255, 255, 0.25),
+  box-shadow: 5px 5px 10px rgba(255, 255, 255, 0.25),
     inset 5px 5px 10px rgba(255, 255, 255, 0.25);
   width: 100%;
   display: flex;
@@ -82,11 +67,17 @@ h2 {
 .input__field:focus + .input__label,
 .input__field:not(:placeholder-shown) + .input__label {
   transform: translate(0, -1.5rem) scale(0.9);
-  color: linear-gradient(to right, #4baeff, #8a2be2);
 }
 
 pty */ .input__field:focus + .input__label,
 .input__field:not(:placeholder-shown) + .input__label {
   transform: translateY(-1.5rem) scale(0.85); /* Move label up */
   color: #e6a800; /* Highlight color */
+}
+
+@media (prefers-color-scheme: dark) {
+  .input__field {
+    border-color: rgba(255, 255, 255, 0.2);
+    border-radius: 10px;
+  }
 }

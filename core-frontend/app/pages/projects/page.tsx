@@ -14,6 +14,7 @@ import ProjectDescription from "@/app/components/ProjectDescription";
 import { v4 as uuidv4 } from "uuid";
 import { useRouter } from "next/navigation";
 import "@/app/css/Loader.css";
+import ProjectDropDown from "@/app/components/ProjectDropdown";
 
 interface SubmitButtonProps {
   loading: boolean;
@@ -68,7 +69,9 @@ const Projects = () => {
             )}
             <SubmitButton loading={loading} setLoading={setLoading} />
           </div>
-          <div className="bg-white">Hello</div>
+          <div className="ml-[6rem] m-4">
+            <ProjectDropDown />
+          </div>
 
           <div className="rounded-lg p-4 h-full ml-20 text-white">
             <ProjectStack />
