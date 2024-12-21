@@ -14,7 +14,7 @@ class ProjectCreateSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Project
-        fields = ['title', 'description', 'tech_stacks', 'files']  
+        fields = ['title', 'description','project_type', 'tech_stacks', 'files']  
 
     @staticmethod
     def create(validated_data): 
@@ -45,5 +45,5 @@ class ProjectListSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Project
-        fields = ['id', 'title', 'description', 'tech_stacks', 'files']
+        fields = ['id', 'title', 'description', 'project_type',  'tech_stacks', 'files']
     
