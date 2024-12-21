@@ -47,8 +47,6 @@ export const ProjectProvider: React.FC<{ children: React.ReactNode }> = ({
         formData.append("files", file);
       });
 
-      console.log("FormData being sent:", formData);
-
       const response = await axios.post(
         "http://127.0.0.1:8000/project/create/",
         formData,

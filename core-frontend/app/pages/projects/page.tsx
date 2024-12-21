@@ -28,7 +28,6 @@ const handleSubmit = async (
   setLoading(true);
   await handleSave()
     .then(() => {
-      console.log("Project saved successfully!");
       router.push("/pages/projectlist");
     })
     .catch((error) => {
@@ -69,6 +68,7 @@ const Projects = () => {
             )}
             <SubmitButton loading={loading} setLoading={setLoading} />
           </div>
+          <div className="bg-white">Hello</div>
 
           <div className="rounded-lg p-4 h-full ml-20 text-white">
             <ProjectStack />
