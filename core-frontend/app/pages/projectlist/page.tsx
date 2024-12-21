@@ -24,9 +24,9 @@ const projectList = () => {
 
       <main className="w-4/5 h-screen overflow-y-auto">
         <CardsForProject TechStack="Frontend" />
-        {/* <CardsForProject TechStack="Backend" />
-        <CardsForProject TechStack="Devops" />
-        <CardsForProject TechStack="Full Stack" /> */}
+        <CardsForProject TechStack="Backend" />
+        <CardsForProject TechStack="DevOps" />
+        <CardsForProject TechStack="Fullstack" />
       </main>
     </div>
   );

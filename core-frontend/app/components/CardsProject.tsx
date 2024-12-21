@@ -10,6 +10,7 @@ interface ProjectType {
   id: number;
   title: string;
   description: string;
+  project_type: string;
   tech_stacks: string[];
   files: string[] | File[];
 }
@@ -26,7 +27,11 @@ const CardsForProject = async ({ TechStack }: { TechStack: string }) => {
     console.error("Error fetching projects:", error);
   }
 
-  const data = projects.map((project) => {
+  const filteredProjects = projects.filter(
+    (project) => project.project_type === TechStack
+  );
+
+  const data = filteredProjects.map((project) => {
     const firstFile = project.files?.[0];
     let imageUrl =
       "https://images.unsplash.com/photo-1602081957921-9137a5d6eaee?q=80&w=2793&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D";

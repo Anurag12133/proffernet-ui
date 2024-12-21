@@ -35,7 +35,7 @@ const EditableTitle = () => {
     (e: React.ChangeEvent<HTMLInputElement>) => {
       setTitle(e.target.value);
     },
-    []
+    [setTitle]
   );
 
   return (
