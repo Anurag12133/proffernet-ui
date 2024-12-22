@@ -14,21 +14,21 @@ import ProjectDescription from "@/app/components/ProjectDescription";
 import { v4 as uuidv4 } from "uuid";
 import { useRouter } from "next/navigation";
 import "@/app/css/Loader.css";
+import ProjectDropDown from "@/app/components/ProjectDropdown";
 
 interface SubmitButtonProps {
   loading: boolean;
   setLoading: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-const handleSubmit = (
+const handleSubmit = async (
   handleSave: () => Promise<void>,
   setLoading: React.Dispatch<React.SetStateAction<boolean>>,
   router: ReturnType<typeof useRouter>
 ) => {
   setLoading(true);
-  handleSave()
+  await handleSave()
     .then(() => {
-      console.log("Project saved successfully!");
       router.push("/pages/projectlist");
     })
     .catch((error) => {
@@ -43,8 +43,12 @@ const SubmitButton = ({ loading, setLoading }: SubmitButtonProps) => {
   const { handleSave } = useProjectContext();
   const router = useRouter();
 
-  const onClick = useCallback(() => {
-    handleSubmit(handleSave, setLoading, router);
+  const onClick = useCallback(async () => {
+    try {
+      await handleSubmit(handleSave, setLoading, router);
+    } catch (e) {
+      console.error("Error saving project");
+    }
   }, [handleSave, setLoading, router]);
 
   return <Button label={loading ? "Saving..." : "Submit"} onClick={onClick} />;
@@ -68,6 +72,9 @@ const Projects = () => {
               </div>
             )}
             <SubmitButton loading={loading} setLoading={setLoading} />
+          </div>
+          <div className="ml-[6rem] m-4">
+            <ProjectDropDown />
           </div>
 
           <div className="rounded-lg p-4 h-full ml-20 text-white">

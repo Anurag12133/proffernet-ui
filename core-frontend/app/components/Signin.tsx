@@ -10,7 +10,6 @@ const SigninComponent = () => {
   const router = useRouter();
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    console.log("Form submitted");
   };
   return (
     <div className="w-full mt-10">

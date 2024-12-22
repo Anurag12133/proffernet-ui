@@ -6,6 +6,8 @@ interface ProjectContextType {
   setTitle: (value: string) => void;
   description: string;
   setDescription: (value: string) => void;
+  project_type: string;
+  setProjectType: (value: string) => void;
   tech_stacks: string[];
   setTechStacks: React.Dispatch<React.SetStateAction<string[]>>;
   files: File[];
@@ -28,6 +30,7 @@ export const ProjectProvider: React.FC<{ children: React.ReactNode }> = ({
 }) => {
   const [title, setTitle] = useState("Title Here..");
   const [description, setDescription] = useState("");
+  const [project_type, setProjectType] = useState("");
   const [tech_stacks, setTechStacks] = useState<string[]>([]);
   const [files, setFiles] = useState<File[]>([]);
 
@@ -41,13 +44,13 @@ export const ProjectProvider: React.FC<{ children: React.ReactNode }> = ({
       const formData = new FormData();
       formData.append("title", title);
       formData.append("description", description);
+      formData.append("project_type", project_type);
       formData.append("tech_stacks", JSON.stringify(tech_stacks));
 
       files.forEach((file) => {
         formData.append("files", file);
       });
-
-      console.log("FormData being sent:", formData);
+      console.log("formData", formData);
 
       const response = await axios.post(
         "http://127.0.0.1:8000/project/create/",
@@ -61,8 +64,9 @@ export const ProjectProvider: React.FC<{ children: React.ReactNode }> = ({
 
       if (response.status === 201) {
         console.log("Project created successfully");
-        setTitle("");
+        setTitle("Title Here...");
         setDescription("");
+        setProjectType("");
         setTechStacks([]);
         setFiles([]);
       } else {
@@ -80,6 +84,8 @@ export const ProjectProvider: React.FC<{ children: React.ReactNode }> = ({
         setTitle,
         description,
         setDescription,
+        project_type,
+        setProjectType,
         tech_stacks,
         setTechStacks,
         files,

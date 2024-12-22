@@ -16,7 +16,6 @@ const ProjectStack = () => {
     (e: React.KeyboardEvent<HTMLInputElement>) => {
       if (e.key === "Enter" && techStack.trim() !== "") {
         setTechStacks((prevStacks) => [...prevStacks, techStack.trim()]);
-        console.log("Updated techStacks:", [...tech_stacks, techStack.trim()]);
         setTechStack("");
       }
     },
@@ -28,7 +27,6 @@ const ProjectStack = () => {
       setTechStacks((prevStacks) =>
         prevStacks.filter((stack) => stack !== stackToRemove)
       );
-      console.log("Updated techStacks after removal:", tech_stacks);
     },
     [setTechStacks, tech_stacks]
   );

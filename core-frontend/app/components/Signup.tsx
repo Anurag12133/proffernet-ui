@@ -16,7 +16,6 @@ const SignupComponent = () => {
 
   const { data: session } = useSession();
   if (session) {
-    console.log("You have signed in");
     router.push("http://localhost:3000/pages/selection");
   }
 
@@ -24,15 +23,13 @@ const SignupComponent = () => {
     e.preventDefault();
     setLoading(true);
     setError("");
-    console.log("Form submitted");
+
     const formData = new FormData(e.currentTarget);
     const data = {
       username: formData.get("username") as string,
       email: formData.get("email") as string,
       password: formData.get("password") as string,
     };
-
-    console.log(data);
 
     try {
       const response = await signupUser(data);
