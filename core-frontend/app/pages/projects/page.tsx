@@ -55,7 +55,6 @@ const SubmitButton = ({ loading, setLoading }: SubmitButtonProps) => {
 };
 
 const Projects = () => {
-  const uploadFileKeys = [...Array(5)].map(() => uuidv4());
   const [loading, setLoading] = React.useState(false);
 
   return (
@@ -89,9 +88,7 @@ const Projects = () => {
           className="col-span-1 rounded-xl p-4 overflow-y-auto"
           style={{ maxHeight: "100vh" }}
         >
-          {uploadFileKeys.map((key) => (
-            <UploadFile key={key} />
-          ))}
+          <UploadFile />
         </div>
       </div>
     </ProjectProvider>

@@ -4,11 +4,11 @@ import { FileUpload } from "@/app/components/ui/file-upload";
 import { useProjectContext } from "../contexts/ProjectContext";
 
 const UploadFile = () => {
-  const { setFiles } = useProjectContext();
+  const { files, setFiles } = useProjectContext();
 
   const handleFileUpload = useCallback(
-    (files: File[]) => {
-      setFiles(files);
+    (newFiles: File[]) => {
+      setFiles((prevFiles) => [...prevFiles, ...newFiles]);
     },
     [setFiles]
   );
