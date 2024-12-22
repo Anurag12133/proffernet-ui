@@ -4,7 +4,7 @@ import UploadFile from "@/app/components/FileUpload";
 import { BackgroundBeams } from "@/app/components/ui/background-beams";
 import EditableTitle from "@/app/components/EditableTitle";
 import "@/app/css/Input.css";
-import Button from "@/app/components/Button";
+import Button from "@/app/components/Buttons/Button";
 import ProjectStack from "@/app/components/ProjectStack";
 import {
   ProjectProvider,

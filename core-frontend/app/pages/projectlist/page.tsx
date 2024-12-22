@@ -1,11 +1,16 @@
 import CardsForProject from "@/app/components/CardsProject";
 import { IoIosArrowForward } from "react-icons/io";
+import { FaLongArrowAltLeft } from "react-icons/fa";
+import HomeButton from "@/app/components/Buttons/HomeButton";
 
 const projectList = () => {
   return (
     <div className="bg-black min-h-screen flex relative">
-      <aside className="w-1/5 bg-black p-4 text-white h-screen sticky top-0 flex flex-col items-center justify-center z-10">
-        <ul className="space-y-5 text-left animate-fadeIn">
+      <aside className="w-1/5 bg-black p-4 text-white h-screen sticky top-0 flex flex-col items-center justify-start z-10 gap-10">
+        <div className=" text-black p-2 rounded mt-[5rem]">
+          <HomeButton />
+        </div>
+        <ul className="space-y-5 text-left animate-fadeIn mt-[10rem]">
           {["Frontend", "Backend", "Full Stack", "DevOps"].map(
             (item, index) => (
               <li

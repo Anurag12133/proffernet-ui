@@ -2,7 +2,7 @@
 import React, { useState } from "react";
 import { Boxes } from "@/app/components/ui/background-boxes";
 import { cn } from "@/app/lib/utils";
-import Button from "./Button";
+import Button from "./Buttons/Button";
 import { useRouter } from "next/navigation";
 
 const BackgroundBoxes = () => {
