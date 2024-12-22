@@ -7,8 +7,8 @@ const UploadFile = () => {
   const { setFiles } = useProjectContext();
 
   const handleFileUpload = useCallback(
-    (files: File[]) => {
-      setFiles(files);
+    (newFiles: File[]) => {
+      setFiles((prevFiles) => [...prevFiles, ...newFiles]);
     },
     [setFiles]
   );

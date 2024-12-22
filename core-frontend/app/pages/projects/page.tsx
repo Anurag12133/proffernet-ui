@@ -11,7 +11,6 @@ import {
   useProjectContext,
 } from "@/app/contexts/ProjectContext";
 import ProjectDescription from "@/app/components/ProjectDescription";
-import { v4 as uuidv4 } from "uuid";
 import { useRouter } from "next/navigation";
 import "@/app/css/Loader.css";
 import ProjectDropDown from "@/app/components/ProjectDropdown";
@@ -55,7 +54,6 @@ const SubmitButton = ({ loading, setLoading }: SubmitButtonProps) => {
 };
 
 const Projects = () => {
-  const uploadFileKeys = [...Array(5)].map(() => uuidv4());
   const [loading, setLoading] = React.useState(false);
 
   return (
@@ -89,9 +87,7 @@ const Projects = () => {
           className="col-span-1 rounded-xl p-4 overflow-y-auto"
           style={{ maxHeight: "100vh" }}
         >
-          {uploadFileKeys.map((key) => (
-            <UploadFile key={key} />
-          ))}
+          <UploadFile />
         </div>
       </div>
     </ProjectProvider>
