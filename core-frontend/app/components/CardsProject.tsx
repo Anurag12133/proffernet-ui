@@ -1,7 +1,6 @@
 import axios from "axios";
 import Image from "next/image";
 import { Carousel, Card } from "@/app/components/ui/apple-cards-carousel";
-import { join } from "path";
 
 interface File {
   file: string;

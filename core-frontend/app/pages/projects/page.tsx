@@ -11,7 +11,6 @@ import {
   useProjectContext,
 } from "@/app/contexts/ProjectContext";
 import ProjectDescription from "@/app/components/ProjectDescription";
-import { v4 as uuidv4 } from "uuid";
 import { useRouter } from "next/navigation";
 import "@/app/css/Loader.css";
 import ProjectDropDown from "@/app/components/ProjectDropdown";
