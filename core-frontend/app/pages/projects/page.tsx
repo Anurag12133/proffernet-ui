@@ -43,8 +43,12 @@ const SubmitButton = ({ loading, setLoading }: SubmitButtonProps) => {
   const { handleSave } = useProjectContext();
   const router = useRouter();
 
-  const onClick = useCallback(() => {
-    handleSubmit(handleSave, setLoading, router);
+  const onClick = useCallback(async () => {
+    try {
+      await handleSubmit(handleSave, setLoading, router);
+    } catch (e) {
+      console.error("Error saving project");
+    }
   }, [handleSave, setLoading, router]);
 
   return <Button label={loading ? "Saving..." : "Submit"} onClick={onClick} />;

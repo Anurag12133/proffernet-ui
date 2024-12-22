@@ -9,11 +9,20 @@ const ProjectDropDown = () => {
 
   const projectTypes = ["Frontend", "Backend", "Fullstack", "DevOps"];
 
+  const handleProjectTypeClick = (type: string) => {
+    setProjectType(type);
+    setIsOpen(false);
+  };
+
+  const toggleIsOpen = () => {
+    setIsOpen((prev) => !prev);
+  };
+
   return (
     <div className="relative w-64">
       <motion.div
         className="flex items-center justify-between w-full p-2 text-white bg-black border border-transaparent  dark:border-white/[0.2] rounded-lg shadow-sm cursor-pointer  focus:outline-none"
-        onClick={() => setIsOpen(!isOpen)}
+        onClick={() => toggleIsOpen()}
         whileTap={{ scale: 0.95 }}
       >
         {project_type || "Enter project type"}
@@ -37,10 +46,7 @@ const ProjectDropDown = () => {
               <motion.li
                 key={type}
                 className="p-3 text-white rounded-lg cursor-pointer hover:text-white"
-                onClick={() => {
-                  setProjectType(type);
-                  setIsOpen(false);
-                }}
+                onClick={() => handleProjectTypeClick(type)}
               >
                 {type}
               </motion.li>
