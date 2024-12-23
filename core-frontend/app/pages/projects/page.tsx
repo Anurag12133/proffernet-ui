@@ -84,7 +84,7 @@ const Projects = () => {
         <div className="absolute top -0 bottom-0 left-[74%] w-1 bg-gradient-to-b from-transparent via-gray-600 to-transparent z-0" />
 
         <div
-          className="col-span-1 rounded-xl p-4 overflow-y-auto"
+          className="col-span-1 rounded-xl p-4 overflow-y-auto mt-10"
           style={{ maxHeight: "100vh" }}
         >
           <UploadFile />

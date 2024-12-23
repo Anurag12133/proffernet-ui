@@ -86,14 +86,14 @@ const CardsForProject = async ({ TechStack }: { TechStack: string }) => {
               </span>
             ))}
           </div>
-          <div className="flex flex-row justify-center  gap-2">
+          <div className="grid grid-cols-2 gap-2.5 max-h-[600px]">
             {imageUrls?.map((imageUrl, index) => (
               <Image
                 key={index}
                 src={imageUrl || defaultImageUrl}
                 alt={`${project.title} image ${index + 1}`}
-                width={600}
-                height={400}
+                width={800}
+                height={800}
                 className="md:w-1/2 md:h-1/2 h-full w-full mx-auto object-contain rounded-xl"
               />
             )) || (
