@@ -27,7 +27,7 @@ const config: Config = {
           "0px 2px 3px -1px rgba(0,0,0,0.1), 0px 1px 0px 0px rgba(25,28,33,0.02), 0px 0px 0px 1px rgba(25,28,33,0.08)",
       },
       colors: {
-        background: "var(--background)",
+        background: "hsl(240, 3%, 6%)",
         foreground: "var(--foreground)",
         "custom-gray": "rgb(102, 102, 102)",
       },
