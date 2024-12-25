@@ -35,8 +35,8 @@ export const ProjectProvider: React.FC<{ children: React.ReactNode }> = ({
   const [files, setFiles] = useState<File[]>([]);
 
   const handleSave = async () => {
-    if (tech_stacks.length === 0) {
-      console.error("Tech stacks are required.");
+    if (tech_stacks.length < 2) {
+      console.error("At least two tech stacks are required");
       return;
     }
 

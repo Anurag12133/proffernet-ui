@@ -5,6 +5,7 @@ import { Input } from "@/app/components/ui/input";
 import { cn } from "@/app/lib/utils";
 import { IconBrandGithub, IconBrandGoogle } from "@tabler/icons-react";
 import { useRouter } from "next/navigation";
+import HomeButton from "./Buttons/HomeButton";
 
 const SigninComponent = () => {
   const router = useRouter();
@@ -13,6 +14,9 @@ const SigninComponent = () => {
   };
   return (
     <div className="w-full mt-10">
+      <div className="h-8 mb-10 ml-[27rem] flex flex-row">
+        <HomeButton />
+      </div>
       <div className="max-w-md w-full mx-auto rounded-none md:rounded-2xl p-4 md:p-8 shadow-input  dark:bg-black bg-black border border-gray-700 ">
         <h2 className="font-bold text-xl text-neutral-800 dark:text-neutral-200">
           Welcome to Proffernet

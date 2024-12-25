@@ -54,7 +54,7 @@ const CardsForProject = async ({ TechStack }: { TechStack: string }) => {
       .filter(Boolean);
 
     const defaultImageUrl =
-      "https://images.unsplash.com/photo-1602081957921-9137a5d6eaee?q=80&w=2793&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D";
+      "https://as2.ftcdn.net/v2/jpg/06/75/59/65/1000_F_675596549_pBc5yUTl4vs1GvLrMV4hjYauXYj2QYh9.jpg";
 
     return {
       category: "Title",
@@ -75,18 +75,20 @@ const CardsForProject = async ({ TechStack }: { TechStack: string }) => {
           <div className="text-neutral-600 dark:text-white text-base md:text-2xl font-sans max-w-3xl mx-auto m-5 font-bold">
             Tech Stacks:
           </div>
-          <div className="flex flex-row justify-center gap-2 mb-4">
-            {project.tech_stacks.map((tech, index) => (
-              <span
-                key={index}
-                className="text-neutral-200 px-2 py-1 rounded-full text-sm"
-              >
-                {tech}
-                {index < project.tech_stacks.length - 1 && ","}
-              </span>
-            ))}
+          <div className="flex flex-col gap-2 mb-4">
+            <ul className="list-disc list-inside text-neutral-300 text-xl">
+              {project.tech_stacks.map((tech, index) => (
+                <li key={index} className="font-thin py-1">
+                  {tech}
+                </li>
+              ))}
+            </ul>
           </div>
-          <div className="grid grid-cols-2 gap-2.5 max-h-[600px]">
+          <div
+            className={`grid gap-5 ${
+              imageUrls?.length > 4 ? "max-h-[2000px]" : "max-h-[1000px]"
+            }`}
+          >
             {imageUrls?.map((imageUrl, index) => (
               <Image
                 key={index}
@@ -94,7 +96,7 @@ const CardsForProject = async ({ TechStack }: { TechStack: string }) => {
                 alt={`${project.title} image ${index + 1}`}
                 width={800}
                 height={800}
-                className="md:w-1/2 md:h-1/2 h-full w-full mx-auto object-contain rounded-xl"
+                className="md:w-1/2 md:h-full h-full w-full mx-auto  rounded-xl"
               />
             )) || (
               <Image
