@@ -5,7 +5,6 @@ import { AuthForm } from "@/app/components/AuthComponent";
 import { VerificationCode } from "@/app/components/Authverificationcomponent";
 import logoSrc from "@/public/authlogo.svg";
 import Image from "next/image";
-import { useSession, signIn } from "next-auth/react";
 
 export default function Home() {
   const [step, setStep] = useState<"email" | "verify">("email");
