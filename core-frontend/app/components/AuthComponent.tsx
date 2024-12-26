@@ -5,7 +5,7 @@ import { FiGithub } from "react-icons/fi";
 import { FaGitlab } from "react-icons/fa6";
 import { FaBitbucket } from "react-icons/fa";
 import { VerificationCode } from "./Authverificationcomponent";
-import { signIn } from "next-auth/react";
+// import { signIn } from "next-auth/react";
 
 export function AuthForm() {
   const [isSignIn, setIsSignIn] = useState(false);
@@ -14,17 +14,6 @@ export function AuthForm() {
   const [error, setError] = useState("");
   const [successMessage, setSuccessMessage] = useState("");
   const [otpSent, setOtpSent] = useState(false);
-
-  const handleSocialLogin = async (provider: string) => {
-    try {
-      await signIn(provider, {
-        callbackUrl: window.location.origin,
-      });
-    } catch (error) {
-      console.error("Social login error:", error);
-      setError("Failed to authenticate. Please try again.");
-    }
-  };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -129,9 +118,9 @@ export function AuthForm() {
               icon={
                 <FiGithub
                   className="h-5 w-5"
-                  onClick={() => {
-                    handleSocialLogin("github");
-                  }}
+                  // onClick={() => {
+                  //   signIn("github");
+                  // }}
                 />
               }
             />
