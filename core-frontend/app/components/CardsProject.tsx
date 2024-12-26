@@ -76,9 +76,9 @@ const CardsForProject = async ({ TechStack }: { TechStack: string }) => {
             Tech Stacks:
           </div>
           <div className="flex flex-col gap-2 mb-4">
-            <ul className="list-disc list-inside text-neutral-300 text-xl">
+            <ul className="list-disc list-inside text-neutral-300 text-xl ">
               {project.tech_stacks.map((tech, index) => (
-                <li key={index} className="font-thin py-1">
+                <li key={index} className="font-thin py-1 ml-8">
                   {tech}
                 </li>
               ))}

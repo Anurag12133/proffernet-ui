@@ -11,29 +11,23 @@ import Link from "next/link";
 import { motion } from "framer-motion";
 import Image from "next/image";
 import { cn } from "@/app/lib/utils";
+import SignOut from "./Signout";
+import { signOut } from "next-auth/react";
 
 export function Sidebar() {
   const links = [
     {
       label: "Dashboard",
-      href: "#",
+      href: "/pages/dashboard",
       icon: (
         <IconBrandTabler className="text-neutral-700 dark:text-neutral-200 h-5 w-5 flex-shrink-0" />
       ),
     },
     {
       label: "Profile",
-      href: "#",
+      href: "/pages/profile",
       icon: (
         <IconUserBolt className="text-neutral-700 dark:text-neutral-200 h-5 w-5 flex-shrink-0" />
-      ),
-    },
-
-    {
-      label: "Logout",
-      href: "#",
-      icon: (
-        <IconArrowLeft className="text-neutral-700 dark:text-neutral-200 h-5 w-5 flex-shrink-0" />
       ),
     },
   ];
@@ -56,6 +50,13 @@ export function Sidebar() {
                 <SidebarLink key={idx} link={link} />
               ))}
             </div>
+            <button
+              onClick={() => signOut({ callbackUrl: "/" })}
+              className="flex text-sm mt-3 items-center gap-2 text-neutral-700 dark:text-neutral-200"
+            >
+              <IconArrowLeft className="h-5 w-5 flex-shrink-0" />
+              Logout
+            </button>
           </div>
           <div>
             <SidebarLink
