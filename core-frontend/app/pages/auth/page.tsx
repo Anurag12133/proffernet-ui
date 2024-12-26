@@ -5,15 +5,11 @@ import { AuthForm } from "@/app/components/AuthComponent";
 import { VerificationCode } from "@/app/components/Authverificationcomponent";
 import logoSrc from "@/public/authlogo.svg";
 import Image from "next/image";
+import { useSession, signIn } from "next-auth/react";
 
 export default function Home() {
   const [step, setStep] = useState<"email" | "verify">("email");
   const [email, setEmail] = useState("");
-
-  const handleEmailSubmit = (submittedEmail: string) => {
-    setEmail(submittedEmail);
-    setStep("verify");
-  };
 
   const handleVerify = async (code: string) => {
     // TODO: Implement verification logic
@@ -27,7 +23,7 @@ export default function Home() {
           <Image src={logoSrc} alt="Logo" width={100} height={100} />
         </div>
         {step === "email" ? (
-          <AuthForm onSubmit={handleEmailSubmit} />
+          <AuthForm />
         ) : (
           <VerificationCode
             email={email}

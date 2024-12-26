@@ -19,7 +19,7 @@ const HeroText = () => {
     setLoading(true);
 
     setTimeout(() => {
-      router.push("http://localhost:3000/pages/auth");
+      router.push("http://localhost:3001/pages/auth");
     }, 500);
   };
 

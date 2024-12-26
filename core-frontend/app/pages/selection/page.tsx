@@ -6,7 +6,7 @@ import { useRouter } from "next/navigation";
 import "../../css/Loader.css";
 const FlipWords = () => {
   const words = ["passion", "skill", "talent", "potential"];
-  const BASE_URL = "http://localhost:3000/pages";
+  const BASE_URL = "http://localhost:3001/pages";
 
   const router = useRouter();
   const [loading, setLoading] = useState(false);
