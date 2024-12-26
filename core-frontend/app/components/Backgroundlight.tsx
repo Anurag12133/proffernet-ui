@@ -13,7 +13,7 @@ const BackgroundBoxes = () => {
     setLoading(true);
 
     setTimeout(() => {
-      router.push("http://localhost:3000/pages/signin");
+      router.push("http://localhost:3000/pages/auth");
     }, 500);
   };
   return (
