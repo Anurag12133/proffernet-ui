@@ -46,11 +46,16 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
     authorized({ request: { nextUrl }, auth }) {
       const isLoggedIn = !!auth?.user;
       const { pathname } = nextUrl;
+
+      if (pathname === "/") {
+        return true;
+      }
+
       if (pathname.startsWith("/auth/signin") && isLoggedIn) {
         return Response.redirect(new URL("/", nextUrl));
       }
 
-      return !!auth;
+      return isLoggedIn;
     },
     jwt({ token, user, trigger, session }) {
       if (user) {
