@@ -24,3 +24,8 @@ class File(models.Model):
 
     def __str__(self):
         return f"{self.file.name} uploaded to {self.project.title}"
+    
+class YourModel(models.Model):
+    name = models.CharField(max_length=100)
+    # Add a dummy field to trigger migration
+    dummy_field = models.BooleanField(default=True)

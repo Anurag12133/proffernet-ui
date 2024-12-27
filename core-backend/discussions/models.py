@@ -12,11 +12,7 @@ class Discussion(models.Model):
     def __str__(self):
         return self.title
 
-class DiscussionComments(models.Model):
-    discussion = models.ForeignKey(Discussion, on_delete=models.CASCADE)
-    comment = models.TextField()
-    commented_by = models.CharField(max_length=50)
-    commented_at = models.DateTimeField(auto_now_add=True)
-
-    def __str__(self):
-        return self.comment
+class YourModel(models.Model):
+    name = models.CharField(max_length=100)
+    # Add a dummy field to trigger migration
+    dummy_field = models.BooleanField(default=True)

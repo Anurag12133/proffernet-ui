@@ -9,12 +9,20 @@ https://docs.djangoproject.com/en/3.2/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/3.2/ref/settings/
 """
-
+from datetime import timedelta
 from pathlib import Path
 import os
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
+
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'  # Or your email provider
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+EMAIL_HOST_USER = 'ranu47243@gmail.com'
+EMAIL_HOST_PASSWORD = 'mlefpqyoeekvrhaj'
+DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
 
 
 # Quick-start development settings - unsuitable for production
@@ -28,6 +36,7 @@ DEBUG = True
 
 ALLOWED_HOSTS = ['*']
 
+AUTH_USER_MODEL = 'developer.User'
 
 # Application definition
 
@@ -40,14 +49,12 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'projects',
-    'accounts',
+    'developer',
     'discussions',
     'notifications',
-    'contributors',
     'rest_framework',
     'rest_framework_simplejwt',
     'corsheaders',
-    'users',
     'dj_rest_auth',
     'allauth',
     'allauth.account',
@@ -67,6 +74,10 @@ AUTHENTICATION_BACKENDS = [
 
 CORS_ALLOW_ALL_ORIGINS = True
 
+SIMPLE_JWT = {
+    'ACCESS_TOKEN_LIFETIME': timedelta(minutes=60),
+    'REFRESH_TOKEN_LIFETIME': timedelta(days=1),
+}
 
 MEDIA_URL = 'media/'
 MEDIA_ROOT = BASE_DIR / 'media'
@@ -127,7 +138,17 @@ DATABASES = {
         'PASSWORD': 'yourpassword',
         'HOST': 'localhost',
         'PORT': '5432',
-    }
+    },
+    'new_db': {
+         'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'Proffernet',
+        'USER': 'root',
+        'PASSWORD': 'Mysql1611@',
+        'HOST': 'localhost',
+        'PORT': '3306',
+
+
+}
 }
 
 

@@ -6,10 +6,7 @@ from django.views.static import serve
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('api/', include('users.urls')),
-    path('accounts/', include('allauth.urls')),  
-    path('api/auth/', include('dj_rest_auth.urls')),  
-    path('api/auth/social/', include('dj_rest_auth.registration.urls')),
+    path('auth/', include('developer.urls')),
     path('project/',include('projects.urls') ),
     path('media/<path:path>', serve, {'document_root': settings.MEDIA_ROOT}),
    
