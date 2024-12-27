@@ -18,7 +18,7 @@ export default function Navbar() {
         Home
       </Link>
       {!session ? (
-        <Link href="/">
+        <Link href="/auth/signin">
           <Button variant="default">Sign In</Button>
         </Link>
       ) : (
