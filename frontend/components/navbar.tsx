@@ -7,7 +7,7 @@ import { handleSignOut } from "@/app/actions/authActions";
 
 export default function Navbar() {
   const { data: session } = useSession();
-
+ console.log(session);
   return (
     <nav className="flex justify-evenly items-center py-2 px-10 bg-black ">
       <Link href="/" className="text-xl font-bold text-white ">
@@ -26,6 +26,9 @@ export default function Navbar() {
           <Button variant="default" type="submit">
             Sign Out
           </Button>
+            <h1 className="text-white">
+                {session?.user?.name}
+            </h1>
         </form>
       )}
     </nav>
