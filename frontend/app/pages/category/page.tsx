@@ -22,7 +22,7 @@ const FlipWords = () => {
   return (
     <div className="relative h-screen bg-black bg-cover bg-center filter grayscale brightness-20 ">
       <div className="relative h-[5rem] flex justify-center items-center px-4 pr-[25rem]">
-        <div className="text-4xl mx-auto font-normal text-neutral-200 dark:text-neutral-300 mt-[10rem]">
+        <div className="text-4xl mx-auto font-normal text-neutral-200 dark:text-neutral-300 mt-[15rem]">
           Connecting <Flip words={words} /> <br />
           through contributions with Proffernet
         </div>

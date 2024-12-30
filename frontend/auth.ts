@@ -2,6 +2,7 @@ import NextAuth from "next-auth";
 import Credentials from "next-auth/providers/credentials";
 import Github from "next-auth/providers/github";
 import { signInSchema } from "./lib/zod";
+import axios from "axios";
 
 export const { handlers, signIn, signOut, auth } = NextAuth({
   providers: [
@@ -16,29 +17,26 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
         },
       },
       async authorize(credentials) {
-        let user = null;
-
         // validate credentials
         const parsedCredentials = signInSchema.safeParse(credentials);
         if (!parsedCredentials.success) {
           console.error("Invalid credentials:", parsedCredentials.error.errors);
           return null;
         }
-        // get user
 
-        user = {
-          id: "1",
-          name: "Aditya Singh",
-          email: "jojo@jojo.com",
-          role: "admin",
-        };
+        const response = await axios.post(
+          "http://127.0.0.1:8000/auth/register/",
+          {
+            email: credentials.email,
+            password: credentials.password,
+          }
+        );
 
-        if (!user) {
-          console.log("Invalid credentials");
-          return null;
+        if (response.data) {
+          return response.data;
         }
 
-        return user;
+        return null;
       },
     }),
   ],
