@@ -109,6 +109,8 @@ const ParallaxVocabulary: React.FC<ParallaxVocabularyProps> = ({
     .fill(null)
     .map(() => useRef<SVGGElement>(null)) as React.RefObject<SVGGElement>[];
 
+
+
   const [activeIndexes, setActiveIndexes] = useState<number[]>([]);
 
   const isHoveredElements = ITEMS.find(({ spring }) => spring?.isActive);

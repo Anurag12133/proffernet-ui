@@ -20,12 +20,12 @@ const HeroSection = () => {
           fill="white"
         />
         <div className="relative z-20 grid grid-cols-4 gap-5 w-full max-w-6xl px-8">
-          <div className="flex items-start justify-start col-span-2 w-full overflow-hidden ">
+          <div className="flex items-start justify-start col-span-2 w-full overflow-hidden mt-[5rem]">
             <HeroText />
           </div>
 
           <div className="flex flex-col col-span-2 w-full">
-            <div className="tile col-span-full mt-4 h-[20rem]">
+            <div className="tile col-span-full h-[20rem] mt-[6rem]">
               <RevealCard />
             </div>
           </div>
