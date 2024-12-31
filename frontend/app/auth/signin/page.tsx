@@ -6,7 +6,6 @@ import {
   FormControl,
   FormField,
   FormItem,
-  FormLabel,
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
@@ -49,27 +48,39 @@ export default function SignIn() {
   };
 
   return (
-    <div className="flex items-center justify-center min-h-screen p-4">
-      <Card className="w-full max-w-md">
+    <div className="flex items-center justify-center min-h-screen p-4 bg-black">
+      <Card className="w-full max-w-md bg-background dark:border-white/[0.2] border-transparent border  ">
         <CardHeader>
-          <CardTitle className="text-3xl font-bold text-center text-gray-800">
-            Welcome Back
+          <div className="mb-10 items-center justify-center flex">
+            <svg aria-label="Logo" fill="white" viewBox="0 0 75 65" height="50">
+              <path d="M37.59.25l36.95 64H.64l36.95-64z"></path>
+            </svg>
+          </div>
+
+          <CardTitle className="text-3xl font-bold text-center text-white ">
+            Continue with Proffernet
           </CardTitle>
+          <p className="text-white text-sm font-bold text-center">
+            Create a Proffernet account to continue.
+          </p>
         </CardHeader>
         <CardContent>
           {globalError && <ErrorMessage error={globalError} />}
           <Form {...form}>
-            <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
+            <form
+              onSubmit={form.handleSubmit(onSubmit)}
+              className="space-y-8 text-white"
+            >
               <FormField
                 control={form.control}
                 name="email"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Email</FormLabel>
                     <FormControl>
                       <Input
+                        className="dark:border-white/[0.2] border-transparent border "
                         type="email"
-                        placeholder="Enter your email address"
+                        placeholder="Enter email"
                         autoComplete="off"
                         {...field}
                       />
@@ -84,9 +95,9 @@ export default function SignIn() {
                 name="password"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Password</FormLabel>
                     <FormControl>
                       <Input
+                        className="dark:border-white/[0.2] border-transparent border "
                         type="password"
                         placeholder="Enter password"
                         {...field}
@@ -97,7 +108,6 @@ export default function SignIn() {
                 )}
               />
 
-              {/* Submit button will go here */}
               <LoadingButton pending={form.formState.isSubmitting} />
             </form>
           </Form>
@@ -106,9 +116,13 @@ export default function SignIn() {
             or
           </span>
           <form className="w-full" action={handleGithubSignin}>
-            <Button variant="outline" className="w-full" type="submit">
+            <Button
+              variant="outline"
+              className="w-full bg-background text-white"
+              type="submit"
+            >
               <FiGithub className="h-4 w-4 mr-2" />
-              Sign in with GitHub
+              GitHub
             </Button>
           </form>
         </CardContent>

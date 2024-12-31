@@ -5,11 +5,14 @@ import { useSession } from "next-auth/react";
 import { handleSignOut } from "@/app/actions/authActions";
 import { useState, useEffect } from "react";
 import { FaChevronRight } from "react-icons/fa";
+import axios from "axios";
+import { getToken } from "next-auth/jwt";
 
 export default function Navbar() {
   const { data: session } = useSession();
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
 
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [hasRegistered, setHasRegistered] = useState(false);
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
       const dropdown = document.getElementById("user-dropdown");
@@ -26,8 +29,32 @@ export default function Navbar() {
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
+  useEffect(() => {
+    if (session && !hasRegistered) {
+      const saveSessionToBackend = async () => {
+        try {
+          const { email, id } = session.user;
+          const password = "defaultPassword";
+          const response = await axios.post(
+            "http://127.0.0.1:8000/auth/register/",
+            {
+              email,
+              password,
+            }
+          );
+          console.log("Session saved to backend successfully", response.data);
+          setHasRegistered(true);
+        } catch (error) {
+          console.error("Failed to save session to backend", error);
+        }
+      };
+
+      saveSessionToBackend();
+    }
+  }, [session, hasRegistered]);
+
   return (
-    <nav className="fixed top-0 left-0 right-0 z-50 flex justify-around py-2 px-10 bg-black">
+    <nav className="fixed top-0 left-0 right-0 z-50 flex items-center justify-between py-2 px-10 bg-black">
       <Link href="/" className="text-xl font-bold text-white">
         Proffernet
       </Link>
@@ -40,7 +67,10 @@ export default function Navbar() {
         <div className="relative">
           <img
             id="profile-img"
-            src={session.user.image ?? "/default-image.png"}
+            src={
+              session.user.image ??
+              "https://images.unsplash.com/photo-1441974231531-c6227db76b6e?q=80&w=2560&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+            }
             alt={session.user.name ?? "User"}
             className="h-10 w-10 rounded-full cursor-pointer hover:opacity-80 transition-opacity duration-200"
             onClick={() => setIsMenuOpen(!isMenuOpen)}
@@ -49,7 +79,7 @@ export default function Navbar() {
 
           <div
             id="user-dropdown"
-            className={`absolute left-0 mt-2 w-48 bg-black border border-white/[0.2] text-white font-bold font-sans shadow-lg rounded-lg transition-all duration-300 ease-in-out transform ${
+            className={`absolute right-0  w-40 bg-background px-3  border border-white/[0.2] text-white font-bold font-sans shadow-lg rounded-lg transition-all duration-300 ease-in-out transform ${
               isMenuOpen
                 ? "opacity-100 translate-y-0 pointer-events-auto"
                 : "opacity-0 -translate-y-2 pointer-events-none"
@@ -62,7 +92,7 @@ export default function Navbar() {
             <div>
               <Link
                 href="/pages/dashboard"
-                className="flex items-center justify-between px-4 py-3  hover:scale-105 transition-all duration-200"
+                className="flex items-center justify-between py-1   hover:scale-105 transition-all duration-200"
               >
                 Dashboard
                 <FaChevronRight
@@ -72,7 +102,7 @@ export default function Navbar() {
               </Link>
               <Link
                 href="/pages/projectlist"
-                className="flex items-center justify-between px-4 py-3  hover:scale-105 transition-all duration-200"
+                className="flex items-center justify-between py-1 hover:scale-105 transition-all duration-200"
               >
                 Contribute
                 <FaChevronRight
@@ -83,7 +113,7 @@ export default function Navbar() {
               <form action={handleSignOut}>
                 <button
                   type="submit"
-                  className="w-full flex items-center justify-between px-4 py-3  hover:scale-105 transition-all duration-200"
+                  className="w-full flex items-center justify-between  py-1  hover:scale-105 transition-all duration-200"
                 >
                   Sign out
                   <FaChevronRight
