@@ -16,14 +16,6 @@ import os
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-EMAIL_HOST = 'smtp.gmail.com'  # Or your email provider
-EMAIL_PORT = 587
-EMAIL_USE_TLS = True
-EMAIL_HOST_USER = 'ranu47243@gmail.com'
-EMAIL_HOST_PASSWORD = 'mlefpqyoeekvrhaj'
-DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
-
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.2/howto/deployment/checklist/
@@ -34,11 +26,7 @@ SECRET_KEY = 'django-insecure-dm$r$@l(4+^e4ax)1j*mf=i@4#4+=gwav0=9a#4ehvv(u!8fge
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['*']
 
-AUTH_USER_MODEL = 'developer.User'
-
-# Application definition
 
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -49,9 +37,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'projects',
-    'developer',
-    'discussions',
-    'notifications',
+    'user',
+    'socials',
     'rest_framework',
     'rest_framework_simplejwt',
     'corsheaders',
@@ -73,6 +60,8 @@ AUTHENTICATION_BACKENDS = [
 
 
 CORS_ALLOW_ALL_ORIGINS = True
+CORS_ALLOW_CREDENTIALS = True  # Allow credentials
+
 
 SIMPLE_JWT = {
     'ACCESS_TOKEN_LIFETIME': timedelta(minutes=60),
@@ -119,11 +108,6 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'core.wsgi.application'
 
-REST_FRAMEWORK = {
-    'DEFAULT_AUTHENTICATION_CLASSES': (
-        'rest_framework_simplejwt.authentication.JWTAuthentication',
-    ),
-}
 
 # Database
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
