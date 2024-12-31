@@ -5,11 +5,14 @@ import { useSession } from "next-auth/react";
 import { handleSignOut } from "@/app/actions/authActions";
 import { useState, useEffect } from "react";
 import { FaChevronRight } from "react-icons/fa";
+import axios from "axios";
+import { getToken } from "next-auth/jwt";
 
 export default function Navbar() {
   const { data: session } = useSession();
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
 
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [hasRegistered, setHasRegistered] = useState(false);
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
       const dropdown = document.getElementById("user-dropdown");
@@ -25,6 +28,30 @@ export default function Navbar() {
     document.addEventListener("mousedown", handleClickOutside);
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
+
+  useEffect(() => {
+    if (session && !hasRegistered) {
+      const saveSessionToBackend = async () => {
+        try {
+          const { email, id } = session.user;
+          const password = "defaultPassword";
+          const response = await axios.post(
+            "http://127.0.0.1:8000/auth/register/",
+            {
+              email,
+              password,
+            }
+          );
+          console.log("Session saved to backend successfully", response.data);
+          setHasRegistered(true);
+        } catch (error) {
+          console.error("Failed to save session to backend", error);
+        }
+      };
+
+      saveSessionToBackend();
+    }
+  }, [session, hasRegistered]);
 
   return (
     <nav className="fixed top-0 left-0 right-0 z-50 flex items-center justify-between py-2 px-10 bg-black">
