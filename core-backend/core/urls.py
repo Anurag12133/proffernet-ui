@@ -6,6 +6,7 @@ from django.views.static import serve
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path("api/social/login/", include("core_user.urls")),
     path('project/',include('projects.urls') ),
     path('media/<path:path>', serve, {'document_root': settings.MEDIA_ROOT}),
 ]
