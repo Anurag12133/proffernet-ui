@@ -6,7 +6,7 @@ from .serializers import ProjectCreateSerializer, ProjectListSerializer
 from .models import Project
 
 class ProjectCreateAPIView(APIView):
-    parser_classes = (MultiPartParser, FormParser)  
+    parser_classes = (MultiPartParser, FormParser)
 
     @staticmethod
     def post(request, *args, **kwargs):
