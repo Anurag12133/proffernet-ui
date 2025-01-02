@@ -1,8 +1,10 @@
 import NextAuth from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 import GithubProvider from "next-auth/providers/github";
+import Google from "next-auth/providers/google";
 import { signInSchema } from "./lib/zod";
 import axios from "axios";
+import { AuthenticatedUser } from "./types/next-auth";
 
 export const { handlers, signIn, signOut, auth } = NextAuth({
   session: {
@@ -12,6 +14,10 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
     GithubProvider({
       clientId: process.env.GITHUB_CLIENT_ID,
       clientSecret: process.env.GITHUB_CLIENT_SECRET,
+    }),
+    Google({
+      clientId: process.env.GOOGLE_CLIENT_ID,
+      clientSecret: process.env.GOOGLE_CLIENT_SECRET,
     }),
     CredentialsProvider({
       credentials: {
@@ -56,34 +62,53 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
     }),
   ],
   callbacks: {
-    async jwt({ token, user, account }) {
+    async signIn({
+      user,
+      account,
+      profile,
+    }: {
+      user: AuthenticatedUser;
+      account: any;
+      profile?: any;
+    }) {
+      if (account?.provider === "google") {
+        const { accessToken, idToken } = account;
+
+        try {
+          const response = await axios.post(
+            "http://127.0.0.1:8000/api/social/login/google/",
+            {
+              access_token: accessToken,
+              id_token: idToken,
+            }
+          );
+          const { access_token } = response.data;
+          user.accessToken = access_token;
+          return true;
+        } catch (error) {
+          return false;
+        }
+      }
+      return false;
+    },
+    async jwt({
+      token,
+      user,
+      account,
+      profile,
+    }: {
+      token: any;
+      user: AuthenticatedUser;
+      account: any;
+      profile?: any;
+    }) {
       if (user) {
-        // Add user details and access token to the JWT token
-        if (user.id) {
-          token.id = user.id;
-        }
-
-        // For Credentials provider
-        if (user.accessToken) {
-          token.accessToken = user.accessToken;
-          console.log("Credentials Access Token:", user.accessToken);
-        }
-
-        // For GitHub provider
-        if (account?.access_token) {
-          token.accessToken = account.access_token;
-          console.log("GitHub Access Token:", account.access_token);
-        }
+        const { accessToken } = user;
+        token.accessToken = accessToken;
       }
       return token;
     },
-    async session({ session, token }) {
-      // Add access token to the session object
-      session.accessToken = token.accessToken;
-
-      // Log the access token for debugging
-      console.log("Session Access Token:", token.accessToken);
-
+    async session({ session, user }) {
       return session;
     },
   },
