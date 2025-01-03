@@ -6,11 +6,10 @@ import { handleSignOut } from "@/app/actions/authActions";
 import { useState, useEffect } from "react";
 import { FaChevronRight } from "react-icons/fa";
 import axios from "axios";
-import { getToken } from "next-auth/jwt";
 
 export default function Navbar() {
   const { data: session } = useSession();
-
+  console.log(session?.accessToken);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [hasRegistered, setHasRegistered] = useState(false);
   useEffect(() => {

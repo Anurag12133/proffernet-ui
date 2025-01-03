@@ -5,7 +5,7 @@ from rest_framework.parsers import MultiPartParser, FormParser
 from .serializers import ProjectCreateSerializer
 
 class ProjectCreateAPIView(APIView):
-    parser_classes = (MultiPartParser, FormParser)  
+    parser_classes = (MultiPartParser, FormParser)
 
     @staticmethod
     def post(request, *args, **kwargs):
