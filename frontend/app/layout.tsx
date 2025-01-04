@@ -2,7 +2,8 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import Navbar from "@/components/navbar";
-import { SessionProvider } from "next-auth/react";
+import Provider from "@/redux/provider";
+import Setup from "./components/utils/Setup";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -25,15 +26,16 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <SessionProvider>
+    <Provider>
       <html lang="en">
         <body
           className={`${geistSans.variable} ${geistMono.variable} antialiased`}
         >
+          <Setup />
           <Navbar />
           {children}
         </body>
       </html>
-    </SessionProvider>
+    </Provider>
   );
 }
