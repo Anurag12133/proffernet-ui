@@ -1,6 +1,6 @@
 "use client";
 
-import useResetPassword from "@/hooks/use-reset-password";
+import { useResetPassword } from "@/hooks";
 import { Form } from "@/app/components/forms";
 
 export default function PasswordResetForm() {

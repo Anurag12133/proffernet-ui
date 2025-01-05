@@ -1,6 +1,6 @@
 "use client";
 
-import useResetPasswordConfirm from "@/hooks/use-reset-password-confirm";
+import { useResetPasswordConfirm } from "@/hooks";
 import { Form } from "@/app/components/forms";
 
 interface Props {

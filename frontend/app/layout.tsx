@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
-import Navbar from "@/components/navbar";
+import { Navbar } from "@/app/components/common";
 import Provider from "@/redux/provider";
 import Setup from "./components/utils/Setup";
 
