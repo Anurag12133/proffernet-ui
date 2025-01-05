@@ -7,7 +7,7 @@ from django.views.static import serve
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/', include('djoser.urls')),
-    path('api/', include('users.urls')),
+    path('api/', include('djoser.urls.jwt')),
     path('project/',include('projects.urls') ),
     path('media/<path:path>', serve, {'document_root': settings.MEDIA_ROOT}),
 ]
