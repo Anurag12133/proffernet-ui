@@ -28,12 +28,25 @@ export default function useLogin() {
 
     login({ email, password })
       .unwrap()
-      .then(() => {
+      .then((response) => {
+        console.log("Login Response:", response); // Log the entire response
+
+        // Extract and store tokens
+        if (response?.access && response?.refresh) {
+          localStorage.setItem("accessToken", response.access);
+          localStorage.setItem("refreshToken", response.refresh);
+          console.log("Access Token:", response.access);
+          console.log("Refresh Token:", response.refresh);
+        } else {
+          console.warn("Tokens not found in the response");
+        }
+
         dispatch(setAuth());
         toast.success("Logged in");
-        router.push("/dashboard");
+        router.push("/pages/dashboard");
       })
-      .catch(() => {
+      .catch((error) => {
+        console.error("Login failed:", error); // Log error details
         toast.error("Failed to log in");
       });
   };
