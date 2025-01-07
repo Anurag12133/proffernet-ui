@@ -1,17 +1,17 @@
 "use client";
 
-import { ImGoogle, ImFacebook } from "react-icons/im";
+import { ImGoogle, ImGithub } from "react-icons/im";
 import { SocialButton } from "@/app/components/common";
-import { continueWithGoogle, continueWithFacebook } from "@/lib";
+import { continueWithGoogle, continueWithGithub } from "@/lib";
 
 export default function SocialButtons() {
   return (
-    <div className="flex justify-between items-center gap-2 mt-5">
+    <div className="flex justify-between items-center gap-2 ">
       <SocialButton provider="google" onClick={continueWithGoogle}>
-        <ImGoogle className="mr-3" /> Google Signin
+        <ImGoogle className="ml-40" />
       </SocialButton>
-      <SocialButton provider="facebook" onClick={continueWithFacebook}>
-        <ImFacebook className="mr-3" /> Facebook Signin
+      <SocialButton provider="github" onClick={continueWithGithub}>
+        <ImGithub className="mr-3" />
       </SocialButton>
     </div>
   );

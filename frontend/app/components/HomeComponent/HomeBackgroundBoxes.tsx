@@ -3,6 +3,7 @@ import React, { useState } from "react";
 import { Boxes } from "@/app/components/ui/background-boxes";
 import { cn } from "@/lib/utils";
 import { useRouter } from "next/navigation";
+import Button from "../Buttons/Button";
 
 const BackgroundBoxes = () => {
   const router = useRouter();
@@ -12,7 +13,7 @@ const BackgroundBoxes = () => {
     setLoading(true);
 
     setTimeout(() => {
-      router.push("http://localhost:3000/pages/auth");
+      router.push("/auth/register");
     }, 500);
   };
   return (
@@ -22,15 +23,12 @@ const BackgroundBoxes = () => {
       <Boxes />
       <h1
         className={cn(
-          "md:text-6xl font-bold text-3xl text-white relative z-20"
+          "md:text-6xl font-bold text-3xl text-white relative z-20 mb-20"
         )}
       >
         Build Together, Grow Together
       </h1>
-      <button
-        className="text-center mt-5 text-neutral-300 relative z-20"
-        onClick={handleSubmit}
-      ></button>
+      <Button label="Get started" onClick={handleSubmit} />
       {loading && (
         <div className="fixed inset-0 flex items-center justify-center bg-black from-black to-grey-100 bg-opacity-75 z-50">
           <div className="loader"></div>

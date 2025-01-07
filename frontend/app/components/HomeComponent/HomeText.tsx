@@ -1,26 +1,19 @@
 "use client";
 import { TypewriterEffectSmooth } from "@/app/components/ui/typewriter-effect";
-import { useRouter } from "next/navigation";
+import { usePathname } from "next/navigation";
 import { useState } from "react";
-import { FiLoader } from "react-icons/fi";
+import { NavLink } from "../common";
 
 const HeroText = () => {
   const words = [
     { text: "Build" },
     { text: "&," },
-    { text: "Practice.", className: "text-blue-500 dark:text-blue-500" },
+    { text: "Practice", className: "text-blue-500 dark:text-blue-500" },
   ];
 
-  const router = useRouter();
+  const pathname = usePathname();
   const [loading, setLoading] = useState(false);
-
-  const handleSubmit = () => {
-    setLoading(true);
-
-    setTimeout(() => {
-      router.push("http://localhost:3000/pages/auth");
-    }, 500);
-  };
+  const isSelected = (path: string) => (pathname === path ? true : false);
 
   return (
     <div className="flex flex-col items-start h-[40rem] w-full overflow-hidden px-4">
@@ -30,23 +23,12 @@ const HeroText = () => {
         a seamless, collaborative environment.
       </p>
       <div className="flex flex-col md:flex-row space-y-4 md:space-y-0 md:space-x-4 mt-6">
-        <button
-          className={`w-40 h-10 rounded-xl bg-black dark:border-white border text-white text-sm 
-                      hover:bg-white hover:text-black flex items-center justify-center ${
-                        loading ? "opacity-70 cursor-not-allowed" : ""
-                      }`}
-          onClick={handleSubmit}
-          disabled={loading}
+        <NavLink
+          isSelected={isSelected("/auth/register")}
+          href="/auth/register"
         >
-          {loading ? (
-            <>
-              <FiLoader className="animate-spin mr-2" /> {/* Spinner */}
-              Loading...
-            </>
-          ) : (
-            "Get Started"
-          )}
-        </button>
+          Register
+        </NavLink>
       </div>
       {loading && (
         <div className="fixed inset-0 flex items-center justify-center bg-black from-black to-grey-100 bg-opacity-75 z-50">

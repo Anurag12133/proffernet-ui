@@ -29,9 +29,9 @@ export default function Navbar() {
   const authLinks = (isMobile: boolean) => (
     <>
       <NavLink
-        isSelected={isSelected("/dashboard")}
+        isSelected={isSelected("/pages/dashboard")}
         isMobile={isMobile}
-        href="/dashboard"
+        href="/pages/dashboard"
       >
         Dashboard
       </NavLink>
@@ -50,22 +50,15 @@ export default function Navbar() {
       >
         Login
       </NavLink>
-      <NavLink
-        isSelected={isSelected("/auth/register")}
-        isMobile={isMobile}
-        href="/auth/register"
-      >
-        Register
-      </NavLink>
     </>
   );
 
   return (
-    <Disclosure as="nav" className="bg-gray-800">
+    <Disclosure as="nav" className="bg-black">
       {({ open }) => (
         <>
-          <div className="mx-auto max-w-7xl px-2 sm:px-6 lg:px-8">
-            <div className="relative flex h-16 items-center justify-between">
+          <div className="mx-auto max-w-7xl px-2 sm:px-6 py-2 lg:px-8">
+            <div className="relative flex  items-center justify-between">
               <div className="absolute inset-y-0 left-0 flex items-center sm:hidden">
                 <Disclosure.Button className="inline-flex items-center justify-center rounded-md p-2 text-gray-400 hover:bg-gray-700 hover:text-white focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white">
                   <span className="sr-only">Open main menu</span>
@@ -76,11 +69,11 @@ export default function Navbar() {
                   )}
                 </Disclosure.Button>
               </div>
-              <div className="flex flex-1 items-center justify-center sm:items-stretch sm:justify-start">
+              <div className="flex flex-1 items-center justify-start sm:items-stretch sm:justify-between">
                 <div className="flex flex-shrink-0 items-center">
-                  <NavLink href="/" isBanner>
-                    Full Auth
-                  </NavLink>
+                  <a href="/" className="text-white font-bold">
+                    Proffernet{" "}
+                  </a>
                 </div>
                 <div className="hidden sm:ml-6 sm:block">
                   <div className="flex space-x-4">
