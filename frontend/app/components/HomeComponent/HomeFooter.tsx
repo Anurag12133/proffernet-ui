@@ -36,67 +36,21 @@ const Footer = () => {
 
           {/* Links Section */}
           <div className="grid grid-cols-3 gap-10 items-start mt-10 md:mt-0">
-            {/* First Column */}
-            <div className="flex justify-center space-y-4 flex-col mt-4">
-              <a
-                className="transition-colors hover:text-foreground/80 text-foreground/60"
-                href="/pricing"
-              >
-                Pricing
-              </a>
-              <a
-                className="transition-colors hover:text-foreground/80 text-foreground/60"
-                href="/components"
-              >
-                Components
-              </a>
-              <a
-                className="transition-colors hover:text-foreground/80 text-foreground/60"
-                href="/templates"
-              >
-                Templates
-              </a>
-              <a
-                className="transition-colors hover:text-foreground/80 text-foreground/60"
-                href="/categories"
-              >
-                Categories
-              </a>
-              <a
-                className="transition-colors hover:text-foreground/80 text-foreground/60"
-                href="/blog"
-              >
-                Blog
-              </a>
-              <a
-                className="transition-colors hover:text-foreground/80 text-foreground/60"
-                href="/tools/box-shadows"
-              >
-                Box Shadows
-              </a>
-              <a
-                className="transition-colors hover:text-foreground/80 text-foreground/60"
-                href="/showcase"
-              >
-                Showcase
-              </a>
-            </div>
-
             {/* Second Column */}
             <div className="flex justify-center space-y-4 flex-col mt-4">
               <a
                 className="transition-colors hover:text-foreground/80 text-foreground/60"
                 target="__blank"
-                href="https://twitter.com/aceternitylabs"
+                href="https://linkedin.com/in/anurag--rajput"
               >
-                Twitter
+                Linkedin
               </a>
               <a
                 className="transition-colors hover:text-foreground/80 text-foreground/60"
                 target="__blank"
-                href="https://discord.gg/ftZbQvCdN7"
+                href="https://github.com/Anurag12133"
               >
-                Discord
+                Github
               </a>
             </div>
 
@@ -105,16 +59,9 @@ const Footer = () => {
               <a
                 className="transition-colors hover:text-foreground/80 text-foreground/60"
                 target="__blank"
-                href="https://pro.aceternity.com"
+                href="/"
               >
-                Aceternity UI Pro
-              </a>
-              <a
-                className="transition-colors hover:text-foreground/80 text-foreground/60"
-                target="__blank"
-                href="https://aceternity.com"
-              >
-                Aceternity
+                Proffernet
               </a>
             </div>
           </div>
