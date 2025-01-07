@@ -54,6 +54,7 @@ const config: Config = {
     },
   },
   plugins: [
+    require("@tailwindcss/forms"),
     addVariablesForColors,
     function ({
       matchUtilities,
