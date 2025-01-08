@@ -28,13 +28,6 @@ export default function Navbar() {
 
   const authLinks = (isMobile: boolean) => (
     <>
-      <NavLink
-        isSelected={isSelected("/pages/dashboard")}
-        isMobile={isMobile}
-        href="/pages/dashboard"
-      >
-        Dashboard
-      </NavLink>
       <NavLink isMobile={isMobile} onClick={handleLogout}>
         Logout
       </NavLink>
