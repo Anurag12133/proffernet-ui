@@ -6,9 +6,7 @@ import { RiVercelFill } from "react-icons/ri";
 export default function ContactPage() {
   return (
     <div className="w-full h-[43.5rem] ">
-      {/* Main Content */}
       <div className="h-full grid grid-cols-1 md:grid-cols-2">
-        {/* Left Section */}
         <div className="bg-black p-8 flex flex-col justify-between relative overflow-hidden">
           <div className="max-w-md pt-24">
             <h1 className="text-white text-5xl md:text-6xl font-sans font-bold ml-10">
@@ -37,7 +35,6 @@ export default function ContactPage() {
 
         <div className="absolute top-0 bottom-0 left-[50%] w-1 bg-gradient-to-b from-transparent via-gray-600 to-transparent z-0" />
 
-        {/* Right Section */}
         <div className="bg-black p-8 flex flex-col justify-between text-white">
           <div className="max-w-md mx-auto w-full pt-24">
             <div>
@@ -76,7 +73,6 @@ export default function ContactPage() {
             </div>
           </div>
 
-          {/* Footer */}
           <div className="flex justify-between items-center text-sm text-black/50 mt-10">
             <a
               href="mailto:enquiries@glassmoon.co"
