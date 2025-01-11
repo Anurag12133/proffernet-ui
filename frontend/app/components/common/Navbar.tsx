@@ -21,6 +21,15 @@ export default function Navbar() {
       .unwrap()
       .then(() => {
         dispatch(setLogout());
+        localStorage.removeItem("accessToken");
+        localStorage.removeItem("refreshToken");
+      })
+      .catch((error) => {
+        console.error("Logout failed:", error);
+
+        dispatch(setLogout());
+        localStorage.removeItem("accessToken");
+        localStorage.removeItem("refreshToken");
       });
   };
 

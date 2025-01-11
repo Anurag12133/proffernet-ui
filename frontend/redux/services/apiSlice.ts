@@ -11,6 +11,14 @@ const mutex = new Mutex();
 const baseQuery = fetchBaseQuery({
   baseUrl: `${process.env.NEXT_PUBLIC_HOST}/api`,
   credentials: "include",
+  prepareHeaders: (headers, { getState }) => {
+    const token = localStorage.getItem("accessToken");
+
+    if (token) {
+      headers.set("Authorization", `Bearer ${token}`);
+    }
+    return headers;
+  },
 });
 const baseQueryWithReauth: BaseQueryFn<
   string | FetchArgs,
