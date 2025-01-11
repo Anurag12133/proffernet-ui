@@ -50,7 +50,6 @@ export const ProjectProvider: React.FC<{ children: React.ReactNode }> = ({
       files.forEach((file) => {
         formData.append("files", file);
       });
-      console.log("formData", formData);
 
       const response = await axios.post(
         "http://127.0.0.1:8000/project/create/",
@@ -63,7 +62,6 @@ export const ProjectProvider: React.FC<{ children: React.ReactNode }> = ({
       );
 
       if (response.status === 201) {
-        console.log("Project created successfully");
         setTitle("Title Here...");
         setDescription("");
         setProjectType("");

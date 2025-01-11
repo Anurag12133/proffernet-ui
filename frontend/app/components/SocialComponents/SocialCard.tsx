@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import * as z from "zod";
@@ -13,7 +13,6 @@ import { Button } from "@/components/ui/button";
 import {
   Form,
   FormControl,
-  FormDescription,
   FormField,
   FormItem,
   FormLabel,
@@ -30,9 +29,12 @@ const formSchema = z.object({
   }),
 });
 
+const API_URL = process.env.NEXT_PUBLIC_HOST;
+
 export default function SocialDetailsForm() {
   const [isLoading, setIsLoading] = useState(false);
   const { toast } = useToast();
+  const [existingData, setExistingData] = useState(null);
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -44,21 +46,110 @@ export default function SocialDetailsForm() {
     },
   });
 
-  function onSubmit(values: z.infer<typeof formSchema>) {
+  // Fetch existing social details when component mounts
+  // useEffect(() => {
+  //   const fetchSocialDetails = async () => {
+  //     try {
+  //       const token = localStorage.getItem("accessToken");
+  //       if (!token) {
+  //
+  //         return;
+  //       }
+
+  //       const response = await fetch(`${API_URL}/social-details/`, {
+  //         headers: {
+  //           Authorization: `Bearer ${token}`,
+  //           "Content-Type": "application/json",
+  //         },
+  //       });
+
+  //       if (response.ok) {
+  //         const data = await response.json();
+  //         setExistingData(data);
+  //         // Update form with existing data
+  //         form.reset({
+  //           whatsappGroupUrl: data.whatsapp_group_url || "",
+  //           linkedinUrl: data.linkedin_url || "",
+  //           githubUrl: data.github_url || "",
+  //           whatsappNumber: data.whatsapp_number || "",
+  //         });
+  //       }
+  //     } catch (error) {
+  //       console.error("Error fetching social details:", error);
+  //       toast({
+  //         title: "Error",
+  //         description: "Failed to fetch existing social details",
+  //         variant: "destructive",
+  //       });
+  //     }
+  //   };
+
+  //   fetchSocialDetails();
+  // }, []);
+
+  const onSubmit = async (values: z.infer<typeof formSchema>) => {
     setIsLoading(true);
-    // Simulate API call
-    setTimeout(() => {
-      setIsLoading(false);
-      toast({
-        title: "Form submitted",
-        description: "Your social details have been saved successfully.",
+    try {
+      const token = localStorage.getItem("accessToken");
+      if (!token) {
+        toast({
+          title: "Error",
+          description: "Please login to save your social details",
+          variant: "destructive",
+        });
+        return;
+      }
+
+      const payload = {
+        whatsapp_group_url: values.whatsappGroupUrl,
+        linkedin_url: values.linkedinUrl,
+        github_url: values.githubUrl,
+        whatsapp_number: values.whatsappNumber,
+      };
+
+      const method = existingData ? "PUT" : "POST";
+
+      const response = await fetch(`${API_URL}/app/social-details/create/`, {
+        method,
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(payload),
       });
-    }, 1000);
-  }
+
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.message || "Failed to save social details");
+      }
+
+      const savedData = await response.json();
+      setExistingData(savedData);
+
+      toast({
+        title: "Success",
+        description: `Social details ${
+          existingData ? "updated" : "created"
+        } successfully`,
+      });
+    } catch (error) {
+      console.error("Error saving social details:", error);
+      toast({
+        title: "Error",
+        description:
+          error instanceof Error
+            ? error.message
+            : "Failed to save social details",
+        variant: "destructive",
+      });
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
   return (
-    <div className="flex min-h-screen items-center justify-center dark:bg-black to-background mt-5 dark:bg-grid-small-white/[0.2] bg-grid-small-black/[0.2]">
-      <div className="w-full max-w-md space-y-8 rounded-lg p-8 ">
+    <div className="flex min-h-screen items-center justify-center dark:bg-black to-background dark:bg-grid-small-white/[0.2] bg-grid-small-black/[0.2]">
+      <div className="w-full max-w-md space-y-8 rounded-lg p-8">
         <div className="text-center">
           <h2 className="mt-6 text-6xl font-bold font-sans tracking-tight text-white mr-[12rem]">
             Socials
@@ -84,6 +175,7 @@ export default function SocialDetailsForm() {
                       />
                     </div>
                   </FormControl>
+                  <FormMessage />
                 </FormItem>
               )}
             />
@@ -153,6 +245,7 @@ export default function SocialDetailsForm() {
                       />
                     </div>
                   </FormControl>
+                  <FormMessage />
                 </FormItem>
               )}
             />
@@ -161,7 +254,7 @@ export default function SocialDetailsForm() {
               className="w-full bg-gradient-to-r from-background to-black dark:border-white/[0.2] border-transparent border text-white font-bold py-3 px-4 rounded-lg transition duration-300 ease-in-out transform hover:scale-105"
               disabled={isLoading}
             >
-              {isLoading ? "Submitting..." : "Submit"}
+              {isLoading ? "Saving..." : "Save"}
             </Button>
           </form>
         </Form>

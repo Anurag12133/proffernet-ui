@@ -16,7 +16,6 @@ export default function useVerify() {
       return;
     }
 
-    console.log("Verifying token:", token);
     verify(token)
       .unwrap()
       .then(() => {

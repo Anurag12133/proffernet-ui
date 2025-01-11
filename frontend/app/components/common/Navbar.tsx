@@ -21,6 +21,15 @@ export default function Navbar() {
       .unwrap()
       .then(() => {
         dispatch(setLogout());
+        localStorage.removeItem("accessToken");
+        localStorage.removeItem("refreshToken");
+      })
+      .catch((error) => {
+        console.error("Logout failed:", error);
+
+        dispatch(setLogout());
+        localStorage.removeItem("accessToken");
+        localStorage.removeItem("refreshToken");
       });
   };
 
@@ -28,13 +37,6 @@ export default function Navbar() {
 
   const authLinks = (isMobile: boolean) => (
     <>
-      <NavLink
-        isSelected={isSelected("/pages/dashboard")}
-        isMobile={isMobile}
-        href="/pages/dashboard"
-      >
-        Dashboard
-      </NavLink>
       <NavLink isMobile={isMobile} onClick={handleLogout}>
         Logout
       </NavLink>
