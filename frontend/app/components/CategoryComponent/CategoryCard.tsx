@@ -44,7 +44,7 @@ const CategoryCards = () => {
           />
         </div>
 
-        <div onClick={() => handleButton("socials")} className="cursor-pointer">
+        <div onClick={() => handleButton("project")} className="cursor-pointer">
           {loading && (
             <div className="fixed inset-0 flex items-center justify-center bg-black from-black to-grey-100 bg-opacity-75 z-50">
               <div className="loader"></div>

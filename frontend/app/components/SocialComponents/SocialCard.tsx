@@ -52,7 +52,7 @@ export default function SocialDetailsForm() {
   //     try {
   //       const token = localStorage.getItem("accessToken");
   //       if (!token) {
-  //         console.log("No token found");
+  //
   //         return;
   //       }
 
@@ -91,7 +91,6 @@ export default function SocialDetailsForm() {
     setIsLoading(true);
     try {
       const token = localStorage.getItem("accessToken");
-      console.log("Token:", token);
       if (!token) {
         toast({
           title: "Error",
