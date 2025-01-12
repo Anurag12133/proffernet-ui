@@ -48,8 +48,11 @@ export const ProjectProvider: React.FC<{ children: React.ReactNode }> = ({
       formData.append("tech_stacks", JSON.stringify(tech_stacks));
 
       files.forEach((file) => {
-        formData.append("files", file);
+        formData.append("file", file);
       });
+
+      const accessToken = localStorage.getItem("accessToken");
+      console.log(accessToken);
 
       const response = await axios.post(
         "http://127.0.0.1:8000/project/create/",
@@ -57,6 +60,7 @@ export const ProjectProvider: React.FC<{ children: React.ReactNode }> = ({
         {
           headers: {
             "Content-Type": "multipart/form-data",
+            Authorization: `Bearer ${accessToken}`,
           },
         }
       );
@@ -67,6 +71,7 @@ export const ProjectProvider: React.FC<{ children: React.ReactNode }> = ({
         setProjectType("");
         setTechStacks([]);
         setFiles([]);
+        console.log("Project created successfully!");
       } else {
         console.error("Failed to create project");
       }
