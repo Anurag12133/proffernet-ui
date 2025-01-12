@@ -1,49 +1,29 @@
 from rest_framework import serializers
 from .models import Project, File
 
-class ProjectCreateSerializer(serializers.ModelSerializer):
-    tech_stacks = serializers.ListField(
-        child=serializers.CharField(max_length=100),
-        allow_empty=True
-    )
-    files = serializers.ListField(
-        child=serializers.FileField(),
-        write_only=True,
-        allow_empty=True
-    )
+class ProjectSerializer(serializers.ModelSerializer):
+    file = serializers.FileField(write_only=True, required=True)  # File upload during project creation
+    files = serializers.SerializerMethodField()  # Nested files for response
 
     class Meta:
         model = Project
-        fields = ['title', 'description','project_type', 'tech_stacks', 'files']  
+        fields = ['id', 'title', 'description', 'project_type', 'tech_stacks', 'file', 'files']
+        read_only_fields = ['user', 'files']  # Prevent user assignment via API
 
-    @staticmethod
-    def create(validated_data): 
-        tech_stacks = validated_data.pop('tech_stacks')
-        files_data = validated_data.pop('files', [])
-    
+    def create(self, validated_data):
+        # Extract the file from validated data
+        file_data = validated_data.pop('file')
+        request = self.context.get('request')  # Get the request context
+        validated_data['user'] = request.user  # Assign the logged-in user
+
+        # Create the project
         project = Project.objects.create(**validated_data)
-        project.tech_stacks = tech_stacks  
-        project.save() 
-        
-        for file in files_data:
-            File.objects.create(project=project, file=file)
-        
+
+        # Create the associated file
+        File.objects.create(project=project, file=file_data)
+
         return project
-    
-class FileSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = File
-        fields = ['id', 'file', 'uploaded_at'] 
-    
 
-class ProjectListSerializer(serializers.ModelSerializer):
-    tech_stacks = serializers.ListField(
-        child=serializers.CharField(max_length=100),
-        allow_empty=True
-    )
-    files = FileSerializer(many=True, read_only=True)  
-
-    class Meta:
-        model = Project
-        fields = ['id', 'title', 'description', 'project_type',  'tech_stacks', 'files']
-    
+    def get_files(self, obj):
+        # Serialize associated files for the response
+        return [{"id": f.id, "file": f.file.url, "uploaded_at": f.uploaded_at} for f in obj.files.all()]

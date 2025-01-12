@@ -49,15 +49,9 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-<<<<<<< HEAD
-    'projects',
     'rest_framework',
     'rest_framework_simplejwt',
-=======
->>>>>>> refs/remotes/origin/master
     'corsheaders',
-    'rest_framework_simplejwt',
-    'rest_framework',
     'djoser',
     'social_django',
     'projects',

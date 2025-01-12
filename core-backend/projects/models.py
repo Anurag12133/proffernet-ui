@@ -1,14 +1,16 @@
 from django.db import models
 from django.contrib.postgres.fields import ArrayField
+from django.conf import settings
 
 class Project(models.Model):
-    title = models.CharField(max_length=100)  
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, related_name='projects', on_delete=models.CASCADE)
+    title = models.CharField(max_length=100)
     description = models.TextField()
     project_type = models.CharField(max_length=50, default='personal')
     tech_stacks = ArrayField(models.CharField(max_length=50), size=20, default=list, blank=True)
 
     class Meta:
-        ordering = ['title']  
+        ordering = ['title']
 
     def __str__(self):
         return self.title
@@ -24,8 +26,4 @@ class File(models.Model):
 
     def __str__(self):
         return f"{self.file.name} uploaded to {self.project.title}"
-    
-class YourModel(models.Model):
-    name = models.CharField(max_length=100)
-    # Add a dummy field to trigger migration
-    dummy_field = models.BooleanField(default=True)
+

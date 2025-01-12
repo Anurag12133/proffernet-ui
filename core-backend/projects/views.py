@@ -1,16 +1,17 @@
-from rest_framework.views import APIView
-from rest_framework.response import Response
-from rest_framework import status
+from rest_framework import generics, permissions
 from rest_framework.parsers import MultiPartParser, FormParser
-from .serializers import ProjectCreateSerializer
+from .models import Project
+from .serializers import ProjectSerializer
 
-class ProjectCreateAPIView(APIView):
-    parser_classes = (MultiPartParser, FormParser)
+class ProjectListCreateView(generics.ListCreateAPIView):
+    """
+    Handles listing all projects for the authenticated user
+    and creating a new project with a file.
+    """
+    serializer_class = ProjectSerializer
+    permission_classes = [permissions.IsAuthenticated]
+    parser_classes = [MultiPartParser, FormParser]  # To handle file uploads
 
-    @staticmethod
-    def post(request, *args, **kwargs):
-        serializer = ProjectCreateSerializer(data=request.data)
-        if serializer.is_valid():
-            serializer.save()
-            return Response(serializer.data, status=status.HTTP_201_CREATED)
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    def get_queryset(self):
+        # Restrict projects to the logged-in user
+        return Project.objects.filter(user=self.request.user)
