@@ -1,7 +1,9 @@
+import DashboardPage from "@/app/components/DashbaordComponent/Dashboard";
+
 const Dashboard = () => {
   return (
     <div>
-      <h1>Dashboard</h1>
+      <DashboardPage />
     </div>
   );
 };
