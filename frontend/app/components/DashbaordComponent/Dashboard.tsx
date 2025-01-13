@@ -1,15 +1,12 @@
+"use client";
 import { Metadata } from "next";
-import Image from "next/image";
 
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { FaProjectDiagram } from "react-icons/fa";
 import Overview from "../DashbaordComponent/Overview";
+import { useRouter } from "next/navigation";
+import { useCallback } from "react";
 
 export const metadata: Metadata = {
   title: "Dashboard",
@@ -17,6 +14,15 @@ export const metadata: Metadata = {
 };
 
 export default function DashboardPage() {
+  const router = useRouter();
+  const BASE_URL = "http://localhost:3000/pages";
+  const handleButton = useCallback(
+    (route: string) => {
+      const fullUrl = `${BASE_URL}/${route}`;
+      router.push(fullUrl);
+    },
+    [router]
+  );
   return (
     <>
       <div className="hidden flex-col md:flex bg-black h-[95vh] border-t dark:border-white/[0.2] border-transparent ">
@@ -29,15 +35,25 @@ export default function DashboardPage() {
           </div>
           <Tabs defaultValue="overview" className="space-y-4 text-white">
             <TabsList>
-              <TabsTrigger value="overview">Overview</TabsTrigger>
-              <TabsTrigger value="analytics" disabled>
-                Analytics
+              <TabsTrigger
+                value="overview"
+                onClick={() => handleButton("dashboard")}
+              >
+                Overview
               </TabsTrigger>
-              <TabsTrigger value="reports" disabled>
-                Reports
+              <TabsTrigger
+                value="contribute"
+                className="cursor-pointer"
+                onClick={() => handleButton("projectlist")}
+              >
+                Contribute
               </TabsTrigger>
-              <TabsTrigger value="notifications" disabled>
-                Notifications
+              <TabsTrigger
+                value="publish"
+                onClick={() => handleButton("project")}
+                className="cursor-pointer"
+              >
+                Publish
               </TabsTrigger>
             </TabsList>
             <TabsContent value="overview" className="space-y-4">
@@ -47,24 +63,10 @@ export default function DashboardPage() {
                     <CardTitle className="text-sm font-medium">
                       Published Projects
                     </CardTitle>
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      viewBox="0 0 24 24"
-                      fill="none"
-                      stroke="currentColor"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth="2"
-                      className="h-4 w-4 text-muted-foreground"
-                    >
-                      <path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6" />
-                    </svg>
+                    <FaProjectDiagram className="h-4 w-4 text-muted-foreground" />
                   </CardHeader>
                   <CardContent>
                     <div className="text-2xl font-bold">$45,231.89</div>
-                    <p className="text-xs text-muted-foreground">
-                      +20.1% from last month
-                    </p>
                   </CardContent>
                 </Card>
                 <Card className="dark:border-white/[0.2] border-transparent border">
@@ -89,9 +91,6 @@ export default function DashboardPage() {
                   </CardHeader>
                   <CardContent>
                     <div className="text-2xl font-bold">+2350</div>
-                    <p className="text-xs text-muted-foreground">
-                      +180.1% from last month
-                    </p>
                   </CardContent>
                 </Card>
               </div>
@@ -100,7 +99,7 @@ export default function DashboardPage() {
                   <CardHeader>
                     <CardTitle>Contributing Projects</CardTitle>
                   </CardHeader>
-                  <CardContent className="pl-2">
+                  <CardContent>
                     <Overview />
                   </CardContent>
                 </Card>
