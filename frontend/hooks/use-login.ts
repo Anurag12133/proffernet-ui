@@ -39,7 +39,7 @@ export default function useLogin() {
 
         dispatch(setAuth());
         toast.success("Logged in");
-        router.push("/pages/category");
+        router.push("/pages/dashboard");
       })
       .catch((error) => {
         console.error("Login failed:", error); // Log error details

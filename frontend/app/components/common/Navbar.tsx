@@ -7,12 +7,14 @@ import { useAppSelector, useAppDispatch } from "@/redux/hooks";
 import { useLogoutMutation } from "@/redux/features/authApiSlice";
 import { logout as setLogout } from "@/redux/features/authSlice";
 import { NavLink } from "@/app/components/common";
+import { useRouter } from "next/navigation";
 
 export default function Navbar() {
   const pathname = usePathname();
   const dispatch = useAppDispatch();
 
   const [logout] = useLogoutMutation();
+  const router = useRouter();
 
   const { isAuthenticated } = useAppSelector((state) => state.auth);
 
@@ -23,6 +25,7 @@ export default function Navbar() {
         dispatch(setLogout());
         localStorage.removeItem("accessToken");
         localStorage.removeItem("refreshToken");
+        router.push("/");
       })
       .catch((error) => {
         console.error("Logout failed:", error);

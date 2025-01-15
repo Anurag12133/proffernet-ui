@@ -1,16 +1,47 @@
-from rest_framework.views import APIView
-from rest_framework.response import Response
-from rest_framework import status
+from rest_framework import generics, permissions
 from rest_framework.parsers import MultiPartParser, FormParser
-from .serializers import ProjectCreateSerializer
+from .models import Project
+from rest_framework.views import APIView
+from rest_framework.permissions import AllowAny
+from .serializers import ProjectSerializer
+from rest_framework.response import Response
 
-class ProjectCreateAPIView(APIView):
-    parser_classes = (MultiPartParser, FormParser)
+class ProjectListCreateView(generics.ListCreateAPIView):
+    """
+    Handles listing all projects for the authenticated user
+    and creating a new project with a file.
+    """
+    serializer_class = ProjectSerializer
+    permission_classes = [permissions.IsAuthenticated]
+    parser_classes = [MultiPartParser, FormParser]  # To handle file uploads
 
-    @staticmethod
-    def post(request, *args, **kwargs):
-        serializer = ProjectCreateSerializer(data=request.data)
-        if serializer.is_valid():
-            serializer.save()
-            return Response(serializer.data, status=status.HTTP_201_CREATED)
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    def get_queryset(self):
+        # Restrict projects to the logged-in user
+        return Project.objects.filter(user=self.request.user)
+
+class ProjeDetailsView(APIView):
+    permission_classes = [AllowAny]
+    def get(self, request, *args, **kwargs):
+        projects = Project.objects.all()
+        serializer = ProjectSerializer(projects, many=True)
+        return Response(serializer.data, status=200)
+
+
+class UserProjectsView(generics.ListAPIView):
+    """
+    Lists all projects belonging to the authenticated user.
+    """
+    serializer_class = ProjectSerializer
+    permission_classes = [permissions.IsAuthenticated]
+
+    def get_queryset(self):
+        return Project.objects.filter(user=self.request.user)
+
+    def list(self, request, *args, **kwargs):
+        queryset = self.get_queryset()
+        serializer = self.get_serializer(queryset, many=True)
+        return Response({
+            'status': 'success',
+            'count': queryset.count(),
+            'projects': serializer.data
+        })

@@ -20,9 +20,7 @@ const CardsForProject = async ({ TechStack }: { TechStack: string }) => {
   const techStacksArray: string[] = [];
 
   try {
-    const fetchData = await axios.get(
-      "http://127.0.0.1:8000/project/projectlist"
-    );
+    const fetchData = await axios.get("http://127.0.0.1:8000/project/list");
     projects.push(...fetchData.data);
   } catch (error) {
     console.error("Error fetching projects:", error);
