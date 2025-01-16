@@ -41,6 +41,7 @@ export default function Form({
           link={input.link}
           required={input.required}
           placeholder={input.labelText}
+          
         >
           {input.labelText}
         </Input>

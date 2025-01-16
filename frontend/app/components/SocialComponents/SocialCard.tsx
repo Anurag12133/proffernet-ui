@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import * as z from "zod";
@@ -19,6 +19,7 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
+import { useRouter } from "next/navigation";
 
 const formSchema = z.object({
   whatsappGroupUrl: z.string().url({ message: "Please enter a valid URL" }),
@@ -35,6 +36,7 @@ export default function SocialDetailsForm() {
   const [isLoading, setIsLoading] = useState(false);
   const { toast } = useToast();
   const [existingData, setExistingData] = useState(null);
+  const route = useRouter();
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -45,47 +47,6 @@ export default function SocialDetailsForm() {
       whatsappNumber: "",
     },
   });
-
-  // Fetch existing social details when component mounts
-  // useEffect(() => {
-  //   const fetchSocialDetails = async () => {
-  //     try {
-  //       const token = localStorage.getItem("accessToken");
-  //       if (!token) {
-  //
-  //         return;
-  //       }
-
-  //       const response = await fetch(`${API_URL}/social-details/`, {
-  //         headers: {
-  //           Authorization: `Bearer ${token}`,
-  //           "Content-Type": "application/json",
-  //         },
-  //       });
-
-  //       if (response.ok) {
-  //         const data = await response.json();
-  //         setExistingData(data);
-  //         // Update form with existing data
-  //         form.reset({
-  //           whatsappGroupUrl: data.whatsapp_group_url || "",
-  //           linkedinUrl: data.linkedin_url || "",
-  //           githubUrl: data.github_url || "",
-  //           whatsappNumber: data.whatsapp_number || "",
-  //         });
-  //       }
-  //     } catch (error) {
-  //       console.error("Error fetching social details:", error);
-  //       toast({
-  //         title: "Error",
-  //         description: "Failed to fetch existing social details",
-  //         variant: "destructive",
-  //       });
-  //     }
-  //   };
-
-  //   fetchSocialDetails();
-  // }, []);
 
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
     setIsLoading(true);
@@ -132,6 +93,7 @@ export default function SocialDetailsForm() {
           existingData ? "updated" : "created"
         } successfully`,
       });
+      route.push("/pages/projectlist");
     } catch (error) {
       console.error("Error saving social details:", error);
       toast({
