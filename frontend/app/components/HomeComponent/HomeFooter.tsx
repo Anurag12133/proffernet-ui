@@ -1,3 +1,5 @@
+import  Link  from "next/link";
+
 const Footer = () => {
   return (
     <div>
@@ -6,7 +8,7 @@ const Footer = () => {
           {/* Logo and Information Section */}
           <div>
             <div className="mr-4 md:flex mb-4">
-              <a
+              <Link
                 className="flex items-center justify-center space-x-2 text-2xl font-bold text-center text-neutral-600 dark:text-gray-100 selection:bg-emerald-500 mr-10 py-0"
                 href="/"
               >
@@ -19,18 +21,18 @@ const Footer = () => {
                     Proffernet
                   </h1>
                 </div>
-              </a>
+              </Link>
             </div>
 
             <div className="mt-2">
               Building in public at{" "}
-              <a
+              <Link
                 className="dark:text-sky-500 font-medium text-neutral-600"
                 target="__blank"
                 href="https://github.com/Anurag12133"
               >
                 @Anurag-Rajput
-              </a>
+              </Link>
             </div>
           </div>
 
@@ -38,31 +40,38 @@ const Footer = () => {
           <div className="grid grid-cols-3 gap-10 items-start mt-10 md:mt-0">
             {/* Second Column */}
             <div className="flex justify-center space-y-4 flex-col mt-4">
-              <a
+              <Link
                 className="transition-colors hover:text-foreground/80 text-foreground/60"
                 target="__blank"
                 href="https://linkedin.com/in/anurag--rajput"
               >
                 Linkedin
-              </a>
-              <a
+              </Link>
+              <Link
                 className="transition-colors hover:text-foreground/80 text-foreground/60"
                 target="__blank"
                 href="https://github.com/Anurag12133"
               >
                 Github
-              </a>
+              </Link>
             </div>
 
             {/* Third Column */}
             <div className="flex justify-center space-y-4 flex-col mt-4">
-              <a
+              <Link
                 className="transition-colors hover:text-foreground/80 text-foreground/60"
                 target="__blank"
                 href="/"
               >
                 Proffernet
-              </a>
+              </Link>
+               <Link
+                className="transition-colors hover:text-foreground/80 text-foreground/60"
+                target="__blank"
+                href="/pages/contact"
+              >
+                Contact us
+              </Link>
             </div>
           </div>
         </div>

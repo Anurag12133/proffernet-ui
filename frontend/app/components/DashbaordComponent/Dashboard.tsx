@@ -55,7 +55,7 @@ export default function DashboardPage() {
           setProjects(response.data.projects);
         }
         setLoading(false);
-      } catch (err) {
+      } catch {
         setError("Failed to fetch projects");
         setLoading(false);
       }

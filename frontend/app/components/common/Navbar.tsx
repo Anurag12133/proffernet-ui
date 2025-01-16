@@ -8,6 +8,7 @@ import { useLogoutMutation } from "@/redux/features/authApiSlice";
 import { logout as setLogout } from "@/redux/features/authSlice";
 import { NavLink } from "@/app/components/common";
 import { useRouter } from "next/navigation";
+import Link from "next/link";
 
 export default function Navbar() {
   const pathname = usePathname();
@@ -76,9 +77,9 @@ export default function Navbar() {
               </div>
               <div className="flex flex-1 items-center justify-start sm:items-stretch sm:justify-between">
                 <div className="flex flex-shrink-0 items-center">
-                  <a href="/" className="text-white font-bold">
+                  <Link href="/" className="text-white font-bold">
                     Proffernet{" "}
-                  </a>
+                  </Link>
                 </div>
                 <div className="hidden sm:ml-6 sm:block">
                   <div className="flex space-x-4">

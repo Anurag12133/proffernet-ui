@@ -1,25 +1,28 @@
 "use client";
 
+import Image from "next/image";
 import Link from "next/link";
 import { RiVercelFill } from "react-icons/ri";
 
 export default function ContactPage() {
   return (
-    <div className="w-full h-[43.5rem] ">
-      <div className="h-full grid grid-cols-1 md:grid-cols-2">
-        <div className="bg-black p-8 flex flex-col justify-between relative overflow-hidden">
+
+      <div className="h-[calc(100vh-2.9rem)] grid grid-cols-1 md:grid-cols-2 ">
+        <div className="bg-black p-8 flex flex-col justify-between relative">
           <div className="max-w-md pt-24">
             <h1 className="text-white text-5xl md:text-6xl font-sans font-bold ml-10">
-              We'd love to hear from you
+              We&apos;d love to hear from you
             </h1>
-            <img
+            <Image
               src="/contact.png"
               alt="contactimage"
+              width={500}
+              height={`70`}
+
               className="w-full h-70 mt-2 mr-10"
             />
           </div>
 
-          {/* Footer */}
           <div className="relative z-10 flex items-center space-x-4 text-white/50 text-sm ">
             <div className="flex space-x-0.5">
               <div className="w-1.5 h-1.5 rounded-full border border-white/50"></div>
@@ -86,6 +89,6 @@ export default function ContactPage() {
           </div>
         </div>
       </div>
-    </div>
+  
   );
 }
