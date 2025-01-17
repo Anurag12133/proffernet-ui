@@ -8,11 +8,11 @@ interface ButtonProps {
 
 const Button = ({ label, onClick }: ButtonProps) => {
   return (
-    <div className=" flex justify-center text-center">
+    <div className=" flex justify-center text-center animate-bounce hover:animate-none">
       <HoverBorderGradient
         containerClassName="rounded-full"
         as="button"
-        className="dark:bg-black bg-white text-black  border border-none dark:text-white flex items-center space-x-2"
+        className="dark:bg-background bg-white text-white  items-center space-x-2"
         onClick={onClick}
       >
         <span>{label}</span>
