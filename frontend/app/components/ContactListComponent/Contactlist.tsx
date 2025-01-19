@@ -1,35 +1,29 @@
-import Image from 'next/image'
+"use client"
 import Link from 'next/link'
-import { Github, Linkedin, Phone, PhoneIcon as WhatsApp } from 'lucide-react'
+import { FaGithub,  FaLinkedin, FaWhatsapp, FaPhone} from 'react-icons/fa';
 import { Avatar, AvatarImage } from '@/components/ui/avatar'
+import { ContactPointer } from './ContactFollowing';
 
 interface SocialLinkProps {
     href: string;
     icon: React.ReactNode;
     label: string;
-    gradient: string;
   }
+
+ 
 const ContactListComponent = () => {
 
   return (
-    <div className="min-h-screen w-full bg-black text-white overflow-hidden">
-      <div
-        className="fixed inset-0 bg-gradient-to-tr from-black via-black to-[#39FF14] opacity-80"
-        style={{
-          backgroundImage: `url(https://hebbkx1anhila5yf.public.blob.vercel-storage.com/original-88dc803448c6ff96b232f8deed33fbb1-E1oe9z7vtCvAlbKwzadwIVhjj9RETO.webp)`,
-          backgroundSize: 'cover',
-          backgroundPosition: 'center',
-          mixBlendMode: 'overlay'
-        }}
-      />
+    <div className="min-h-screen w-full dark:bg-black to-background dark:bg-grid-small-white/[0.3] bg-grid-small-black/[0.3] text-white overflow-hidden">
+      
 
       <div className="relative z-10">
 
 
         <main className="grid lg:grid-cols-2 gap-12 p-6 pt-12 max-w-7xl mx-auto">
           <div className="space-y-12">
-            <h1 className="text-7xl font-serif">
-              Connect with me<span className="align-super text-4xl">^</span>
+            <h1 className="text-7xl font-sans font-bold">
+              Connect Here<span className="align-super text-4xl">^</span>
             </h1>
 
             {/* Global Section */}
@@ -38,9 +32,9 @@ const ContactListComponent = () => {
                 <div className="w-6 h-6 rounded-full border border-white flex items-center justify-center">
                   🌍
                 </div>
-                <span>Proffernet</span>
+                <Link href="/" className='font-bold font-sans'>Proffernet</Link>
               </div>
-              <blockquote className="text-2xl font-light leading-relaxed">
+              <blockquote className="text-2xl font-thin">
                 &quot;Connect by using any of the given socials provided here.&quot;
               </blockquote>
               <div className="flex items-center gap-4">
@@ -54,58 +48,35 @@ const ContactListComponent = () => {
               </div>
             </div>
 
-            <div className="flex gap-4">
+            <div className="grid grid-cols-2 gap-2">
             <SocialLink
             href="https://wa.me/1234567890"
-            icon={<WhatsApp className="w-6 h-6" />}
+            icon={<FaWhatsapp className="w-6 h-6 text-green-500" />}
             label="WhatsApp"
-            gradient="from-green-400 to-green-600"
           />
           <SocialLink
             href="https://github.com/johndoe"
-            icon={<Github className="w-6 h-6" />}
+            icon={<FaGithub className="w-6 h-6" />}
             label="GitHub"
-            gradient="from-gray-600 to-gray-800"
           />
           <SocialLink
             href="https://www.linkedin.com/in/johndoe"
-            icon={<Linkedin className="w-6 h-6" />}
+            icon={<FaLinkedin className="w-6 h-6 text-blue-500  " />}
             label="LinkedIn"
-            gradient="from-blue-400 to-blue-600"
           />
           <SocialLink
             href="tel:+1234567890"
-            icon={<Phone className="w-6 h-6" />}
+            icon={<FaPhone className="w-6 h-6 text-green-300" />}
             label="+1 (234) 567-890"
-            gradient="from-yellow-400 to-orange-600"
           />
 
             </div>
           </div>
 
           <div className="relative h-[600px] hidden lg:block">
-            {Array.from({ length: 8 }).map((_, i) => (
-              <div
-                key={i}
-                className="absolute rounded-2xl overflow-hidden"
-                style={{
-                  width: '200px',
-                  height: '250px',
-                  top: `${Math.sin(i * 0.8) * 100 + 150}px`,
-                  right: `${Math.cos(i * 0.8) * 100 + 150}px`,
-                  transform: `rotate(${i * 5}deg)`,
-                  zIndex: i,
-                }}
-              >
-                <Image
-                  src="/"
-                  alt={`Creator ${i + 1}`}
-                  width={200}
-                  height={250}
-                  className="w-full h-full object-cover grayscale bg-white"
-                />
-              </div>
-            ))}
+           
+               <ContactPointer/>
+           
           </div>
         </main>
       </div>
@@ -114,13 +85,13 @@ const ContactListComponent = () => {
 }
 
 
-function SocialLink({ href, icon, label, gradient }: SocialLinkProps) {
+function SocialLink({ href, icon, label }: SocialLinkProps) {
     return (
       <Link
         href={href}
-        className={`flex items-center space-x-4 p-4 rounded-lg transition-all duration-300 ease-in-out transform hover:scale-105 bg-gradient-to-r ${gradient}`}
+        className="flex items-center space-x-4 p-3 rounded-lg transition-all duration-300 ease-in-out dark:border-white/[0.2] border-transparent border transform hover:scale-105 bg-background"
       >
-        <div className="bg-white p-2 rounded-full">{icon}</div>
+        <div className="rounded-full w-[1rem]">{icon}</div>
         <span className="text-white font-semibold">{label}</span>
       </Link>
     )
