@@ -11,7 +11,8 @@ module.exports = {
       "api.microlink.io",
       "127.0.0.1",
       "github.com",
-      "ui.aceternity.com"
+      "www.google.com",
+
     ],
   },
 };
