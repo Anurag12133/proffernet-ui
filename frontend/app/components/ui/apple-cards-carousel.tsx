@@ -17,6 +17,7 @@ import { AnimatePresence, motion } from "framer-motion";
 import Image, { ImageProps } from "next/image";
 import useOutsideClick from "@/hooks/use-outside-click";
 import Button from "../Buttons/Button";
+import { useRouter } from "next/navigation";
 
 interface CarouselProps {
   items: JSX.Element[];
@@ -58,6 +59,8 @@ export const Carousel = ({ items, initialScroll = 0 }: CarouselProps) => {
       setCanScrollRight(scrollLeft < scrollWidth - clientWidth);
     }
   };
+
+
 
   const scrollLeft = () => {
     if (carouselRef.current) {
@@ -166,7 +169,9 @@ export const Card = ({
 }) => {
   const [open, setOpen] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null!);
-  const { onCardClose, currentIndex } = useContext(CarouselContext);
+  const { onCardClose} = useContext(CarouselContext);
+
+  const route = useRouter();
 
   useEffect(() => {
     function onKeyDown(event: KeyboardEvent) {
@@ -196,6 +201,11 @@ export const Card = ({
     onCardClose(index);
   };
 
+  const handleContribute = () => {
+    route.push("/pages/contactlist");
+  }
+
+
   return (
     <>
       <AnimatePresence>
@@ -222,7 +232,7 @@ export const Card = ({
               className="max-w-5xl mx-auto bg-white dark:bg-neutral-900 h-fit  z-[60] my-10 p-4 md:p-10 rounded-3xl font-sans relative"
             >
               <div className=" top-4 h-8 m-4 w-8 right-0 ml-auto  flex items-center justify-center">
-              <Button label="Contribute" />
+              <Button label="Contribute"  onClick={handleContribute}/>
               </div>
 
     

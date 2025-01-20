@@ -2,6 +2,7 @@
 import Link from 'next/link'
 import { FaGithub, FaLinkedin, FaWhatsapp, FaPhone } from 'react-icons/fa';
 import { Avatar, AvatarImage } from '@/components/ui/avatar'
+import axios from 'axios';
 
 interface SocialLinkProps {
   href: string;
@@ -9,7 +10,22 @@ interface SocialLinkProps {
   label: string;
 }
 
+import {useState } from 'react';
+
 const ContactListComponent = () => {
+  const [socialDetails, setSocialDetails] = useState(null);
+
+
+    const fetchData = async () => {
+      try {
+        const response = await axios.get("http://127.0.0.1:8000/app/social-details/get/");
+        setSocialDetails(response.data);
+        console.log(response.data);
+      } catch {
+        console.error("Error fetching social details");
+      }
+    };
+    fetchData();
   return (
     <div className="min-h-screen w-full dark:bg-black to-background dark:bg-grid-small-white/[0.3] bg-grid-small-black/[0.3] text-white overflow-hidden relative">
 
