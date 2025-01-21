@@ -52,7 +52,6 @@ export const ProjectProvider: React.FC<{ children: React.ReactNode }> = ({
       });
 
       const accessToken = localStorage.getItem("accessToken");
-      console.log(accessToken);
 
       const response = await axios.post(
         "http://127.0.0.1:8000/project/create/",
