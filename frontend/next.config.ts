@@ -10,6 +10,9 @@ module.exports = {
       "aceternity.com",
       "api.microlink.io",
       "127.0.0.1",
+      "github.com",
+      "www.google.com",
+
     ],
   },
 };

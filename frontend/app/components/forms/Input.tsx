@@ -38,7 +38,7 @@ export default function Input({
       <div className="">
         <input
           id={labelId}
-          className="block w-full h-[2rem] rounded-md  text-white shadow-sm   dark:border-white/[0.2] border-transparent border  placeholder:text-gray-400  bg-black sm:text-sm sm:leading-6"
+          className="block w-full h-[2rem] rounded-md  text-white shadow-sm  pl-2 dark:border-white/[0.2] border-transparent border  placeholder:text-gray-400  bg-black sm:text-sm sm:leading-6"
           name={labelId}
           type={type}
           onChange={onChange}

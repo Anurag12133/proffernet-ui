@@ -55,7 +55,7 @@ export default function DashboardPage() {
           setProjects(response.data.projects);
         }
         setLoading(false);
-      } catch (err) {
+      } catch {
         setError("Failed to fetch projects");
         setLoading(false);
       }
@@ -80,8 +80,8 @@ export default function DashboardPage() {
 
   if (loading) {
     return (
-      <div className="flex justify-center items-center h-full">
-        <p className="text-gray-500">Loading projects...</p>
+      <div className="flex justify-center items-center h-screen bg-black">
+       <p className="text-white">Loading...</p>
       </div>
     );
   }
@@ -194,7 +194,7 @@ export default function DashboardPage() {
                           key={project.id}
                           className="flex items-start space-x-2"
                         >
-                          <span className="text-blue-500 mt-1">
+                          <span className="text-white mt-2">
                             <GoDotFill />
                           </span>
                           <div className="flex-1">

@@ -8,6 +8,15 @@ import { useLogoutMutation } from "@/redux/features/authApiSlice";
 import { logout as setLogout } from "@/redux/features/authSlice";
 import { NavLink } from "@/app/components/common";
 import { useRouter } from "next/navigation";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger
+} from "@/components/ui/dropdown-menu";
+
+import Link from "next/link";
 
 export default function Navbar() {
   const pathname = usePathname();
@@ -38,11 +47,57 @@ export default function Navbar() {
 
   const isSelected = (path: string) => (pathname === path ? true : false);
 
+  const AvatarDropdownMenu = () => (
+    <DropdownMenu >
+      <DropdownMenuTrigger className="outline-none">
+        <Avatar>
+          <AvatarImage src="https://github.com/shadcn.png" />
+          <AvatarFallback>CN</AvatarFallback>
+        </Avatar>
+      </DropdownMenuTrigger>
+      <DropdownMenuContent align="end" className="w-48 mt-3 text-white dark:border-white/[0.2] border-transparent border bg-black">
+        <DropdownMenuItem asChild>
+          <Link href="/pages/dashboard" className="w-full cursor-pointer">
+          Dashboard
+          </Link>
+        </DropdownMenuItem>
+        <DropdownMenuItem asChild>
+          <Link href="/pages/project" className="w-full cursor-pointer">
+          Publish
+          </Link>
+        </DropdownMenuItem>
+        <DropdownMenuItem asChild>
+          <Link href="/pages/projectlist" className="w-full cursor-pointer">
+          Contribute
+          </Link>
+        </DropdownMenuItem>
+        <DropdownMenuItem className="text-white hover:text-red-400 cursor-pointer" onClick={handleLogout}>
+          Logout
+        </DropdownMenuItem>
+      </DropdownMenuContent>
+    </DropdownMenu>
+  );
+
   const authLinks = (isMobile: boolean) => (
     <>
-      <NavLink isMobile={isMobile} onClick={handleLogout}>
-        Logout
-      </NavLink>
+      {isMobile ? (
+        <div className="px-2">
+          <Link href="/pages/dashboard" className="block px-3 py-2 text-white hover:bg-gray-700 rounded-md">
+            Dashboard
+          </Link>
+          <Link href="/pages/project" className="block px-3 py-2 text-white hover:bg-gray-700 rounded-md">
+            Publish
+          </Link>
+          <Link href="/pages/projectlist" className="block px-3 py-2 text-white hover:bg-gray-700 rounded-md">
+            Contribute
+          </Link>
+          <NavLink isMobile={isMobile} onClick={handleLogout}>
+            Logout
+          </NavLink>
+        </div>
+      ) : (
+        <AvatarDropdownMenu />
+      )}
     </>
   );
 
@@ -76,9 +131,9 @@ export default function Navbar() {
               </div>
               <div className="flex flex-1 items-center justify-start sm:items-stretch sm:justify-between">
                 <div className="flex flex-shrink-0 items-center">
-                  <a href="/" className="text-white font-bold">
+                  <Link href="/" className="text-white font-bold">
                     Proffernet{" "}
-                  </a>
+                  </Link>
                 </div>
                 <div className="hidden sm:ml-6 sm:block">
                   <div className="flex space-x-4">

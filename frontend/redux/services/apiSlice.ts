@@ -11,7 +11,7 @@ const mutex = new Mutex();
 const baseQuery = fetchBaseQuery({
   baseUrl: `${process.env.NEXT_PUBLIC_HOST}/api`,
   credentials: "include",
-  prepareHeaders: (headers, { getState }) => {
+  prepareHeaders: (headers, { }) => {
     const token = localStorage.getItem("accessToken");
 
     if (token) {
@@ -61,5 +61,5 @@ const baseQueryWithReauth: BaseQueryFn<
 export const apiSlice = createApi({
   reducerPath: "api",
   baseQuery: baseQueryWithReauth,
-  endpoints: (builder) => ({}),
+  endpoints: () => ({}),
 });

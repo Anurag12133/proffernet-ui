@@ -12,7 +12,9 @@ const config: Config = {
     "./app/**/*.{js,ts,jsx,tsx,mdx}",
     "./node_modules/@nextui-org/theme/dist/components/input.js",
   ],
+  
   theme: {
+  
     extend: {
       animation: {
         spotlight: "spotlight 2s ease .75s 1 forwards",
@@ -54,7 +56,7 @@ const config: Config = {
     },
   },
   plugins: [
-    // require("@tailwindcss/forms"),
+    
     addVariablesForColors,
     function ({
       matchUtilities,

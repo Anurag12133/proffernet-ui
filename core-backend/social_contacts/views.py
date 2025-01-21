@@ -5,7 +5,7 @@ from django.shortcuts import get_object_or_404
 from .models import SocialDetails
 from .serializers import SocialDetailsSerializer
 
-# Function Based Views
+
 class SocialDetailsView(generics.RetrieveUpdateAPIView):
     serializer_class = SocialDetailsSerializer
     permission_classes = [IsAuthenticated]
@@ -23,6 +23,13 @@ class CreateSocialDetailsView(generics.CreateAPIView):
         serializer.save(user=self.request.user)
 
 class DeleteSocialDetailsView(generics.DestroyAPIView):
+    permission_classes = [IsAuthenticated]
+
+    def get_object(self):
+        return get_object_or_404(SocialDetails, user=self.request.user)
+
+class GetContactDetailsView(generics.RetrieveAPIView):
+    serializer_class = SocialDetailsSerializer
     permission_classes = [IsAuthenticated]
 
     def get_object(self):
