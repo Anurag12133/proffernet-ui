@@ -17,6 +17,7 @@ interface SocialLinkProps {
 }
 
 interface SocialDetails {
+  username: string;
   whatsapp_group_url: string;
   linkedin_url: string;
   github_url: string;
@@ -117,7 +118,7 @@ const ContactListComponent = () => {
                   <AvatarImage src="https://github.com/shadcn.png" />
                 </Avatar>
                 <div>
-                  <p className="font-medium">Arther</p>
+                  <p className="font-medium">{socialDetails?.username}</p>
                   <p className="text-sm text-gray-400">Proposer</p>
                 </div>
               </div>
