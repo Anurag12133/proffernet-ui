@@ -3,7 +3,7 @@ import { LoginForm } from "@/app/components/forms";
 import SocialButtons from "@/app/components/common/SocialButtons";
 import type { Metadata } from "next";
 import { RiVercelFill } from "react-icons/ri";
-import { toast } from "react-toastify";
+
 
 export const metadata: Metadata = {
   title: "Proffernet",

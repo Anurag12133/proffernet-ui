@@ -221,7 +221,7 @@ export default function SocialDetailsForm() {
           </form>
         </Form>
         <ToastProvider>
-          <Toaster />
+          <Toaster/>
         </ToastProvider>
       </div>
     </div>

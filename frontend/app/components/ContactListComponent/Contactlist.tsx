@@ -4,7 +4,9 @@ import { FaGithub, FaLinkedin, FaWhatsapp, FaPhone } from 'react-icons/fa';
 import { Avatar, AvatarImage } from '@/components/ui/avatar'
 import axios from 'axios';
 import { useState, useEffect } from 'react';
-import { toast } from "react-toastify";
+import { useToast } from "@/lib/use-toast";
+import { ToastProvider } from '../ui/toast';
+import { Toaster } from '../ui/toaster';
 
 interface SocialLinkProps {
   href?: string;
@@ -25,17 +27,18 @@ const ContactListComponent = () => {
   const [socialDetails, setSocialDetails] = useState<SocialDetails | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(true);
+  const {toast} = useToast();
 
   const handleCopyWhatsApp = async () => {
     if (socialDetails?.whatsapp_number) {
       try {
         await navigator.clipboard.writeText(socialDetails.whatsapp_number);
-        toast.toast({
-          title: "WhatsApp number copied!",
-          description: `${socialDetails.whatsapp_number} has been copied to your clipboard.`,
+        toast({
+          title: "Copied",
+          description: "WhatsApp number copied to clipboard",
         });
       } catch {
-        toast.toast({
+        toast({
           title: "Failed to copy",
           description: "Could not copy the WhatsApp number to clipboard.",
         });
@@ -154,6 +157,9 @@ const ContactListComponent = () => {
           </div>
         </main>
       </div>
+      <ToastProvider>
+          <Toaster/>
+        </ToastProvider>
     </div>
   );
 };
