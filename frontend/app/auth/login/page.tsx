@@ -4,6 +4,7 @@ import SocialButtons from "@/app/components/common/SocialButtons";
 import type { Metadata } from "next";
 import { RiVercelFill } from "react-icons/ri";
 
+
 export const metadata: Metadata = {
   title: "Proffernet",
   description: "Welcome to proffernet",

@@ -8,7 +8,7 @@ interface ButtonProps {
 
 const Button = ({ label, onClick }: ButtonProps) => {
   return (
-    <div className=" flex justify-center text-center animate-bounce hover:animate-none">
+    <div className=" flex justify-center text-center animate-pulse hover:animate-none">
       <HoverBorderGradient
         containerClassName="rounded-full"
         as="button"
