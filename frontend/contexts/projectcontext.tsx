@@ -1,5 +1,6 @@
 import React, { createContext, useContext, useState } from "react";
 import axios from "axios";
+import { useToast } from "@/lib/use-toast";
 
 interface ProjectContextType {
   title: string;
@@ -33,6 +34,8 @@ export const ProjectProvider: React.FC<{ children: React.ReactNode }> = ({
   const [project_type, setProjectType] = useState("");
   const [tech_stacks, setTechStacks] = useState<string[]>([]);
   const [files, setFiles] = useState<File[]>([]);
+
+  const { toast } = useToast();
 
   const handleSave = async () => {
     if (tech_stacks.length < 2) {
@@ -70,7 +73,12 @@ export const ProjectProvider: React.FC<{ children: React.ReactNode }> = ({
         setProjectType("");
         setTechStacks([]);
         setFiles([]);
-        console.log("Project created successfully!");
+        toast({
+          title: "Success",
+          description: "Project created successfully",
+          variant: "default",
+
+        })
       } else {
         console.error("Failed to create project");
       }

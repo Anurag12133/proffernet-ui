@@ -37,11 +37,13 @@ const ContactListComponent = () => {
         toast({
           title: "Copied",
           description: "WhatsApp number copied to clipboard",
+          variant:"default"
         });
       } catch {
         toast({
           title: "Failed to copy",
           description: "Could not copy the WhatsApp number to clipboard.",
+          variant:"default"
         });
       }
     }
