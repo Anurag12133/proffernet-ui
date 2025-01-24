@@ -1,8 +1,9 @@
 import Link from "next/link";
 import { LoginForm } from "@/app/components/forms";
-import SocialButtons from "@/app/components/common/SocialButtons";
 import type { Metadata } from "next";
 import { RiVercelFill } from "react-icons/ri";
+import { Toaster } from "@/app/components/ui/toaster";
+import { ToastProvider } from "@/app/components/ui/toast";
 
 
 export const metadata: Metadata = {
@@ -26,7 +27,7 @@ export default function Page() {
 
       <div className="mt-5 sm:mx-auto sm:w-full sm:max-w-sm text-white">
         <LoginForm />
-        <SocialButtons />
+
 
         <p className="mt-5 text-center text-sm text-white">
           Already have an account?{" "}
@@ -38,6 +39,9 @@ export default function Page() {
           </Link>
         </p>
       </div>
+      <ToastProvider>
+          <Toaster/>
+        </ToastProvider>
     </div>
   );
 }

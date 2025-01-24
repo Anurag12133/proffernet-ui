@@ -3,9 +3,11 @@ import { useRouter } from "next/navigation";
 import { useAppDispatch } from "@/redux/hooks";
 import { useLoginMutation } from "@/redux/features/authApiSlice";
 import { setAuth } from "@/redux/features/authSlice";
-import { toast } from "react-toastify";
+// import { toast } from "react-toastify";
+import { useToast } from "@/lib/use-toast";
 
 export default function useLogin() {
+  const {toast} = useToast();
   const router = useRouter();
   const dispatch = useAppDispatch();
   const [login, { isLoading }] = useLoginMutation();
@@ -38,12 +40,20 @@ export default function useLogin() {
         }
 
         dispatch(setAuth());
-        toast.success("Logged in");
+        toast({
+          title: "Success",
+          description: "Logged in successfully",
+          variant: "default"
+        });
         router.push("/pages/dashboard");
       })
       .catch((error) => {
         console.error("Login failed:", error); // Log error details
-        toast.error("Failed to log in");
+        toast({
+          title: "Error",
+          description: "Login failed",
+          variant: "default"
+        });
       });
   };
 

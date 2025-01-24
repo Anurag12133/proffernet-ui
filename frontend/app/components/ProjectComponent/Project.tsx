@@ -10,6 +10,8 @@ import { ProjectProvider, useProjectContext } from "@/contexts/projectcontext";
 import ProjectDescription from "@/app/components/ProjectComponent/ProjectDescription";
 import { useRouter } from "next/navigation";
 import ProjectDropDown from "@/app/components/ProjectComponent/ProjectDropDown";
+import { Toaster } from "../ui/toaster";
+import { ToastProvider } from "@/app/components/ui/toast";
 
 interface SubmitButtonProps {
   loading: boolean;
@@ -86,6 +88,9 @@ const ProjectPublish = () => {
           <UploadFile />
         </div>
       </div>
+      <ToastProvider>
+          <Toaster/>
+        </ToastProvider>
     </ProjectProvider>
   );
 };

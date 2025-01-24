@@ -56,7 +56,7 @@ export default function SocialDetailsForm() {
         toast({
           title: "Error",
           description: "Please login to save your social details",
-          variant: "destructive",
+          variant: "default",
         });
         return;
       }
