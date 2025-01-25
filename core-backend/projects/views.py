@@ -21,7 +21,8 @@ class ProjectListCreateView(generics.ListCreateAPIView):
 
 class ProjeDetailsView(APIView):
     permission_classes = [AllowAny]
-    def get(self, request, *args, **kwargs):
+    @staticmethod
+    def get(request, *args, **kwargs):
         projects = Project.objects.all()
         serializer = ProjectSerializer(projects, many=True)
         return Response(serializer.data, status=200)
