@@ -1,6 +1,5 @@
 import Link from "next/link";
 import { RegisterForm } from "@/app/components/forms";
-import SocialButtons from "@/app/components/common/SocialButtons";
 import type { Metadata } from "next";
 import { RiVercelFill } from "react-icons/ri";
 
@@ -25,7 +24,7 @@ export default function Page() {
 
       <div className="mt-5 sm:mx-auto sm:w-full sm:max-w-sm text-white">
         <RegisterForm />
-        <SocialButtons />
+       
 
         <p className="mt-5 text-center text-sm text-white">
           Already have an account?{" "}

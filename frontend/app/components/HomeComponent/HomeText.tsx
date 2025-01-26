@@ -1,19 +1,25 @@
 "use client";
 import { TypewriterEffectSmooth } from "@/app/components/ui/typewriter-effect";
-import { usePathname } from "next/navigation";
 import { useState } from "react";
-import { NavLink } from "../common";
+import { useRouter } from "next/navigation";
+import Spinner from "../SpinnerComponent/Spinner";
 
 const HeroText = () => {
+  const router = useRouter();
   const words = [
     { text: "Build" },
     { text: "&," },
     { text: "Practice", className: "text-blue-500 dark:text-blue-500" },
   ];
 
-  const pathname = usePathname();
   const [loading, setLoading] = useState(false);
-  const isSelected = (path: string) => (pathname === path ? true : false);
+  const handleRegisterClick = () => {
+    setLoading(true);
+    setTimeout(() => {
+      setLoading(false);
+    }, 10000);
+    router.push("/auth/register");
+  };
 
   return (
     <div className="flex flex-col items-start h-[40rem] w-full overflow-hidden px-4">
@@ -23,16 +29,15 @@ const HeroText = () => {
         a seamless, collaborative environment.
       </p>
       <div className="flex flex-col md:flex-row space-y-4 md:space-y-0 md:space-x-4 mt-6">
-        <NavLink
-          isSelected={isSelected("/auth/register")}
-          href="/auth/register"
+        <button className="text-white bg-background rounded-md px-3 py-1 font-medium dark:border-white/[0.2] border-transparent border"
+          onClick={handleRegisterClick}
         >
           Register
-        </NavLink>
+        </button>
       </div>
       {loading && (
-        <div className="fixed inset-0 flex items-center justify-center bg-black from-black to-grey-100 bg-opacity-75 z-50">
-          <div className="loader"></div>
+        <div className="h-screen w-full">
+          <Spinner/>
         </div>
       )}
       <div
