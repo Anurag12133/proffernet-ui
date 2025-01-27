@@ -1,6 +1,5 @@
 "use client";
 
-import { usePathname } from "next/navigation";
 import { Disclosure } from "@headlessui/react";
 import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
 import { useAppSelector, useAppDispatch } from "@/redux/hooks";
@@ -17,15 +16,26 @@ import {
 } from "@/components/ui/dropdown-menu";
 
 import Link from "next/link";
+import Spinner from "../SpinnerComponent/Spinner";
+import { useState } from "react";
 
 export default function Navbar() {
-  const pathname = usePathname();
+
   const dispatch = useAppDispatch();
 
   const [logout] = useLogoutMutation();
   const router = useRouter();
 
   const { isAuthenticated } = useAppSelector((state) => state.auth);
+
+  const [loading, setLoading] = useState(false);
+    const handleRegisterClick = () => {
+      setLoading(true);
+      setTimeout(() => {
+        setLoading(false);
+      }, 1000);
+      router.push("/auth/login");
+    };
 
   const handleLogout = () => {
     logout(undefined)
@@ -45,7 +55,6 @@ export default function Navbar() {
       });
   };
 
-  const isSelected = (path: string) => (pathname === path ? true : false);
 
   const AvatarDropdownMenu = () => (
     <DropdownMenu >
@@ -101,15 +110,18 @@ export default function Navbar() {
     </>
   );
 
-  const guestLinks = (isMobile: boolean) => (
+  const guestLinks = () => (
     <>
-      <NavLink
-        isSelected={isSelected("/auth/login")}
-        isMobile={isMobile}
-        href="/auth/login"
-      >
-        Login
-      </NavLink>
+      <button className="text-white bg-background rounded-md px-3 py-1 font-medium dark:border-white/[0.2] border-transparent border"
+          onClick={handleRegisterClick}
+        >
+          Login
+        </button>
+      {loading && (
+        <div className="h-screen w-full">
+          <Spinner/>
+        </div>
+      )}
     </>
   );
 
@@ -137,7 +149,7 @@ export default function Navbar() {
                 </div>
                 <div className="hidden sm:ml-6 sm:block">
                   <div className="flex space-x-4">
-                    {isAuthenticated ? authLinks(false) : guestLinks(false)}
+                    {isAuthenticated ? authLinks(false) : guestLinks()}
                   </div>
                 </div>
               </div>
@@ -146,7 +158,7 @@ export default function Navbar() {
 
           <Disclosure.Panel className="sm:hidden">
             <div className="space-y-1 px-2 pb-3 pt-2">
-              {isAuthenticated ? authLinks(true) : guestLinks(true)}
+              {isAuthenticated ? authLinks(true) : guestLinks()}
             </div>
           </Disclosure.Panel>
         </>
