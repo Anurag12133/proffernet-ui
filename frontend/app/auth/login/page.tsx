@@ -27,7 +27,7 @@ export default function Page() {
 
       <div className="mt-5 sm:mx-auto sm:w-full sm:max-w-sm text-white">
         <LoginForm />
-
+        
 
         <p className="mt-5 text-center text-sm text-white">
           Already have an account?{" "}
