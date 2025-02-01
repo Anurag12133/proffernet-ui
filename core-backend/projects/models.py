@@ -26,4 +26,11 @@ class File(models.Model):
 
     def __str__(self):
         return f"{self.file.name} uploaded to {self.project.title}"
+class Contribution(models.Model):
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, related_name='contributions', on_delete=models.CASCADE)
+    project = models.ForeignKey(Project, related_name='contributions', on_delete=models.CASCADE)
+    contributed_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f"{self.user} contributing to {self.project.title}"
 
