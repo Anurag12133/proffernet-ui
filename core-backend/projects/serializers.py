@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import Project, File
+from .models import Project, File, Contribution
 
 class ProjectSerializer(serializers.ModelSerializer):
     file = serializers.FileField(write_only=True, required=True)
@@ -23,3 +23,9 @@ class ProjectSerializer(serializers.ModelSerializer):
 
     def get_files(self, obj):
         return [{"id": f.id, "file": f.file.url, "uploaded_at": f.uploaded_at} for f in obj.files.all()]
+
+class ContributionSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Contribution
+        fields = ['user', 'project', 'contributed_at']
+        read_only_fields = ['contributed_at']

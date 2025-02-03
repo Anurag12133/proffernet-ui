@@ -110,7 +110,7 @@ export const Carousel = ({ items, initialScroll = 0 }: CarouselProps) => {
           <div
             className={cn(
               "flex flex-row justify-start gap-4 pl-4",
-              "max-w-7xl mx-auto" // remove max-w-4xl if you want the carousel to span the full width of its container
+              "max-w-7xl mx-auto"
             )}
           >
             {items.map((item, index) => (
@@ -202,6 +202,7 @@ export const Card = ({
   };
 
   const handleContribute = () => {
+    console.log(card.title);
     route.push("/pages/contactlist");
   }
 
@@ -234,8 +235,6 @@ export const Card = ({
               <div className=" top-4 h-8 m-4 w-8 right-0 ml-auto  flex items-center justify-center">
               <Button label="Contribute"  onClick={handleContribute}/>
               </div>
-
-    
               <motion.p
                 layoutId={layout ? `category-${card.title}` : undefined}
                 className="text-base font-medium text-black dark:text-white"
