@@ -96,8 +96,146 @@ export default function DashboardPage() {
 
   if (projects.length === 0) {
     return (
-      <div className="flex justify-center items-center h-full">
-        <p className="text-gray-500">No projects found</p>
+      <div className="hidden flex-col md:flex bg-black h-[95vh] border-t dark:border-white/[0.2] border-transparent ">
+        <div className="flex-1 space-y-4 p-8 pt-6">
+          <div className="flex items-center justify-between space-y-2">
+            <h2 className="text-3xl font-bold tracking-tight text-white">
+              Dashboard
+            </h2>
+            <div className="flex items-center space-x-2"></div>
+          </div>
+          <Tabs defaultValue="overview" className="space-y-4 text-white">
+            <TabsList>
+              <TabsTrigger
+                value="overview"
+                onClick={() => handleButton("dashboard")}
+              >
+                Overview
+              </TabsTrigger>
+              <TabsTrigger
+                value="contribute"
+                className="cursor-pointer"
+                onClick={() => handleButton("projectlist")}
+              >
+                Contribute
+              </TabsTrigger>
+              <TabsTrigger
+                value="publish"
+                onClick={() => handleButton("project")}
+                className="cursor-pointer"
+              >
+                Publish
+              </TabsTrigger>
+            </TabsList>
+            <TabsContent value="overview" className="space-y-4">
+              <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
+                <Card className="dark:border-white/[0.2] border-transparent border">
+                  <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+                    <CardTitle className="text-sm font-medium">
+                      Published Projects
+                    </CardTitle>
+                    <FaProjectDiagram className="h-4 w-4 text-muted-foreground" />
+                  </CardHeader>
+                  <CardContent>
+                    <div className="text-2xl font-bold">0</div>
+                  </CardContent>
+                </Card>
+
+                <Card className="dark:border-white/[0.2] border-transparent border">
+                  <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+                    <CardTitle className="text-sm font-medium">
+                      Contributing Projects
+                    </CardTitle>
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth="2"
+                      className="h-4 w-4 text-muted-foreground"
+                    >
+                      <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2" />
+                      <circle cx="9" cy="7" r="4" />
+                      <path d="M22 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75" />
+                    </svg>
+                  </CardHeader>
+                  <CardContent>
+                    <div className="text-2xl font-bold">0</div>
+                  </CardContent>
+                </Card>
+              </div>
+              <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-7">
+                <Card className="col-span-4 dark:border-white/[0.2] border-transparent border h-96 overflow-y-auto">
+                  <CardHeader>
+                    <CardTitle>Contributing Projects</CardTitle>
+                  </CardHeader>
+                  <CardContent>
+                   <Image
+                      src="/Notfound1.png"
+                      alt="Notfound"
+                      width={200}
+                      height={50}
+                      className="w-50 h-30 mt-10"
+                    />
+                  </CardContent>
+                </Card>
+                <Card className="col-span-3 dark:border-white/[0.2] border-transparent border">
+                  <CardHeader>
+                    <CardTitle>Published Projects</CardTitle>
+                    <CardContent> <Image
+                      src="/Notfound2.png"
+                      alt="Notfound"
+                      width={200}
+                      height={50}
+                      className="w-50 h-30 mt-10"
+                    /></CardContent>
+                  </CardHeader>
+                  <CardContent>
+                    <ul className="space-y-2">
+                      {projects.map((project) => (
+                        <li
+                          key={project.id}
+                          className="flex items-start space-x-2"
+                        >
+                          <span className="text-white mt-2">
+                            <GoDotFill />
+                          </span>
+                          <div className="flex-1">
+                            <div className="flex justify-between items-center flex-1">
+                              <span className="font-medium">
+                                {project.title}
+                              </span>
+                              <div className="relative w-8 h-8 overflow-hidden rounded-full bg-gray-200">
+                                {project.files && project.files.length > 0 ? (
+                                  <Image
+                                    src={getFirstImageUrl(project.files) || ""}
+                                    alt={project.title}
+                                    layout="fill"
+                                    objectFit="cover"
+                                    className="rounded-full"
+                                  />
+                                ) : (
+                                  <div className="w-full h-full flex items-center justify-center bg-blue-100 text-blue-500 text-sm">
+                                    {project.title.charAt(0).toUpperCase()}
+                                  </div>
+                                )}
+                              </div>
+                            </div>
+                            <p className="text-sm text-gray-400 mt-1">
+                              {project.description}
+                            </p>
+                          </div>
+                        </li>
+                      ))}
+                    </ul>
+                  </CardContent>
+                </Card>
+              </div>
+            </TabsContent>
+          </Tabs>
+        </div>
       </div>
     );
   }
