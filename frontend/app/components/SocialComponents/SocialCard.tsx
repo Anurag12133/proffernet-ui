@@ -20,6 +20,7 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { useRouter } from "next/navigation";
+import axios from "axios";
 
 const formSchema = z.object({
   whatsappGroupUrl: z.string().url({ message: "Please enter a valid URL" }),
@@ -70,21 +71,21 @@ export default function SocialDetailsForm() {
 
       const method = existingData ? "PUT" : "POST";
 
-      const response = await fetch(`${API_URL}/app/social-details/create/`, {
+      const response = await axios({
         method,
+        url: `${API_URL}/app/social-details/create/`,
         headers: {
           Authorization: `Bearer ${token}`,
           "Content-Type": "application/json",
         },
-        body: JSON.stringify(payload),
+        data: payload,
       });
 
-      if (!response.ok) {
-        const errorData = await response.json();
-        throw new Error(errorData.message || "Failed to save social details");
+      if (!response.data) {
+        throw new Error("Failed to save social details");
       }
 
-      const savedData = await response.json();
+      const savedData = response.data;
       setExistingData(savedData);
 
       toast({

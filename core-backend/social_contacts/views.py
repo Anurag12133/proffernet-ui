@@ -1,7 +1,9 @@
 from rest_framework import generics
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.exceptions import ValidationError
-from django.shortcuts import get_object_or_404
+
+from rest_framework.permissions import AllowAny
+from rest_framework.generics import ListAPIView
 from .models import SocialDetails
 from .serializers import SocialDetailsSerializer
 
@@ -28,9 +30,10 @@ class DeleteSocialDetailsView(generics.DestroyAPIView):
     def get_object(self):
         return get_object_or_404(SocialDetails, user=self.request.user)
 
-class GetContactDetailsView(generics.RetrieveAPIView):
-    serializer_class = SocialDetailsSerializer
-    permission_classes = [IsAuthenticated]
 
-    def get_object(self):
-        return get_object_or_404(SocialDetails, user=self.request.user)
+class GetContactDetailsView(ListAPIView):
+    serializer_class = SocialDetailsSerializer
+    permission_classes = [AllowAny]  # Allow public access
+
+    def get_queryset(self):
+        return SocialDetails.objects.all()
