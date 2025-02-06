@@ -17,7 +17,7 @@ export default function ContactPage() {
               src="/contact.png"
               alt="contactimage"
               width={500}
-              height={`70`}
+              height={"70"}
 
               className="w-full h-70 mt-2 mr-10"
             />
