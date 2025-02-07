@@ -35,5 +35,6 @@ class GetContactDetailsView(ListAPIView):
     serializer_class = SocialDetailsSerializer
     permission_classes = [AllowAny]  # Allow public access
 
-    def get_queryset(self):
+    @staticmethod
+    def get_queryset():
         return SocialDetails.objects.all()
