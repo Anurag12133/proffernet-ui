@@ -21,7 +21,8 @@ class ProjectSerializer(serializers.ModelSerializer):
 
         return project
 
-    def get_files(self, obj):
+    @staticmethod
+    def get_files(obj):
         return [{"id": f.id, "file": f.file.url, "uploaded_at": f.uploaded_at} for f in obj.files.all()]
 
 class ContributionSerializer(serializers.ModelSerializer):

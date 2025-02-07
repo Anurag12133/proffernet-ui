@@ -20,7 +20,8 @@ class ProjectListCreateView(generics.ListCreateAPIView):
 
 class ProjectDetailsView(APIView):
     permission_classes = [AllowAny]
-    def get(self, request, *args, **kwargs):
+    @staticmethod
+    def get(request, *args, **kwargs):
         projects = Project.objects.all()
         serializer = ProjectSerializer(projects, many=True)
         return Response(serializer.data, status=200)
@@ -45,7 +46,8 @@ class UserProjectsView(generics.ListAPIView):
 
 class ProjectDetailsByTitleView(APIView):
 
-    def get(self, request, *args, **kwargs):
+    @staticmethod
+    def get(request, *args, **kwargs):
         project_title = kwargs.get('title') 
         try:
             project = Project.objects.get(title=project_title)
@@ -57,7 +59,8 @@ class ProjectDetailsByTitleView(APIView):
 
 class ContributeToProjectView(APIView):
 
-    def post(self, request, *args, **kwargs):
+    @staticmethod
+    def post(request, *args, **kwargs):
         project_title = request.data.get('project_title')
 
         if not project_title:
