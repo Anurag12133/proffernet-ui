@@ -1,7 +1,7 @@
 "use client";
 import Link from "next/link";
 import { FaGithub, FaLinkedin, FaWhatsapp, FaPhone } from "react-icons/fa";
-import { Avatar, AvatarImage } from "@/components/ui/avatar";
+import { IoShareSocialSharp } from "react-icons/io5";
 import axios from "axios";
 import { useState, useEffect } from "react";
 import { useToast } from "@/lib/use-toast";
@@ -17,15 +17,15 @@ interface SocialLinkProps {
 }
 
 interface SocialDetails {
-  username: string;
-  whatsapp_group_url: string;
-  linkedin_url: string;
-  github_url: string;
-  whatsapp_number: string;
+  username?: string;
+  whatsapp_group_url?: string;
+  linkedin_url?: string;
+  github_url?: string;
+  whatsapp_number?: string;
 }
 
-const ContactListComponent = () => {
-  const [socialDetails, setSocialDetails] = useState<SocialDetails[]>([]); // Store as an array
+const ContactListComponent = ({ projectTitle }: { projectTitle: string }) => {
+  const [socialDetails, setSocialDetails] = useState<SocialDetails | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(true);
   const { toast } = useToast();
@@ -52,12 +52,24 @@ const ContactListComponent = () => {
 
   useEffect(() => {
     const fetchData = async () => {
+      if (!projectTitle) {
+        setError("Project ID is missing");
+        setLoading(false);
+        return;
+      }
+
       try {
         const response = await axios.get(
-          "http://127.0.0.1:8000/app/social-details/get/"
+         `http://127.0.0.1:8000/app/social-details/project/?project_title=${encodeURIComponent(projectTitle)}`,
+  {
+    headers: {
+      Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+    },
+  }
         );
 
-        setSocialDetails(response.data); // Store array of social details
+        console.log("API Response:", response.data); // Debugging
+        setSocialDetails(response.data);
         setError(null);
       } catch (err) {
         if (axios.isAxiosError(err)) {
@@ -71,7 +83,7 @@ const ContactListComponent = () => {
     };
 
     fetchData();
-  }, []);
+  }, [projectTitle]);
 
   if (loading) {
     return (
@@ -81,10 +93,10 @@ const ContactListComponent = () => {
     );
   }
 
-  if (error) {
+  if (error || !socialDetails) {
     return (
       <div className="min-h-screen w-full flex items-center justify-center">
-        <p className="text-white">{error}</p>
+        <p className="text-white">{error || "No social details found for this project."}</p>
       </div>
     );
   }
@@ -96,68 +108,59 @@ const ContactListComponent = () => {
       <div className="relative z-10">
         <main className="flex justify-center items-center min-h-screen">
           <div className="space-y-12 p-6 mb-[10rem] max-w-xl w-full">
-            <h1 className="text-7xl font-sans font-bold text-center mr-[20rem]">
-              Socials
+            <h1 className="text-7xl font-sans font-bold text-start">
+              {projectTitle}
             </h1>
 
             <div className="space-y-6">
-              <div className="flex items-center gap-2 justify-center mr-[25rem]">
-                <div className="w-6 h-6 rounded-full border border-white flex items-center justify-center"></div>
+              <div className="flex items-start gap-2 justify-start">
+                <div className="w-6 h-6 rounded-full border border-white flex items-start justify-start"></div>
                 <Link href="/" className="font-bold font-sans">
                   Proffernet
                 </Link>
               </div>
             </div>
 
-            {socialDetails.length > 0 ? (
-              socialDetails.map((social, index) => (
-                <div key={index} className="space-y-6">
-                  <div className="flex items-center gap-4 justify-center mr-[25rem]">
-                    <Avatar>
-                      <AvatarImage src="https://github.com/shadcn.png" />
-                    </Avatar>
-                    <div>
-                      <p className="font-medium">{social.username}</p>
-                      <p className="text-sm text-gray-400">Proposer</p>
-                    </div>
-                  </div>
-
-                  <div className="grid grid-cols-2 gap-2">
-                    {social.whatsapp_group_url && (
-                      <SocialLink
-                        href={social.whatsapp_group_url}
-                        icon={<FaWhatsapp className="w-6 h-6 text-green-500" />}
-                        label="WhatsApp Group"
-                      />
-                    )}
-                    {social.whatsapp_number && (
-                      <SocialLink
-                        icon={<FaPhone className="w-6 h-6 text-green-500" />}
-                        label="Phone Number"
-                        onClick={() => handleCopyWhatsApp(social.whatsapp_number)}
-                        isButton={true}
-                      />
-                    )}
-                    {social.github_url && (
-                      <SocialLink
-                        href={social.github_url}
-                        icon={<FaGithub className="w-6 h-6" />}
-                        label="GitHub"
-                      />
-                    )}
-                    {social.linkedin_url && (
-                      <SocialLink
-                        href={social.linkedin_url}
-                        icon={<FaLinkedin className="w-6 h-6 text-blue-500" />}
-                        label="LinkedIn"
-                      />
-                    )}
-                  </div>
+            <div className="space-y-6">
+              <div className="flex items-start gap-2 justify-start">
+               <IoShareSocialSharp className="mt-1.5" size={25}/>
+                <div>
+                  <p className="text-2xl font-bold ">Socials</p>
                 </div>
-              ))
-            ) : (
-              <p className="text-center text-gray-400">No social details found.</p>
-            )}
+              </div>
+
+              <div className="grid grid-cols-2 gap-2">
+                {socialDetails.whatsapp_group_url && (
+                  <SocialLink
+                    href={socialDetails.whatsapp_group_url}
+                    icon={<FaWhatsapp className="w-6 h-6 text-green-500" />}
+                    label="WhatsApp Group"
+                  />
+                )}
+                {socialDetails.whatsapp_number && (
+                  <SocialLink
+                    icon={<FaPhone className="w-6 h-6 text-green-500" />}
+                    label="Phone Number"
+                    onClick={() => handleCopyWhatsApp(socialDetails.whatsapp_number!)}
+                    isButton={true}
+                  />
+                )}
+                {socialDetails.github_url && (
+                  <SocialLink
+                    href={socialDetails.github_url}
+                    icon={<FaGithub className="w-6 h-6" />}
+                    label="GitHub"
+                  />
+                )}
+                {socialDetails.linkedin_url && (
+                  <SocialLink
+                    href={socialDetails.linkedin_url}
+                    icon={<FaLinkedin className="w-6 h-6 text-blue-500" />}
+                    label="LinkedIn"
+                  />
+                )}
+              </div>
+            </div>
           </div>
         </main>
       </div>

@@ -202,9 +202,12 @@ export const Card = ({
   };
 
   const handleContribute = () => {
-    console.log(card.title);
-    route.push("/pages/contactlist");
-  }
+    // Encode the project title to ensure it's URL-safe
+    const projectTitle = encodeURIComponent(card.title);
+  
+    // Navigate to the contact list page with the project title
+    route.push(`/pages/contactlist?project_title=${projectTitle}`);
+  };
 
 
   return (
