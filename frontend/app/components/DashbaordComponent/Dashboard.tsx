@@ -4,12 +4,12 @@ import { Metadata } from "next";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { FaProjectDiagram } from "react-icons/fa";
-import Overview from "../DashbaordComponent/Overview";
 import { useRouter } from "next/navigation";
 import { GoDotFill } from "react-icons/go";
 import { useCallback, useEffect, useState } from "react";
 import Image from "next/image";
 import axios from "axios";
+import Button from "../Buttons/Button";
 
 export const metadata: Metadata = {
   title: "Dashboard",
@@ -56,7 +56,7 @@ export default function DashboardPage() {
         }
         setLoading(false);
       } catch {
-        setError("Failed to fetch projects");
+        router.push("/auth/login");
         setLoading(false);
       }
     };
@@ -167,31 +167,45 @@ export default function DashboardPage() {
                 </Card>
               </div>
               <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-7">
-                <Card className="col-span-4 dark:border-white/[0.2] border-transparent border h-96 overflow-y-auto">
+              <Card className="col-span-4 dark:border-white/[0.2] border-transparent border h-96 overflow-y-auto">
                   <CardHeader>
                     <CardTitle>Contributing Projects</CardTitle>
                   </CardHeader>
                   <CardContent>
-                   <Image
-                      src="/Notfound1.png"
-                      alt="Notfound"
-                      width={200}
-                      height={50}
-                      className="w-50 h-30 mt-10"
-                    />
+                    <div className="flex items-center gap-x-6 mt-10">
+                      {/* Image stays on the left */}
+                      <Image src="/Notfound1.png" alt="Notfound" width={200} height={50} className="w-50 h-30" />
+
+                      {/* Text and button centered */}
+                      <div className="flex flex-col items-center flex-1">
+                        <h1 className="text-white font-sans mb-3 text-center font-bold">See Various Projects to Contribute</h1>
+                        <Button label="Contribute" onClick={() => handleButton("projectlist")} />
+                      </div>
+                    </div>
                   </CardContent>
                 </Card>
+
                 <Card className="col-span-3 dark:border-white/[0.2] border-transparent border">
-                  <CardHeader>
-                    <CardTitle>Published Projects</CardTitle>
-                    <CardContent> <Image
+                <CardHeader className="flex items-center gap-x-6">
+                    {/* Image on the left */}
+                    <Image
                       src="/Notfound2.png"
                       alt="Notfound"
                       width={200}
                       height={50}
-                      className="w-50 h-30 mt-10"
-                    /></CardContent>
+                      className="w-50 h-30"
+                    />
+
+                    {/* Centered text and button */}
+                    <div className="flex flex-col items-center flex-1">
+                      <h1 className="text-white font-sans mb-2 text-center font-bold">
+                        Publish Your Projects
+                      </h1>
+                      <Button label="Publish" onClick={() => handleButton("project")} />
+                    </div>
                   </CardHeader>
+
+
                   <CardContent>
                     <ul className="space-y-2">
                       {projects.map((project) => (
@@ -317,29 +331,22 @@ export default function DashboardPage() {
                   <CardHeader>
                     <CardTitle>Contributing Projects</CardTitle>
                   </CardHeader>
-                  <CardContent>
-                    <Overview />
-                  </CardContent>
+                 
                 </Card>
-                <Card className="col-span-3 dark:border-white/[0.2] border-transparent border">
+                <Card className="col-span-3 dark:border-white/[0.2] border-transparent border h-[calc(70vh-100px)] overflow-y-auto">
                   <CardHeader>
                     <CardTitle>Published Projects</CardTitle>
                   </CardHeader>
                   <CardContent>
                     <ul className="space-y-2">
                       {projects.map((project) => (
-                        <li
-                          key={project.id}
-                          className="flex items-start space-x-2"
-                        >
+                        <li key={project.id} className="flex items-start space-x-2">
                           <span className="text-white mt-2">
                             <GoDotFill />
                           </span>
                           <div className="flex-1">
                             <div className="flex justify-between items-center flex-1">
-                              <span className="font-medium">
-                                {project.title}
-                              </span>
+                              <span className="font-medium">{project.title}</span>
                               <div className="relative w-8 h-8 overflow-hidden rounded-full bg-gray-200">
                                 {project.files && project.files.length > 0 ? (
                                   <Image
@@ -356,15 +363,14 @@ export default function DashboardPage() {
                                 )}
                               </div>
                             </div>
-                            <p className="text-sm text-gray-400 mt-1">
-                              {project.description}
-                            </p>
+                            <p className="text-sm text-gray-400 mt-1">{project.description}</p>
                           </div>
                         </li>
                       ))}
                     </ul>
                   </CardContent>
                 </Card>
+
               </div>
             </TabsContent>
           </Tabs>
