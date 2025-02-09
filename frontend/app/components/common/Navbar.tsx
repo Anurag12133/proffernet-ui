@@ -29,16 +29,18 @@ export default function Navbar() {
   const { isAuthenticated } = useAppSelector((state) => state.auth);
 
   const [loading, setLoading] = useState(false);
-    const handleRegisterClick = () => {
-      setLoading(true);
-      setTimeout(() => {
-        setLoading(false);
-      }, 1000);
-      router.push("/auth/login");
-    };
+
+  const handleRegisterClick = () => {
+    setLoading(true);
+    setTimeout(() => {
+      setLoading(false);
+    }, 1000);
+    router.push("/auth/login");
+  };
 
   const handleLogout = () => {
-    logout(undefined)
+    setLoading(true);
+    logout({})
       .unwrap()
       .then(() => {
         dispatch(setLogout());
@@ -48,13 +50,22 @@ export default function Navbar() {
       })
       .catch((error) => {
         console.error("Logout failed:", error);
-
         dispatch(setLogout());
         localStorage.removeItem("accessToken");
         localStorage.removeItem("refreshToken");
+      })
+      .finally(() => {
+        setLoading(false);
       });
   };
 
+  const handleNavigation = (path: string) => {
+    setLoading(true);
+    setTimeout(() => {
+      setLoading(false);
+      router.push(path);
+    }, 1000);
+  };
 
   const AvatarDropdownMenu = () => (
     <DropdownMenu >
@@ -66,18 +77,18 @@ export default function Navbar() {
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end" className="w-48 mt-3 text-white dark:border-white/[0.2] border-transparent border bg-black">
         <DropdownMenuItem asChild>
-          <Link href="/pages/dashboard" className="w-full cursor-pointer">
-          Dashboard
+          <Link href="/pages/dashboard" className="w-full cursor-pointer" onClick={() => handleNavigation("/pages/dashboard")}>
+            Dashboard
           </Link>
         </DropdownMenuItem>
         <DropdownMenuItem asChild>
-          <Link href="/pages/project" className="w-full cursor-pointer">
-          Publish
+          <Link href="/pages/project" className="w-full cursor-pointer" onClick={() => handleNavigation("/pages/project")}>
+            Publish
           </Link>
         </DropdownMenuItem>
         <DropdownMenuItem asChild>
-          <Link href="/pages/projectlist" className="w-full cursor-pointer">
-          Contribute
+          <Link href="/pages/projectlist" className="w-full cursor-pointer" onClick={() => handleNavigation("/pages/projectlist")}>
+            Contribute
           </Link>
         </DropdownMenuItem>
         <DropdownMenuItem className="text-white hover:text-red-400 cursor-pointer" onClick={handleLogout}>
@@ -91,13 +102,13 @@ export default function Navbar() {
     <>
       {isMobile ? (
         <div className="px-2">
-          <Link href="/pages/dashboard" className="block px-3 py-2 text-white hover:bg-gray-700 rounded-md">
+          <Link href="/pages/dashboard" className="block px-3 py-2 text-white hover:bg-gray-700 rounded-md" onClick={() => handleNavigation("/pages/dashboard")}>
             Dashboard
           </Link>
-          <Link href="/pages/project" className="block px-3 py-2 text-white hover:bg-gray-700 rounded-md">
+          <Link href="/pages/project" className="block px-3 py-2 text-white hover:bg-gray-700 rounded-md" onClick={() => handleNavigation("/pages/project")}>
             Publish
           </Link>
-          <Link href="/pages/projectlist" className="block px-3 py-2 text-white hover:bg-gray-700 rounded-md">
+          <Link href="/pages/projectlist" className="block px-3 py-2 text-white hover:bg-gray-700 rounded-md" onClick={() => handleNavigation("/pages/projectlist")}>
             Contribute
           </Link>
           <NavLink isMobile={isMobile} onClick={handleLogout}>
@@ -113,13 +124,13 @@ export default function Navbar() {
   const guestLinks = () => (
     <>
       <button className="text-white bg-background rounded-md px-3 py-1 font-medium dark:border-white/[0.2] border-transparent border"
-          onClick={handleRegisterClick}
-        >
-          Login
-        </button>
+        onClick={handleRegisterClick}
+      >
+        Login
+      </button>
       {loading && (
         <div className="h-screen w-full">
-          <Spinner/>
+          <Spinner />
         </div>
       )}
     </>
@@ -130,7 +141,7 @@ export default function Navbar() {
       {({ open }) => (
         <>
           <div className="mx-auto max-w-7xl px-2 sm:px-6 py-2 lg:px-8">
-            <div className="relative flex  items-center justify-between">
+            <div className="relative flex items-center justify-between">
               <div className="absolute inset-y-0 left-0 flex items-center sm:hidden">
                 <Disclosure.Button className="inline-flex items-center justify-center rounded-md p-2 text-gray-400 hover:bg-gray-700 hover:text-white focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white">
                   <span className="sr-only">Open main menu</span>

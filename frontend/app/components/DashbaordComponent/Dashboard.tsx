@@ -7,6 +7,7 @@ import { FaProjectDiagram } from "react-icons/fa";
 import { useRouter } from "next/navigation";
 import { GoDotFill } from "react-icons/go";
 import { useCallback, useEffect, useState } from "react";
+import Spinner from "@/app/components/SpinnerComponent/Spinner";
 import Image from "next/image";
 import axios from "axios";
 import Button from "../Buttons/Button";
@@ -26,17 +27,21 @@ export default function DashboardPage() {
   }
 
   const [projects, setProjects] = useState<Project[]>([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
+  const [loading, setLoading] = useState(false);
   const router = useRouter();
   const BASE_URL = "http://localhost:3000/pages";
   const handleButton = useCallback(
     (route: string) => {
+      setLoading(true);
+      setTimeout(() => {
+        setLoading(false);
+      }, 10000);
       const fullUrl = `${BASE_URL}/${route}`;
       router.push(fullUrl);
     },
     [router]
   );
+
 
   useEffect(() => {
     const fetchUserProjects = async () => {
@@ -80,19 +85,12 @@ export default function DashboardPage() {
 
   if (loading) {
     return (
-      <div className="flex justify-center items-center h-screen bg-black">
-       <p className="text-white">Loading...</p>
-      </div>
+      <div className="h-screen w-full bg-black">
+            <Spinner/>
+        </div>
     );
   }
 
-  if (error) {
-    return (
-      <div className="flex justify-center items-center h-full">
-        <p className="text-red-500">{error}</p>
-      </div>
-    );
-  }
 
   if (projects.length === 0) {
     return (
@@ -119,6 +117,11 @@ export default function DashboardPage() {
               >
                 Contribute
               </TabsTrigger>
+              {loading && (
+                <div className="h-screen w-full">
+                  <Spinner/>
+                </div>
+              )}
               <TabsTrigger
                 value="publish"
                 onClick={() => handleButton("project")}
@@ -126,6 +129,11 @@ export default function DashboardPage() {
               >
                 Publish
               </TabsTrigger>
+              {loading && (
+                <div className="h-screen w-full">
+                  <Spinner/>
+                </div>
+              )}
             </TabsList>
             <TabsContent value="overview" className="space-y-4">
               <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
@@ -180,7 +188,12 @@ export default function DashboardPage() {
                       <div className="flex flex-col items-center flex-1">
                         <h1 className="text-white font-sans mb-3 text-center font-bold">See Various Projects to Contribute</h1>
                         <Button label="Contribute" onClick={() => handleButton("projectlist")} />
-                      </div>
+                        {loading && (
+                        <div className="h-screen w-full">
+                          <Spinner/>
+                        </div>
+                      )}
+                    </div>
                     </div>
                   </CardContent>
                 </Card>
@@ -203,6 +216,11 @@ export default function DashboardPage() {
                       </h1>
                       <Button label="Publish" onClick={() => handleButton("project")} />
                     </div>
+                    {loading && (
+                      <div className="h-screen w-full">
+                        <Spinner/>
+                      </div>
+                    )}
                   </CardHeader>
 
 
@@ -264,17 +282,11 @@ export default function DashboardPage() {
             </h2>
             <div className="flex items-center space-x-2"></div>
           </div>
-          <Tabs defaultValue="overview" className="space-y-4 text-white">
+          <Tabs defaultValue="contribute" className="space-y-4 text-white">
             <TabsList>
               <TabsTrigger
-                value="overview"
-                onClick={() => handleButton("dashboard")}
-              >
-                Overview
-              </TabsTrigger>
-              <TabsTrigger
                 value="contribute"
-                className="cursor-pointer"
+                className="cursor-pointer font-bold"
                 onClick={() => handleButton("projectlist")}
               >
                 Contribute
@@ -282,7 +294,7 @@ export default function DashboardPage() {
               <TabsTrigger
                 value="publish"
                 onClick={() => handleButton("project")}
-                className="cursor-pointer"
+                className="cursor-pointer font-bold"
               >
                 Publish
               </TabsTrigger>
@@ -322,16 +334,16 @@ export default function DashboardPage() {
                     </svg>
                   </CardHeader>
                   <CardContent>
-                    <div className="text-2xl font-bold">+2350</div>
+                    <div className="text-2xl font-bold">0</div>
                   </CardContent>
                 </Card>
               </div>
               <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-7">
-                <Card className="col-span-4 dark:border-white/[0.2] border-transparent border h-96 overflow-y-auto">
+                <Card className="col-span-4 dark:border-white/[0.2] border-transparent border h-[calc(70vh-100px)]  overflow-y-auto">
                   <CardHeader>
                     <CardTitle>Contributing Projects</CardTitle>
                   </CardHeader>
-                 
+
                 </Card>
                 <Card className="col-span-3 dark:border-white/[0.2] border-transparent border h-[calc(70vh-100px)] overflow-y-auto">
                   <CardHeader>

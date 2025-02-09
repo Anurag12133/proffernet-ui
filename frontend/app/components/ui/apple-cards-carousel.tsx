@@ -18,6 +18,7 @@ import Image, { ImageProps } from "next/image";
 import useOutsideClick from "@/hooks/use-outside-click";
 import Button from "../Buttons/Button";
 import { useRouter } from "next/navigation";
+import Spinner from "../SpinnerComponent/Spinner";
 
 interface CarouselProps {
   items: JSX.Element[];
@@ -170,6 +171,7 @@ export const Card = ({
   const [open, setOpen] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null!);
   const { onCardClose} = useContext(CarouselContext);
+  const [loading, setLoading] = useState(false);
 
   const route = useRouter();
 
@@ -202,10 +204,11 @@ export const Card = ({
   };
 
   const handleContribute = () => {
-    // Encode the project title to ensure it's URL-safe
     const projectTitle = encodeURIComponent(card.title);
-  
-    // Navigate to the contact list page with the project title
+    setLoading(true);
+    setTimeout(() => {
+      setLoading(false);
+    }, 10000);
     route.push(`/pages/contactlist?project_title=${projectTitle}`);
   };
 
@@ -237,6 +240,10 @@ export const Card = ({
             >
               <div className=" top-4 h-8 m-4 w-8 right-0 ml-auto  flex items-center justify-center">
               <Button label="Contribute"  onClick={handleContribute}/>
+              {loading && (
+                <div className="h-screen w-full">
+                  <Spinner/>
+                  </div>)}
               </div>
               <motion.p
                 layoutId={layout ? `category-${card.title}` : undefined}
