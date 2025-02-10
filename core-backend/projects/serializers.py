@@ -25,7 +25,21 @@ class ProjectSerializer(serializers.ModelSerializer):
         return [{"id": f.id, "file": f.file.url, "uploaded_at": f.uploaded_at} for f in obj.files.all()]
 
 class ContributionSerializer(serializers.ModelSerializer):
+    user = serializers.PrimaryKeyRelatedField(read_only=True)  # Automatically set to the current user
+    project = serializers.PrimaryKeyRelatedField(queryset=Project.objects.all())
+
     class Meta:
         model = Contribution
-        fields = ['user', 'project', 'contributed_at']
-        read_only_fields = ['contributed_at']
+        fields = ['id', 'user', 'project', 'contributed_at', 'contribution_type']
+        read_only_fields = ['id', 'user', 'contributed_at']
+
+    def validate_contribution_type(self, value):
+        """Validate that the contribution_type is a non-empty list."""
+        if not value:
+            raise serializers.ValidationError("At least one contribution type is required.")
+        return value
+
+    def create(self, validated_data):
+        """Automatically set the user to the current user."""
+        validated_data['user'] = self.context['request'].user
+        return super().create(validated_data)

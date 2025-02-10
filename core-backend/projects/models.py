@@ -26,11 +26,22 @@ class File(models.Model):
 
     def __str__(self):
         return f"{self.file.name} uploaded to {self.project.title}"
+
+
 class Contribution(models.Model):
-    user = models.ForeignKey(settings.AUTH_USER_MODEL, related_name='contributions', on_delete=models.CASCADE)
-    project = models.ForeignKey(Project, related_name='contributions', on_delete=models.CASCADE)
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='contributions')
+    project = models.ForeignKey('Project', on_delete=models.CASCADE, related_name='contributions')
     contributed_at = models.DateTimeField(auto_now_add=True)
+    contribution_type = ArrayField(
+        models.CharField(max_length=50),
+        blank=True,
+        default=list,
+    )
+
+    class Meta:
+        ordering = ['-contributed_at']
+        unique_together = ['user', 'project']
 
     def __str__(self):
-        return f"{self.user} contributing to {self.project.title}"
+        return f"{self.user.username} contributed to {self.project.title}"
 
