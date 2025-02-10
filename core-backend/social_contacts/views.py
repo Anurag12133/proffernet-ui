@@ -14,13 +14,13 @@ class CreateSocialDetailsView(generics.CreateAPIView):
     permission_classes = [IsAuthenticated]
 
     def perform_create(self, serializer):
-        project_title = self.request.data.get("project_title")
+        project = self.request.data.get("project")
 
-        if not project_title:
-            raise ValidationError("Project title is required.")
+        if not project:
+            raise ValidationError("Project ID is required.")
 
         # Ensure the project exists
-        project = get_object_or_404(Project, title=project_title)
+        project = get_object_or_404(Project, id=project)
 
         # Ensure the user does not have duplicate social details for the same project
         if SocialDetails.objects.filter(project=project).exists():
