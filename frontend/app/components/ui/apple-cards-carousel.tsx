@@ -205,6 +205,7 @@ export const Card = ({
 
   const handleContribute = () => {
     const projectTitle = encodeURIComponent(card.title);
+    localStorage.setItem("project_title", projectTitle);
     setLoading(true);
     setTimeout(() => {
       setLoading(false);
