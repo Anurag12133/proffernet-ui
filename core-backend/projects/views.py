@@ -1,13 +1,14 @@
 from rest_framework import generics, permissions, status
 from rest_framework.parsers import MultiPartParser, FormParser
-from .models import Project
 from rest_framework.views import APIView
 from .serializers import ProjectSerializer
 from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated, AllowAny
 from .models import Project, Contribution
 from .serializers import ProjectSerializer, ContributionSerializer
+import logging
 
+logger = logging.getLogger(__name__)
 class ProjectListCreateView(generics.ListCreateAPIView):
    
     serializer_class = ProjectSerializer
@@ -57,7 +58,17 @@ class ProjectDetailsByTitleView(APIView):
         serializer = ProjectSerializer(project)
         return Response(serializer.data, status=200)
 
-class ContributeToProjectView(APIView):
+class CreateContributionView(generics.GenericAPIView):
+    queryset = Contribution.objects.all()
+    serializer_class = ContributionSerializer
+    permission_classes = [permissions.IsAuthenticated]
+
+
+    def post(self, request, *args, **kwargs):
+        serializer = self.get_serializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        self.perform_create(serializer)
+        return Response(serializer.data, status=status.HTTP_201_CREATED)
 
     @staticmethod
     def post(request, *args, **kwargs):
@@ -71,10 +82,13 @@ class ContributeToProjectView(APIView):
         except Project.DoesNotExist:
             return Response({'error': 'Project not found'}, status=status.HTTP_404_NOT_FOUND)
 
-        if Contribution.objects.filter(user=request.user, project=project).exists():
-            return Response({'message': 'You have already contributed to this project.'}, status=status.HTTP_400_BAD_REQUEST)
 
-        contribution = Contribution.objects.create(user=request.user, project=project)
+    def perform_create(self, serializer):
+        serializer.save(user=self.request.user)
+class UserContributionsView(generics.ListAPIView):
+    serializer_class = ContributionSerializer
+    permission_classes = [IsAuthenticated]
 
-        return Response({'message': 'Successfully added contribution', 'data': ContributionSerializer(contribution).data}, status=status.HTTP_201_CREATED)
+    def get_queryset(self):
+        return Contribution.objects.filter(user=self.request.user)
 

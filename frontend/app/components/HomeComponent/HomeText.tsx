@@ -18,7 +18,7 @@ const HeroText = () => {
     setTimeout(() => {
       setLoading(false);
     }, 10000);
-    router.push("/auth/register");
+    router.push("/register");
   };
 
   return (

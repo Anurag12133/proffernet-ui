@@ -1,7 +1,10 @@
 import Link from "next/link";
-import { RegisterForm } from "@/app/components/forms";
+import { LoginForm } from "@/app/components/forms";
 import type { Metadata } from "next";
 import { RiVercelFill } from "react-icons/ri";
+import { Toaster } from "@/app/components/ui/toaster";
+import { ToastProvider } from "@/app/components/ui/toast";
+
 
 export const metadata: Metadata = {
   title: "Proffernet",
@@ -23,19 +26,22 @@ export default function Page() {
       </div>
 
       <div className="mt-5 sm:mx-auto sm:w-full sm:max-w-sm text-white">
-        <RegisterForm />
-       
+        <LoginForm />
+        
 
         <p className="mt-5 text-center text-sm text-white">
           Already have an account?{" "}
           <Link
-            href="/auth/login"
+            href="/register"
             className="leading-6 text-white font-bold hover:text-blue-500"
           >
-            Login here
+            Register here
           </Link>
         </p>
       </div>
+      <ToastProvider>
+          <Toaster/>
+        </ToastProvider>
     </div>
   );
 }

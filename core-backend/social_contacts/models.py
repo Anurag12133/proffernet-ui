@@ -1,35 +1,31 @@
+# socials/models.py
 from django.db import models
 from django.core.validators import URLValidator, RegexValidator
-from django.conf import settings
 
 class SocialDetails(models.Model):
-    user = models.OneToOneField(
-        settings.AUTH_USER_MODEL,
-        on_delete=models.CASCADE,
-        related_name='social_details'
-    )
-    
+    project = models.ForeignKey('projects.Project', on_delete=models.CASCADE, related_name='social_details')
+
     whatsapp_group_url = models.URLField(
         max_length=255,
         validators=[URLValidator()],
         blank=True,
         null=True
     )
-    
+
     linkedin_url = models.URLField(
         max_length=255,
         validators=[URLValidator()],
         blank=True,
         null=True
     )
-    
+
     github_url = models.URLField(
         max_length=255,
         validators=[URLValidator()],
         blank=True,
         null=True
     )
-    
+
     whatsapp_number = models.CharField(
         max_length=15,
         validators=[
@@ -41,13 +37,14 @@ class SocialDetails(models.Model):
         blank=True,
         null=True
     )
-    
+
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
-    
+
     class Meta:
         verbose_name = 'Social Details'
         verbose_name_plural = 'Social Details'
-    
+        unique_together = ('project',)
+
     def __str__(self):
-        return f"Social details for {self.user.email}"
+        return f"Social details for project {self.project.id}"

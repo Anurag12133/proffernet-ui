@@ -13,7 +13,7 @@ const BackgroundBoxes = () => {
     setLoading(true);
 
     setTimeout(() => {
-      router.push("/auth/register");
+      router.push("/register");
     }, 500);
   };
   return (

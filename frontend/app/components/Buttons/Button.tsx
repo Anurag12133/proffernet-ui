@@ -6,7 +6,7 @@ interface ButtonProps {
   onClick?: () => void;
 }
 
-const Button = ({ label, onClick }: ButtonProps) => {
+const LabelButton = ({ label, onClick }: ButtonProps) => {
   return (
     <div className=" flex justify-center text-center animate-pulse hover:animate-none">
       <HoverBorderGradient
@@ -21,4 +21,4 @@ const Button = ({ label, onClick }: ButtonProps) => {
   );
 };
 
-export default Button;
+export default LabelButton;

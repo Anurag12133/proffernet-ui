@@ -11,6 +11,7 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.2/ref/settings/
 """
 from os import getenv, path
+from datetime import timedelta
 from pathlib import Path
 from django.core.management.utils import get_random_secret_key
 import dotenv
@@ -55,6 +56,7 @@ INSTALLED_APPS = [
     'projects',
     'users',
     'social_contacts',
+    'contributions',
 ]
 
 MIDDLEWARE = [
@@ -180,7 +182,7 @@ REST_FRAMEWORK = {
 DJOSER = {
     'PASSWORD_RESET_CONFIRM_URL': 'password-reset/{uid}/{token}',
     'SEND_ACTIVATION_EMAIL': True,
-    'ACTIVATION_URL': 'activation/{uid}/{token}',
+    'ACTIVATION_URL': 'auth/activation/{uid}/{token}',
     'USER_CREATE_PASSWORD_RETYPE': True,
     'PASSWORD_RESET_CONFIRM_RETYPE': True,
     'TOKEN_MODEL': None,
@@ -190,7 +192,7 @@ DJOSER = {
 
 
 AUTH_COOKIE = 'access'
-AUTH_COOKIE_MAX_AGE = 60 * 60 * 24
+AUTH_COOKIE_MAX_AGE = timedelta(hours=6)
 AUTH_COOKIE_SECURE = False
 AUTH_COOKIE_HTTP_ONLY = True
 AUTH_COOKIE_PATH = '/'

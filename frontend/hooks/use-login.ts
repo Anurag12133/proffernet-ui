@@ -3,8 +3,7 @@ import { useRouter } from "next/navigation";
 import { useAppDispatch } from "@/redux/hooks";
 import { useLoginMutation } from "@/redux/features/authApiSlice";
 import { setAuth } from "@/redux/features/authSlice";
-// import { toast } from "react-toastify";
-import { useToast } from "@/lib/use-toast";
+import { useToast } from "@/hooks/use-toast";
 
 export default function useLogin() {
   const {toast} = useToast();
@@ -45,10 +44,9 @@ export default function useLogin() {
           description: "Logged in successfully",
           variant: "default"
         });
-        router.push("/pages/dashboard");
+        router.push("/pages/category");
       })
-      .catch((error) => {
-        console.error("Login failed:", error); // Log error details
+      .catch(() => {
         toast({
           title: "Error",
           description: "Login failed",

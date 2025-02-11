@@ -53,6 +53,8 @@ export default function SocialDetailsForm() {
     setIsLoading(true);
     try {
       const token = localStorage.getItem("accessToken");
+      const projectId = localStorage.getItem("projectId");
+  
       if (!token) {
         toast({
           title: "Error",
@@ -61,16 +63,26 @@ export default function SocialDetailsForm() {
         });
         return;
       }
-
+  
+      if (!projectId) {
+        toast({
+          title: "Error",
+          description: "No project ID found. Please create a project first.",
+          variant: "destructive",
+        });
+        return;
+      }
+  
       const payload = {
+        project: projectId,
         whatsapp_group_url: values.whatsappGroupUrl,
         linkedin_url: values.linkedinUrl,
         github_url: values.githubUrl,
         whatsapp_number: values.whatsappNumber,
       };
-
+  
       const method = existingData ? "PUT" : "POST";
-
+  
       const response = await axios({
         method,
         url: `${API_URL}/app/social-details/create/`,
@@ -80,14 +92,14 @@ export default function SocialDetailsForm() {
         },
         data: payload,
       });
-
+  
       if (!response.data) {
         throw new Error("Failed to save social details");
       }
-
+  
       const savedData = response.data;
       setExistingData(savedData);
-
+  
       toast({
         title: "Success",
         description: `Social details ${
@@ -109,7 +121,7 @@ export default function SocialDetailsForm() {
       setIsLoading(false);
     }
   };
-
+  
   return (
     <div className="flex min-h-screen items-center justify-center dark:bg-black to-background dark:bg-grid-small-white/[0.2] bg-grid-small-black/[0.2]">
       <div className="w-full max-w-md space-y-8 rounded-lg p-8">

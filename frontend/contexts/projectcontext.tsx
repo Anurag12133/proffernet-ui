@@ -55,6 +55,7 @@ export const ProjectProvider: React.FC<{ children: React.ReactNode }> = ({
       });
 
       const accessToken = localStorage.getItem("accessToken");
+      console.log(formData);
 
       const response = await axios.post(
         "http://127.0.0.1:8000/project/create/",
@@ -67,7 +68,16 @@ export const ProjectProvider: React.FC<{ children: React.ReactNode }> = ({
         }
       );
 
+      
+
       if (response.status === 201) {
+        const projectId = response.data.id; 
+        localStorage.setItem("projectId", projectId);
+        toast({
+          title: "Success",
+          description: `Project created successfully! ID: ${projectId}`,
+          variant: "default",
+        });
         setTitle("Title Here...");
         setDescription("");
         setProjectType("");
