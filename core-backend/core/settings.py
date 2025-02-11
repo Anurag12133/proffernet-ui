@@ -13,6 +13,7 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 
 import sys
 from os import getenv, path
+from datetime import timedelta
 from pathlib import Path
 from django.core.management.utils import get_random_secret_key
 import dotenv
@@ -193,7 +194,7 @@ DJOSER = {
 
 
 AUTH_COOKIE = 'access'
-AUTH_COOKIE_MAX_AGE = 60 * 60 * 24
+AUTH_COOKIE_MAX_AGE = timedelta(hours=6)
 AUTH_COOKIE_SECURE = False
 AUTH_COOKIE_HTTP_ONLY = True
 AUTH_COOKIE_PATH = '/'
