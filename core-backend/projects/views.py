@@ -21,7 +21,8 @@ class ProjectListCreateView(generics.ListCreateAPIView):
 
 class ProjectDetailsView(APIView):
     permission_classes = [AllowAny]
-    def get(self, request, *args, **kwargs):
+    @staticmethod
+    def get(request, *args, **kwargs):
         projects = Project.objects.all()
         serializer = ProjectSerializer(projects, many=True)
         return Response(serializer.data, status=200)
@@ -46,7 +47,8 @@ class UserProjectsView(generics.ListAPIView):
 
 class ProjectDetailsByTitleView(APIView):
 
-    def get(self, request, *args, **kwargs):
+    @staticmethod
+    def get(request, *args, **kwargs):
         project_title = kwargs.get('title') 
         try:
             project = Project.objects.get(title=project_title)
@@ -61,11 +63,25 @@ class CreateContributionView(generics.GenericAPIView):
     serializer_class = ContributionSerializer
     permission_classes = [permissions.IsAuthenticated]
 
+
     def post(self, request, *args, **kwargs):
         serializer = self.get_serializer(data=request.data)
         serializer.is_valid(raise_exception=True)
         self.perform_create(serializer)
         return Response(serializer.data, status=status.HTTP_201_CREATED)
+
+    @staticmethod
+    def post(request, *args, **kwargs):
+        project_title = request.data.get('project_title')
+
+        if not project_title:
+            return Response({'error': 'Project title is required'}, status=status.HTTP_400_BAD_REQUEST)
+
+        try:
+            project = Project.objects.get(title=project_title)
+        except Project.DoesNotExist:
+            return Response({'error': 'Project not found'}, status=status.HTTP_404_NOT_FOUND)
+
 
     def perform_create(self, serializer):
         serializer.save(user=self.request.user)

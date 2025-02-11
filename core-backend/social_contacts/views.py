@@ -1,5 +1,7 @@
-# socials/views.py
+
 from rest_framework import status, generics
+from rest_framework import generics
+
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.exceptions import ValidationError
 from rest_framework.generics import ListAPIView, get_object_or_404
@@ -71,4 +73,9 @@ class DeleteSocialDetailsView(generics.DestroyAPIView):
         project = get_object_or_404(Project, title=project_title)
 
         return get_object_or_404(SocialDetails, project=project)
+
+
+    @staticmethod
+    def get_queryset():
+        return SocialDetails.objects.all()
 
