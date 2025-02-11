@@ -3,17 +3,18 @@ import React, { useCallback, useState } from "react";
 import Flip from "@/app/components/ui/flip-words";
 import ThreeDCard from "@/app/components/SelectionComponent/SelectionCardComonent";
 import { useRouter } from "next/navigation";
+import { Button } from "@/components/ui/button";
+import Spinner from "../SpinnerComponent/Spinner";
 
 const CategoryCards = () => {
   const words = ["passion", "skill", "talent", "potential"];
-  const BASE_URL = "http://localhost:3000/pages";
 
   const router = useRouter();
   const [loading, setLoading] = useState(false);
   const handleButton = useCallback(
     (route: string) => {
       setLoading(true);
-      const fullUrl = `${BASE_URL}/${route}`;
+      const fullUrl = `${process.env.NEXT_PUBLIC_REDIRECT_URL}/pages/${route}`;
       router.push(fullUrl);
     },
     [router]
@@ -21,7 +22,7 @@ const CategoryCards = () => {
 
   return (
     <div className="relative h-screen bg-black bg-cover bg-center filter grayscale brightness-20 ">
-      <div className="relative h-[5rem] flex justify-center items-center px-4 pr-[25rem]">
+      <div className="relative h-[5rem] flex justify-center items-center px-4 pr-[30rem]">
         <div className="text-4xl mx-auto font-normal text-neutral-200 dark:text-neutral-300 mt-[15rem]">
           Connecting <Flip words={words} /> <br />
           through contributions with Proffernet
@@ -34,9 +35,7 @@ const CategoryCards = () => {
           className="cursor-pointer"
         >
           {loading && (
-            <div className="fixed inset-0 flex items-center justify-center bg-black from-black to-grey-100 bg-opacity-75 z-50">
-              <div className="loader"></div>
-            </div>
+         <Spinner/>
           )}
           <ThreeDCard
             type="Contributor"
@@ -46,9 +45,7 @@ const CategoryCards = () => {
 
         <div onClick={() => handleButton("project")} className="cursor-pointer">
           {loading && (
-            <div className="fixed inset-0 flex items-center justify-center bg-black from-black to-grey-100 bg-opacity-75 z-50">
-              <div className="loader"></div>
-            </div>
+          <Spinner/>
           )}
           <ThreeDCard
             type="Volunteer"
@@ -56,6 +53,17 @@ const CategoryCards = () => {
           />
         </div>
       </div>
+      <div className="flex items-center justify-center mr-[45rem]">
+  <div className="text-center  rounded-lg shadow-lg">
+    <h2 className="text-l font-sans font-semibold text-white">Continue to the Dashboard  <span>
+      <Button className="ml-3" onClick={() => handleButton("dashboard")}>
+        Dashboard
+      </Button>
+    </span></h2>
+   
+  </div>
+</div>
+
     </div>
   );
 };

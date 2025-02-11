@@ -1,10 +1,11 @@
 import { useState, ChangeEvent, FormEvent } from "react";
 import { useRouter } from "next/navigation";
 import { useRegisterMutation } from "@/redux/features/authApiSlice";
-import { toast } from "react-toastify";
+import { useToast } from "@/hooks/use-toast";
 
 export default function useRegister() {
   const router = useRouter();
+  const { toast } = useToast();
   const [register, { isLoading }] = useRegisterMutation();
 
   const [formData, setFormData] = useState({
@@ -29,11 +30,16 @@ export default function useRegister() {
     register({ first_name, last_name, email, password, re_password })
       .unwrap()
       .then(() => {
-        toast.success("Please check email to verify account");
+        toast({title: "Please check email to verify account",
+          description: "Account created successfully",
+        });
         router.push("/login");
       })
       .catch(() => {
-        toast.error("Failed to register account");
+        toast({title:"Failed to register account",
+          description: "Please try again",
+        });
+        router.push("/register");
       });
   };
 

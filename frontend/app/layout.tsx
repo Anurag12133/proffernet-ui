@@ -4,6 +4,7 @@ import "./globals.css";
 import { Navbar } from "@/app/components/common";
 import Provider from "@/redux/provider";
 import Setup from "./components/utils/Setup";
+import { Toaster } from "@/components/ui/toaster"
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -34,6 +35,7 @@ export default function RootLayout({
           <Setup />
           <Navbar />
           {children}
+          <Toaster />
         </body>
       </html>
     </Provider>
