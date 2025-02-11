@@ -28,7 +28,7 @@ export default function Page({ params }: Props) {
         toast.error("Failed to activate account");
       })
       .finally(() => {
-        router.push("/auth/login");
+        router.push("/login");
       });
   }, []);
 

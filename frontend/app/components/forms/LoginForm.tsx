@@ -21,7 +21,7 @@ export default function LoginForm() {
       value: password,
       link: {
         linkText: "Forgot password?",
-        linkUrl: "/auth/password-reset",
+        linkUrl: "/password-reset/",
       },
       required: true,
     },

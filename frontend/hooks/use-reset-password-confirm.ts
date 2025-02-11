@@ -29,7 +29,7 @@ export default function useResetPasswordConfirm(uid: string, token: string) {
       .unwrap()
       .then(() => {
         toast.success("Password reset successful");
-        router.push("/auth/login");
+        router.push("/login");
       })
       .catch(() => {
         toast.error("Password reset failed");

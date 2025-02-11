@@ -77,7 +77,7 @@ export default function DashboardPage() {
 
         setLoading(false);
       } catch  {
-        router.push("/auth/login");
+        router.push("/login");
         setLoading(false);
       }
     };
