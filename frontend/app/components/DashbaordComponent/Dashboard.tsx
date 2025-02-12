@@ -169,7 +169,7 @@ export default function DashboardPage() {
                       <Image src="/Notfound1.png" alt="Notfound" width={200} height={50} className="w-50 h-30" />
                       <div className="flex flex-col items-center flex-1">
                         <h1 className="text-white font-sans mb-3 text-center font-bold">See Various Projects to Contribute</h1>
-                        <Button label="Contribute" onClick={() => handleButton("projeclist")} />
+                        <Button label="Contribute" onClick={() => handleButton("projectlist")} />
                       </div>
                     </div>
                   ) : (

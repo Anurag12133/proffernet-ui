@@ -66,7 +66,7 @@ const EditableTitle = () => {
         ) : (
           <motion.h1
             onClick={handleClickTitle}
-            className="text-4xl font-['Poppins'] cursor-pointer text-center"
+            className="text-3xl font-['Poppins'] cursor-pointer text-center  dark:border-white/[0.2] border-transparent border rounded-xl px-5 py-2  ml-[-20px]"  
             style={{
               backgroundImage:
                 "linear-gradient(to right, #888888, #ffffff, #888888)",
