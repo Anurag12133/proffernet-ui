@@ -47,6 +47,8 @@ const ProjectStack = () => {
     )
   );
 
+  TechStackItem.displayName = "TechStackItem";
+
   return (
     <div>
       <div className="relative">

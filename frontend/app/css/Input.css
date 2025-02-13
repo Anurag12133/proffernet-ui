@@ -50,7 +50,7 @@ h2 {
   transition: transform 0.2s ease;
   background: #050505;
   padding: 0 0.5rem;
-  color: rgb(102, 102, 102);
+  color: white;
   font-weight: 500;
 }
 .description {
