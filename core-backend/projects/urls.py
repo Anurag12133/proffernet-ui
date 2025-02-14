@@ -1,5 +1,5 @@
 from django.urls import path, include
-from .views import ProjectListCreateView, ProjectDetailsView, UserProjectsView, ProjectDetailsByTitleView,CreateContributionView, UserContributionsView
+from .views import ProjectListCreateView, ProjectDetailsView, UserProjectsView, ProjectDetailsByTitleView
 
 urlpatterns = [
     path('create/', ProjectListCreateView.as_view(), name='project-create'),
