@@ -53,6 +53,8 @@ const EditableTitle = () => {
               onBlur={handleBlur}
               className="text-4xl font-['Poppins'] w-[24rem] bg-transparent text-white outline-none pl-4 text-opacity-1"
               style={{
+                minWidth: "10ch",
+                width: `${Math.max(10, title.length)}ch`, 
                 backgroundImage:
                   "linear-gradient(to right, #888888, #ffffff, #888888)",
                 WebkitBackgroundClip: "text",
