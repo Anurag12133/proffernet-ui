@@ -10,10 +10,12 @@ https://docs.djangoproject.com/en/4.2/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.2/ref/settings/
 """
+import os
 from os import getenv, path
 from datetime import timedelta
 from pathlib import Path
 from django.core.management.utils import get_random_secret_key
+import dj_database_url
 import dotenv
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -95,14 +97,7 @@ WSGI_APPLICATION = 'core.wsgi.application'
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'proffernet',
-        'USER': 'postgres',
-        'PASSWORD': 'yourpassword',
-        'HOST': 'localhost',
-        'PORT': '5432',
-    }
+    'default':  dj_database_url.config(default=os.getenv('DATABASE_URL'), conn_max_age=600, ssl_require=True)
 }
 
 # Email settings
@@ -182,7 +177,7 @@ REST_FRAMEWORK = {
 DJOSER = {
     'PASSWORD_RESET_CONFIRM_URL': 'password-reset/{uid}/{token}',
     'SEND_ACTIVATION_EMAIL': True,
-    'ACTIVATION_URL': 'auth/activation/{uid}/{token}',
+    'ACTIVATION_URL': 'activation/{uid}/{token}',
     'USER_CREATE_PASSWORD_RETYPE': True,
     'PASSWORD_RESET_CONFIRM_RETYPE': True,
     'TOKEN_MODEL': None,
@@ -191,12 +186,22 @@ DJOSER = {
 
 
 
-AUTH_COOKIE = 'access'
-AUTH_COOKIE_MAX_AGE = timedelta(hours=6)
-AUTH_COOKIE_SECURE = False
-AUTH_COOKIE_HTTP_ONLY = True
-AUTH_COOKIE_PATH = '/'
-AUTH_COOKIE_SAMESITE = 'Lax'
+SIMPLE_JWT = {
+    "ACCESS_TOKEN_LIFETIME": timedelta(days=7),  
+    "REFRESH_TOKEN_LIFETIME": timedelta(days=30),  # Refresh token lasts for 30 days
+    "ROTATE_REFRESH_TOKENS": True,  # Issue a new refresh token when refreshing
+    "BLACKLIST_AFTER_ROTATION": True,  # Blacklist old refresh token after rotation
+    "AUTH_HEADER_TYPES": ("Bearer",),
+    "AUTH_TOKEN_CLASSES": ("rest_framework_simplejwt.tokens.AccessToken",),
+    "COOKIE_SECURE": True,  # Use Secure Cookies in Production
+}
+
+# Cookie settings to store tokens in HttpOnly cookies
+AUTH_COOKIE_MAX_AGE = 60 * 60 * 24 * 7  # 7 days (match access token lifetime)
+AUTH_COOKIE_PATH = "/"  # Root path
+AUTH_COOKIE_SECURE = True  # Secure flag for HTTPS
+AUTH_COOKIE_HTTP_ONLY = True  # Prevent JS access to cookies
+AUTH_COOKIE_SAMESITE = "Lax"  # Prevent CSRF issues in cross-site requests
 
 SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = getenv('GOOGLE_AUTH_KEY')
 SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = getenv('GOOGLE_AUTH_SECRET_KEY')
