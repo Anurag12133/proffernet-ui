@@ -9,7 +9,7 @@ import { Mutex } from "async-mutex";
 
 const mutex = new Mutex();
 const baseQuery = fetchBaseQuery({
-  baseUrl: `${process.env.NEXT_PUBLIC_HOST}/api`,
+  baseUrl: `${process.env.BACKEND_URI}/api`,
   credentials: "include",
   prepareHeaders: (headers, { }) => {
     const token = localStorage.getItem("accessToken");

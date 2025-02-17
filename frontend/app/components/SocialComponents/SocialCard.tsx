@@ -31,7 +31,7 @@ const formSchema = z.object({
   }),
 });
 
-const API_URL = process.env.NEXT_PUBLIC_HOST;
+const API_URL = process.env.BACKEND_URI;
 
 export default function SocialDetailsForm() {
   const [isLoading, setIsLoading] = useState(false);

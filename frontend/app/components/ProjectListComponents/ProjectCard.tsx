@@ -20,7 +20,7 @@ const CardsForProject = async ({ TechStack }: { TechStack: string }) => {
   const techStacksArray: string[] = [];
 
   try {
-    const fetchData = await axios.get("http://127.0.0.1:8000/project/list");
+    const fetchData = await axios.get(`${process.env.BACKEND_URI}/project/list`);
     projects.push(...fetchData.data);
   } catch (error) {
     console.error("Error fetching projects:", error);
@@ -39,11 +39,11 @@ const CardsForProject = async ({ TechStack }: { TechStack: string }) => {
     const imageUrls = project.files
       ?.map((file) => {
         if (typeof file === "object" && file?.file) {
-          return `http://127.0.0.1:8000${
+          return `${process.env.BACKEND_URI}${
             file.file.startsWith("/") ? file.file : `/${file.file}`
           }`;
         } else if (typeof file === "string") {
-          return `http://127.0.0.1:8000${
+          return `${process.env.BACKEND_URI}${
             file.startsWith("/") ? file : `/${file}`
           }`;
         }
