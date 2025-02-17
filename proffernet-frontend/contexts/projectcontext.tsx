@@ -58,7 +58,7 @@ export const ProjectProvider: React.FC<{ children: React.ReactNode }> = ({
       console.log(formData);
 
       const response = await axios.post(
-        `${process.env.BACKEND_URI}/project/create/`,
+        `${process.env.NEXT_PUBLIC_BACKEND_URI}/project/create/`,
         formData,
         {
           headers: {
@@ -67,8 +67,6 @@ export const ProjectProvider: React.FC<{ children: React.ReactNode }> = ({
           },
         }
       );
-
-      
 
       if (response.status === 201) {
         const projectId = response.data.id; 

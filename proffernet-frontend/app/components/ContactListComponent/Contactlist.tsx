@@ -104,7 +104,7 @@ const ContactListComponent = ({ projectTitle }: { projectTitle: string }) => {
 
       try {
         const response = await axios.get(
-          `${process.env.BACKEND_URI}/app/social-details/project/?project_title=${encodeURIComponent(projectTitle)}`,
+          `${process.env.NEXT_PUBLIC_BACKEND_URI}/app/social-details/project/?project_title=${encodeURIComponent(projectTitle)}`,
           {
             headers: {
               Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
@@ -132,7 +132,7 @@ const ContactListComponent = ({ projectTitle }: { projectTitle: string }) => {
   const onSubmit = async () => {
     try {
       const data = await axios.post(
-        `${process.env.BACKEND_URI}/project/contributions/create/`,
+        `${process.env.NEXT_PUBLIC_BACKEND_URI}/project/contributions/create/`,
         {
           project_title: projectTitle,
           contribution_type: form.getValues("items"),

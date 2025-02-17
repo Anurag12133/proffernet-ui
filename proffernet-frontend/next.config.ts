@@ -12,6 +12,9 @@ module.exports = {
       "127.0.0.1",
       "github.com",
       "www.google.com",
+      "proffernet-core.onrender.com",
+      'res.cloudinary.com',
+      'as2.ftcdn.net'
 
     ],
   },

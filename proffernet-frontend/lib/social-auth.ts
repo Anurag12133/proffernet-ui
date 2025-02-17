@@ -6,7 +6,7 @@ export default async function continueWithSocialAuth(
 ) {
   try {
     const url = `${
-      process.env.BACKEND_URI
+      process.env.NEXT_PUBLIC_BACKEND_URI
     }/api/o/${provider}/?redirect_uri=${
       process.env.NODE_ENV === "production"
         ? process.env.NEXT_PUBLIC_REDIRECT_URL

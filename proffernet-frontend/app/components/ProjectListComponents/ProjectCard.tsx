@@ -20,7 +20,7 @@ const CardsForProject = async ({ TechStack }: { TechStack: string }) => {
   const techStacksArray: string[] = [];
 
   try {
-    const fetchData = await axios.get(`${process.env.BACKEND_URI}/project/list`);
+    const fetchData = await axios.get(`${process.env.NEXT_PUBLIC_BACKEND_URI}/project/list`);
     projects.push(...fetchData.data);
   } catch (error) {
     console.error("Error fetching projects:", error);
@@ -37,19 +37,19 @@ const CardsForProject = async ({ TechStack }: { TechStack: string }) => {
       }
     });
     const imageUrls = project.files
-      ?.map((file) => {
-        if (typeof file === "object" && file?.file) {
-          return `${process.env.BACKEND_URI}${
-            file.file.startsWith("/") ? file.file : `/${file.file}`
-          }`;
-        } else if (typeof file === "string") {
-          return `${process.env.BACKEND_URI}${
-            file.startsWith("/") ? file : `/${file}`
-          }`;
-        }
-        return null;
-      })
-      .filter(Boolean);
+  ?.map((file) => {
+    if (typeof file === "object" && file?.file) {
+      return file.file.startsWith("http")
+        ? file.file
+        : `${process.env.NEXT_PUBLIC_BACKEND_URI}${file.file}`;
+    } else if (typeof file === "string") {
+      return file.startsWith("http") ? file : `${process.env.NEXT_PUBLIC_BACKEND_URI}${file}`;
+    }
+    return null;
+  })
+  .filter(Boolean);
+
+      console.log(imageUrls);
 
     const defaultImageUrl =
       "https://as2.ftcdn.net/v2/jpg/06/75/59/65/1000_F_675596549_pBc5yUTl4vs1GvLrMV4hjYauXYj2QYh9.jpg";
