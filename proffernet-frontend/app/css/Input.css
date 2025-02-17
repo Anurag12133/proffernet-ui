@@ -71,7 +71,7 @@ h2 {
 
 pty */ .input__field:focus + .input__label,
 .input__field:not(:placeholder-shown) + .input__label {
-  transform: translateY(-1.5rem) scale(0.85); /* Move label up */
+  transform: translateY(-1.5rem) scale(0.85);
   color: #e6a800; /* Highlight color */
 }
 

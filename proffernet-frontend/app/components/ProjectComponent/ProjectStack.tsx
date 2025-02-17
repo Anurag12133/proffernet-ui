@@ -51,19 +51,22 @@ const ProjectStack = () => {
 
   return (
     <div>
-      <div className="relative">
-        <label className="input">
-          <input
-            className="input__field"
-            type="text"
-            placeholder=" "
-            value={techStack}
-            onChange={handleInputChange}
-            onKeyDown={handleKeyPress}
-          />
-          <span className="input__label">Tech Stack</span>
-        </label>
-      </div>
+      <div className="relative mt-4">
+  <label className="relative block">
+    <input
+      type="text"
+      placeholder=" "
+      value={techStack}
+      onChange={handleInputChange}
+      onKeyDown={handleKeyPress}
+      className="peer w-full p-4 bg-transparent text-white outline-none border-transparent transition-all duration-200 ease-in-out focus:border-transparent focus:ring-0"
+    />
+    <span className="absolute left-4 top-4 transform transition-all duration-300 ease text-white font-medium bg-black px-2 peer-placeholder-shown:translate-y-0 peer-placeholder-shown:scale-100 peer-focus:translate-y-[-1.5rem] peer-focus:scale-90 peer-focus:text-yellow-500">
+      Tech Stack
+    </span>
+  </label>
+</div>
+
 
       <div className="flex flex-wrap gap-2 mt-4">
         {tech_stacks.map((stack) => (

@@ -18,6 +18,11 @@ const config: Config = {
     extend: {
       animation: {
         spotlight: "spotlight 2s ease .75s 1 forwards",
+        dotRect: 'dotRect 3s cubic-bezier(0.785, 0.135, 0.15, 0.86) infinite',
+        pathCircle: 'pathCircle 3s cubic-bezier(0.785, 0.135, 0.15, 0.86) infinite',
+        pathRect: 'pathRect 3s cubic-bezier(0.785, 0.135, 0.15, 0.86) infinite',
+        pathTriangle: 'pathTriangle 3s cubic-bezier(0.785, 0.135, 0.15, 0.86) infinite',
+        dotTriangle: 'dotTriangle 3s cubic-bezier(0.785, 0.135, 0.15, 0.86) infinite',
       },
 
       backgroundImage: {
@@ -32,8 +37,38 @@ const config: Config = {
         background: "hsl(240, 3%, 6%)",
         foreground: "var(--foreground)",
         "custom-gray": "rgb(102, 102, 102)",
+        dot: '#0d59e7',
+        path: '#ffffff',
       },
       keyframes: {
+        pathCircle: {
+          '25%': { strokeDashoffset: '125' },
+          '50%': { strokeDashoffset: '175' },
+          '75%': { strokeDashoffset: '225' },
+          '100%': { strokeDashoffset: '275' },
+        },
+        dotRect: {
+          '25%': { transform: 'translate(0, 0)' },
+          '50%': { transform: 'translate(18px, -18px)' },
+          '75%': { transform: 'translate(0, -36px)' },
+          '100%': { transform: 'translate(-18px, -18px)' },
+        },
+        pathRect: {
+          '25%': { strokeDashoffset: '64' },
+          '50%': { strokeDashoffset: '128' },
+          '75%': { strokeDashoffset: '192' },
+          '100%': { strokeDashoffset: '256' },
+        },
+        pathTriangle: {
+          '33%': { strokeDashoffset: '74' },
+          '66%': { strokeDashoffset: '147' },
+          '100%': { strokeDashoffset: '221' },
+        },
+        dotTriangle: {
+          '33%': { transform: 'translate(0, 0)' },
+          '66%': { transform: 'translate(10px, -18px)' },
+          '100%': { transform: 'translate(-10px, -18px)' },
+        },
         spotlight: {
           "0%": {
             opacity: "0",
@@ -62,8 +97,8 @@ const config: Config = {
       matchUtilities,
       theme,
     }: {
-      matchUtilities: any;
-      theme: (path: string) => any;
+      matchUtilities: (utilities: Record<string, (value: string) => { backgroundImage: string }>) => void;
+      theme: (path: string) => string | number | undefined;
     }) {
       matchUtilities(
         {

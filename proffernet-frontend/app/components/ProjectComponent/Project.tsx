@@ -3,7 +3,6 @@ import React, { useCallback } from "react";
 import UploadFile from "@/app/components/ProjectComponent/ProjectFile";
 import { BackgroundBeams } from "@/app/components/ui/background-beams";
 import EditableTitle from "@/app/components/ProjectComponent/ProjectTitle";
-import "@/app/css/Input.css";
 import Button from "@/app/components/Buttons/Button";
 import ProjectStack from "@/app/components/ProjectComponent/ProjectStack";
 import { ProjectProvider, useProjectContext } from "@/contexts/projectcontext";
