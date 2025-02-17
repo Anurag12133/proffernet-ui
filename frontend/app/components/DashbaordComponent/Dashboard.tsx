@@ -49,7 +49,7 @@ export default function DashboardPage() {
 
         // Fetch user projects
         const projectsResponse = await axios.get(
-          "http://127.0.0.1:8000/project/user-projects/",
+          `${process.env.BACKEND_URI}/project/user-projects/`,
           {
             headers: {
               Authorization: `Bearer ${token}`,
@@ -59,7 +59,7 @@ export default function DashboardPage() {
 
         // Fetch user contributions
         const contributionsResponse = await axios.get(
-          "http://127.0.0.1:8000/project/contributions/user/",
+          `${process.env.BACKEND_URI}/project/contributions/user/`,
           {
             headers: {
               Authorization: `Bearer ${token}`,
@@ -90,11 +90,11 @@ export default function DashboardPage() {
 
     const file = files[0];
     if (typeof file === "object" && file?.file) {
-      return `http://127.0.0.1:8000${
+      return `${process.env.BACKEND_URI}${
         file.file.startsWith("/") ? file.file : `/${file.file}`
       }`;
     } else if (typeof file === "string") {
-      return `http://127.0.0.1:8000${file.startsWith("/") ? file : `/${file}`}`;
+      return `${process.env.BACKEND_URI}${file.startsWith("/") ? file : `/${file}`}`;
     }
     return null;
   };

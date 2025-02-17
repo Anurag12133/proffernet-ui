@@ -58,7 +58,7 @@ export const ProjectProvider: React.FC<{ children: React.ReactNode }> = ({
       console.log(formData);
 
       const response = await axios.post(
-        "http://127.0.0.1:8000/project/create/",
+        `${process.env.BACKEND_URI}/project/create/`,
         formData,
         {
           headers: {
