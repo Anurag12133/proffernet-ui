@@ -49,7 +49,7 @@ export default function DashboardPage() {
 
         // Fetch user projects
         const projectsResponse = await axios.get(
-          `${process.env.BACKEND_URI}/project/user-projects/`,
+          `${process.env.NEXT_PUBLIC_BACKEND_URI}/project/user-projects/`,
           {
             headers: {
               Authorization: `Bearer ${token}`,
@@ -57,9 +57,8 @@ export default function DashboardPage() {
           }
         );
 
-        // Fetch user contributions
         const contributionsResponse = await axios.get(
-          `${process.env.BACKEND_URI}/project/contributions/user/`,
+          `${process.env.NEXT_PUBLIC_BACKEND_URI}/project/contributions/user/`,
           {
             headers: {
               Authorization: `Bearer ${token}`,
@@ -87,17 +86,23 @@ export default function DashboardPage() {
 
   const getFirstImageUrl = (files: { file: string }[] | string[]) => {
     if (!files || files.length === 0) return null;
-
     const file = files[0];
+
     if (typeof file === "object" && file?.file) {
-      return `${process.env.BACKEND_URI}${
-        file.file.startsWith("/") ? file.file : `/${file.file}`
-      }`;
-    } else if (typeof file === "string") {
-      return `${process.env.BACKEND_URI}${file.startsWith("/") ? file : `/${file}`}`;
+      return file.file.startsWith("http")
+        ? file.file
+        : `${process.env.NEXT_PUBLIC_BACKEND_URI}${file.file.startsWith("/") ? file.file : `/${file.file}`}`;
+    }
+    else if (typeof file === "string") {
+      return file.startsWith("http")
+        ? file
+        : `${process.env.NEXT_PUBLIC_BACKEND_URI}${file.startsWith("/") ? file : `/${file}`}`;
     }
     return null;
   };
+
+
+
 
   if (loading) {
     return (
