@@ -40,23 +40,26 @@ const HeroSection = () => {
 
           <div className="flex flex-col col-span-2 w-full">
             <div className="grid grid-rows-2 grid-cols-3 gap-4 mt-[3rem] justify-center items-center">
-              <Image src="/icons/html.svg" alt="HTML" className="h-10 w-auto" />
-              <Image src="/icons/css.svg" alt="CSS" className="h-13 w-auto" />
+              <Image src="/icons/html.svg" alt="HTML" className="h-10 w-auto" width={10} height={10}/>
+              <Image src="/icons/css.svg" alt="CSS" className="h-13 w-auto" width={10} height={10} />
               <Image
                 src="/icons/js.svg"
                 alt="Javascript"
                 className="h-10 w-auto"
+                width={10} height={10}
               />
-              <Image src="/icons/react.svg" alt="React" className="h-10 w-auto" />
+              <Image src="/icons/react.svg" alt="React" className="h-10 w-auto" width={10} height={10}/>
               <Image
                 src="/icons/django.svg"
                 alt="Django"
                 className="h-15 w-auto"
+                width={10} height={10}
               />
               <Image
                 src="/icons/psql.svg"
                 alt="PostgresSQL"
                 className="h-10 w-auto"
+                width={10} height={10}
               />
             </div>
           </div>

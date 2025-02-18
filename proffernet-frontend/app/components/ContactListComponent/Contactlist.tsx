@@ -112,7 +112,6 @@ const ContactListComponent = ({ projectTitle }: { projectTitle: string }) => {
           }
         );
 
-        console.log("API Response:", response.data);
         setSocialDetails(response.data);
         setError(null);
       } catch (err) {

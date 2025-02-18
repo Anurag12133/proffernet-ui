@@ -1,43 +1,84 @@
-"use client";
+'use client';
 
-import clsx from "clsx";
-import {
-  LazyMotion,
-  domAnimation,
-  useMotionValue,
-  useSpring,
-  m,
-} from "framer-motion";
-import React, { useEffect, useRef, useState } from "react";
+import clsx from 'clsx';
+import { LazyMotion, domAnimation, useMotionValue, useSpring, m, MotionValue } from 'framer-motion';
+import PropTypes from 'prop-types';
+import React, { useEffect, useRef, useState } from 'react';
+import { useMouse } from 'react-use';
+
+interface Item {
+  x: string;
+  y: string;
+  label: string;
+  defaultAnimation: {
+    transform: string[];
+    transition: {
+      duration: number;
+      ease: string;
+      repeat: number;
+      repeatType: string;
+    };
+  };
+  spring?: {
+    x: MotionValue<number>;
+    y: MotionValue<number>;
+    isActive: boolean;
+  };
+}
 
 const generateRandomAnimation = () => {
   const randomValuesX = Array.from({ length: 5 }, () => Math.random() * 10 - 5);
   const randomValuesY = Array.from({ length: 5 }, () => Math.random() * 10 - 5);
 
   const keyframes = [
-    "translate(0px, 0px)",
+    'translate(0px, 0px)',
     ...randomValuesX.map((x, i) => `translate(${x}px, ${randomValuesY[i]}px)`),
-    "translate(0px, 0px)",
+    'translate(0px, 0px)',
   ];
 
   return {
     transform: keyframes,
     transition: {
       duration: 5,
-      ease: "easeInOut",
+      ease: 'easeInOut',
       repeat: Infinity,
-      repeatType: "loop" as const,
+      repeatType: 'loop',
     },
   };
 };
 
-interface Item {
-  x: string;
-  y: string;
-  label: string;
-  defaultAnimation: ReturnType<typeof generateRandomAnimation>;
-  spring?: { x: ReturnType<typeof useSpring>; y: ReturnType<typeof useSpring>; isActive: boolean };
-}
+const ITEMS: Item[] = [
+  {
+    x: '19%',
+    y: '19%',
+    label: 'Reliable',
+  },
+  {
+    x: '67.5%',
+    y: '25%',
+    label: 'Scalability',
+  },
+  {
+    x: '9%',
+    y: '41%',
+    label: 'High compatibility',
+  },
+  {
+    x: '71.5%',
+    y: '41%',
+    label: 'Blazingly fast search',
+  },
+  {
+    x: '17%',
+    y: '76%',
+    label: 'Works with PGVECTOR',
+  },
+  {
+    x: '68%',
+    y: '81%',
+    label: 'Works with langchain',
+  },
+].map((item) => ({ ...item, defaultAnimation: generateRandomAnimation() }));
 
 const useDynamicSpring = (
   mouseX: number,
@@ -67,18 +108,20 @@ const useDynamicSpring = (
     const distanceY = mouseY - gCenterY;
 
     const isCurrentlyActive =
-      Math.abs(distanceX) < activeRadiusX &&
-      Math.abs(distanceY) < activeRadiusY;
+      Math.abs(distanceX) < activeRadiusX && Math.abs(distanceY) < activeRadiusY;
 
     setIsActive(isCurrentlyActive);
 
-    const dampingFactor = 0.5;
+    // Apply damping effect to motionX and motionY
+    const dampingFactor = 0.5; // Adjust this value to control the damping effect
     const targetX = isCurrentlyActive ? distanceX * dampingFactor : 0;
     const targetY = isCurrentlyActive ? distanceY * dampingFactor : 0;
 
     motionX.set(targetX);
     motionY.set(targetY);
-  }, [mouseX, mouseY, gRef, svgRef, wideRadius, motionX, motionY]);
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [mouseX, mouseY, gRef, svgRef]);
 
   const springConfig = { damping: 20, stiffness: 50, mass: 6 };
   const springX = useSpring(motionX, springConfig);
@@ -91,45 +134,28 @@ interface ParallaxVocabularyProps {
   className?: string;
 }
 
-const ITEMS: Omit<Item, 'spring'>[] = [
-  { x: "19%", y: "19%", label: "Collaboration" },
-  { x: "67.5%", y: "25%", label: "Contribution" },
-  { x: "9%", y: "41%", label: "Teamwork" },
-  { x: "71.5%", y: "41%", label: "Synergy" },
-  { x: "17%", y: "76%", label: "Learning" },
-  { x: "68%", y: "81%", label: "Networking" },
-].map((item) => ({
-  ...item,
-  defaultAnimation: generateRandomAnimation(),
-}));
-
 const ParallaxVocabulary: React.FC<ParallaxVocabularyProps> = ({ className }) => {
   const svgRef = useRef<SVGSVGElement>(null);
-  const gRefs = useRef<Array<React.RefObject<SVGGElement>>>(
-    Array.from({ length: 6 }, () => React.createRef<SVGGElement>() as React.RefObject<SVGGElement>)
-  );
+  const gRefs = [
+    useRef<SVGGElement>(null),
+    useRef<SVGGElement>(null),
+    useRef<SVGGElement>(null),
+    useRef<SVGGElement>(null),
+    useRef<SVGGElement>(null),
+    useRef<SVGGElement>(null),
+  ];
+  const { elX: mouseX, elY: mouseY } = useMouse(svgRef as React.RefObject<SVGSVGElement>);
 
-  const [mouseX, setMouseX] = useState(0);
-  const [mouseY, setMouseY] = useState(0);
-
-  useEffect(() => {
-    const handleMouseMove = (event: MouseEvent) => {
-      setMouseX(event.clientX);
-      setMouseY(event.clientY);
-    };
-
-    window.addEventListener("mousemove", handleMouseMove);
-    return () => window.removeEventListener("mousemove", handleMouseMove);
-  }, []);
-
-  const itemsWithSpring = ITEMS.map((item, index) => ({
-    ...item,
-    // eslint-disable-next-line react-hooks/rules-of-hooks
-    spring: svgRef.current ? useDynamicSpring(mouseX, mouseY, gRefs.current[index], svgRef as React.RefObject<SVGSVGElement>) : undefined,
-  }));
+  ITEMS[0].spring = useDynamicSpring(mouseX, mouseY, gRefs[0] as React.RefObject<SVGGElement>, svgRef as React.RefObject<SVGSVGElement>);
+  ITEMS[1].spring = useDynamicSpring(mouseX, mouseY, gRefs[1] as React.RefObject<SVGGElement>, svgRef as React.RefObject<SVGSVGElement>);
+  ITEMS[2].spring = useDynamicSpring(mouseX, mouseY, gRefs[2] as React.RefObject<SVGGElement>, svgRef as React.RefObject<SVGSVGElement>, true);
+  ITEMS[3].spring = useDynamicSpring(mouseX, mouseY, gRefs[3] as React.RefObject<SVGGElement>, svgRef as React.RefObject<SVGSVGElement>);
+  ITEMS[4].spring = useDynamicSpring(mouseX, mouseY, gRefs[4] as React.RefObject<SVGGElement>, svgRef as React.RefObject<SVGSVGElement>, true);
+  ITEMS[5].spring = useDynamicSpring(mouseX, mouseY, gRefs[5] as React.RefObject<SVGGElement>, svgRef as React.RefObject<SVGSVGElement>);
 
   const [activeIndexes, setActiveIndexes] = useState<number[]>([]);
-  const isHoveredElements = itemsWithSpring.find(({ spring }) => spring?.isActive);
+
+  const isHoveredElements = ITEMS.find(({ spring }) => spring?.isActive);
 
   useEffect(() => {
     setActiveIndexes(() => {
@@ -161,42 +187,35 @@ const ParallaxVocabulary: React.FC<ParallaxVocabularyProps> = ({ className }) =>
     <div
       className={clsx(
         className,
-        "aspect-[1.66667] [mask-image:radial-gradient(ellipse_50%_70%_at_50%_50%,#000_60%,transparent_100%)]"
+        'aspect-[1.66667] [mask-image:radial-gradient(ellipse_50%_70%_at_50%_50%,#000_60%,transparent_100%)]'
       )}
-      ref={svgRef as unknown as React.RefObject<HTMLDivElement>}
     >
       <LazyMotion features={domAnimation}>
         <svg
-          className="w-full mt-[60rem]"
+          ref={svgRef}
+          className="w-full"
           width="1280"
           height="768"
           viewBox="0 0 1280 768"
           fill="none"
           xmlns="http://www.w3.org/2000/svg"
         >
-          {itemsWithSpring.map(({ spring, x, y, label, defaultAnimation }, index) => {
-            const isActive = isHoveredElements
-              ? spring?.isActive
-              : activeIndexes.includes(index);
+          {ITEMS.map(({ spring, x, y, label, defaultAnimation }, index) => {
+            const isActive = isHoveredElements ? spring?.isActive : activeIndexes.includes(index);
             return (
               <m.g
                 className="relative mix-blend-hard-light transition-transform duration-200"
-                style={spring ? { x: spring.x, y: spring.y } : undefined}
-                ref={gRefs.current[index]}
+                style={{ x: spring?.x, y: spring?.y }}
+                ref={gRefs[index]}
                 key={index}
               >
                 <m.text
                   className={clsx(
-                    "text-xl font-medium uppercase transition-[opacity,colors,filter] duration-[500ms] sm:text-[21px]",
-                    isActive
-                      ? "text-gray-800"
-                      : "text-[#CCC6EC] opacity-80 blur-[2px]"
+                    'text-xl font-medium uppercase transition-[opacity,colors,filter] duration-[500ms] sm:text-[21px]',
+                    isActive ? 'text-gray-8' : 'text-[#CCC6EC] opacity-80 blur-[2px]'
                   )}
-                  animate={
-                    !isActive || !spring?.isActive
-                      ? defaultAnimation
-                      : undefined
-                  }
+                  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+                  animate={ isActive ? undefined : (defaultAnimation as any)}
                   x={x}
                   y={y}
                   fill="currentColor"
@@ -206,10 +225,15 @@ const ParallaxVocabulary: React.FC<ParallaxVocabularyProps> = ({ className }) =>
               </m.g>
             );
           })}
+          ;
         </svg>
       </LazyMotion>
     </div>
   );
+};
+
+ParallaxVocabulary.propTypes = {
+  className: PropTypes.string,
 };
 
 export default ParallaxVocabulary;

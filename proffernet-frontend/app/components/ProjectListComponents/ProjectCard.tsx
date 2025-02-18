@@ -49,8 +49,6 @@ const CardsForProject = async ({ TechStack }: { TechStack: string }) => {
   })
   .filter(Boolean);
 
-      console.log(imageUrls);
-
     const defaultImageUrl =
       "https://as2.ftcdn.net/v2/jpg/06/75/59/65/1000_F_675596549_pBc5yUTl4vs1GvLrMV4hjYauXYj2QYh9.jpg";
 

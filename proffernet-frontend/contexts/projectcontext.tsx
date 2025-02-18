@@ -55,7 +55,6 @@ export const ProjectProvider: React.FC<{ children: React.ReactNode }> = ({
       });
 
       const accessToken = localStorage.getItem("accessToken");
-      console.log(formData);
 
       const response = await axios.post(
         `${process.env.NEXT_PUBLIC_BACKEND_URI}/project/create/`,

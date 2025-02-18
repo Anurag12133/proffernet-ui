@@ -15,7 +15,6 @@ const CategoryCards = () => {
     (route: string) => {
       setLoading(true);
       const fullUrl = `${process.env.NEXT_PUBLIC_REDIRECT_URL}/pages/${route}`;
-      console.log(fullUrl);
       router.push(fullUrl);
     },
     [router]
