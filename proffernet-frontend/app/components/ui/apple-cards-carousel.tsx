@@ -6,6 +6,7 @@ import React, {
   createContext,
   useContext,
   JSX,
+  useCallback,
 } from "react";
 import {
   IconArrowNarrowLeft,
@@ -175,6 +176,12 @@ export const Card = ({
 
   const route = useRouter();
 
+  const handleClose = useCallback(() => {
+    setOpen(false);
+    onCardClose(index);
+  },[index, onCardClose]);
+
+
   useEffect(() => {
     function onKeyDown(event: KeyboardEvent) {
       if (event.key === "Escape") {
@@ -190,7 +197,7 @@ export const Card = ({
 
     window.addEventListener("keydown", onKeyDown);
     return () => window.removeEventListener("keydown", onKeyDown);
-  }, [open]);
+  }, [open, handleClose]);
 
   useOutsideClick(containerRef, () => handleClose());
 
@@ -198,11 +205,7 @@ export const Card = ({
     setOpen(true);
   };
 
-  const handleClose = () => {
-    setOpen(false);
-    onCardClose(index);
-  };
-
+ 
   const handleContribute = () => {
     const projectTitle = encodeURIComponent(card.title);
     localStorage.setItem("project_title", projectTitle);

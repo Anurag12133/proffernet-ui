@@ -4,6 +4,7 @@ import { SparklesCore } from "@/app/components/ui/sparkles";
 import { AnimatePresence, motion } from "framer-motion";
 import { cn } from "@/lib/utils";
 import { IconDotsVertical } from "@tabler/icons-react";
+import Image from "next/image";
 
 interface CompareProps {
   firstImage?: string;
@@ -34,7 +35,6 @@ export const Compare = ({
 
   const sliderRef = useRef<HTMLDivElement>(null);
 
-  const [isMouseOver, setIsMouseOver] = useState(false);
 
   const autoplayRef = useRef<NodeJS.Timeout | null>(null);
 
@@ -67,13 +67,12 @@ export const Compare = ({
     return () => stopAutoplay();
   }, [startAutoplay, stopAutoplay]);
 
+  // function mouseEnterHandler() {
   function mouseEnterHandler() {
-    setIsMouseOver(true);
     stopAutoplay();
   }
 
   function mouseLeaveHandler() {
-    setIsMouseOver(false);
     if (slideMode === "hover") {
       setSliderXPercent(initialSliderPercentage);
     }
@@ -82,8 +81,8 @@ export const Compare = ({
     }
     startAutoplay();
   }
-
   const handleStart = useCallback(
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     (_clientX: number) => {
       if (slideMode === "drag") {
         setIsDragging(true);
@@ -206,7 +205,7 @@ export const Compare = ({
               }}
               transition={{ duration: 0 }}
             >
-              <img
+              <Image
                 alt="Comparison of the first image"
                 src={firstImage}
                 className={cn(

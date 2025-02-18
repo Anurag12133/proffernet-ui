@@ -2,6 +2,7 @@
 
 import clsx from "clsx";
 import { AnimatePresence, LazyMotion, domAnimation, m } from "framer-motion";
+import Image from "next/image";
 import {
   forwardRef,
   useEffect,
@@ -65,8 +66,7 @@ const PauseableVideo = forwardRef<HTMLVideoElement, PauseableVideoProps>(
           className={clsx("relative overflow-hidden", className)}
           ref={videoVisibilityRef}
         >
-          {/* Placeholder image to prevent layout shift */}
-          <img
+          <Image
             className={clsx("relative", videoClassName)}
             src={`data:image/svg+xml;charset=utf-8,%3Csvg width='${width}' height='${height}' xmlns='http://www.w3.org/2000/svg' version='1.1'%3E%3C/svg%3E`}
             alt=""
@@ -98,6 +98,6 @@ const PauseableVideo = forwardRef<HTMLVideoElement, PauseableVideoProps>(
   }
 );
 
-PauseableVideo.displayName = "PauseableVideo"; // For better debugging with forwardRef
+PauseableVideo.displayName = "PauseableVideo";
 
 export default PauseableVideo;
