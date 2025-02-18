@@ -131,7 +131,7 @@ const ContactListComponent = ({ projectTitle }: { projectTitle: string }) => {
 
   const onSubmit = async () => {
     try {
-      const data = await axios.post(
+      await axios.post(
         `${process.env.NEXT_PUBLIC_BACKEND_URI}/project/contributions/create/`,
         {
           project_title: projectTitle,
@@ -237,7 +237,7 @@ const ContactListComponent = ({ projectTitle }: { projectTitle: string }) => {
                             key={item.id}
                             control={form.control}
                             name="items"
-                            render={({ field }) => {
+                            render={({ field }: { field: { value: string[]; onChange: (value: string[]) => void } }) => {
                               return (
                                 <FormItem
                                   key={item.id}
@@ -250,10 +250,10 @@ const ContactListComponent = ({ projectTitle }: { projectTitle: string }) => {
                                         return checked
                                           ? field.onChange([...field.value, item.id])
                                           : field.onChange(
-                                              field.value?.filter(
-                                                (value) => value !== item.id
-                                              )
-                                            );
+                                            field.value?.filter(
+                                            (value: string) => value !== item.id
+                                            )
+                                          );
                                       }}
                                     />
                                   </FormControl>

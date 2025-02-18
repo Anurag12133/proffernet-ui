@@ -2,7 +2,6 @@
 
 export const TypewriterEffectSmooth = ({
   words,
-  className,
 }: {
   words: {
     text: string;

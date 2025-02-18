@@ -8,8 +8,7 @@ import {
   useSpring,
   m,
 } from "framer-motion";
-import { useEffect, useRef, useState } from "react";
-import { useMouse } from "react-use";
+import React, { useEffect, useRef, useState } from "react";
 
 const generateRandomAnimation = () => {
   const randomValuesX = Array.from({ length: 5 }, () => Math.random() * 10 - 5);
@@ -37,17 +36,8 @@ interface Item {
   y: string;
   label: string;
   defaultAnimation: ReturnType<typeof generateRandomAnimation>;
-  spring?: ReturnType<typeof useDynamicSpring>;
+  spring?: { x: ReturnType<typeof useSpring>; y: ReturnType<typeof useSpring>; isActive: boolean };
 }
-
-const ITEMS: Item[] = [
-  { x: "19%", y: "19%", label: "Collaboration" },
-  { x: "67.5%", y: "25%", label: "Contribution" },
-  { x: "9%", y: "41%", label: "Teamwork" },
-  { x: "71.5%", y: "41%", label: "Synergy" },
-  { x: "17%", y: "76%", label: "Learning" },
-  { x: "68%", y: "81%", label: "Networking" },
-].map((item) => ({ ...item, defaultAnimation: generateRandomAnimation() }));
 
 const useDynamicSpring = (
   mouseX: number,
@@ -88,7 +78,7 @@ const useDynamicSpring = (
 
     motionX.set(targetX);
     motionY.set(targetY);
-  }, [mouseX, mouseY, gRef, svgRef, wideRadius]);
+  }, [mouseX, mouseY, gRef, svgRef, wideRadius, motionX, motionY]);
 
   const springConfig = { damping: 20, stiffness: 50, mass: 6 };
   const springX = useSpring(motionX, springConfig);
@@ -101,19 +91,45 @@ interface ParallaxVocabularyProps {
   className?: string;
 }
 
-const ParallaxVocabulary: React.FC<ParallaxVocabularyProps> = ({
-  className,
-}) => {
+const ITEMS: Omit<Item, 'spring'>[] = [
+  { x: "19%", y: "19%", label: "Collaboration" },
+  { x: "67.5%", y: "25%", label: "Contribution" },
+  { x: "9%", y: "41%", label: "Teamwork" },
+  { x: "71.5%", y: "41%", label: "Synergy" },
+  { x: "17%", y: "76%", label: "Learning" },
+  { x: "68%", y: "81%", label: "Networking" },
+].map((item) => ({
+  ...item,
+  defaultAnimation: generateRandomAnimation(),
+}));
+
+const ParallaxVocabulary: React.FC<ParallaxVocabularyProps> = ({ className }) => {
   const svgRef = useRef<SVGSVGElement>(null);
-  const gRefs = Array(6)
-    .fill(null)
-    .map(() => useRef<SVGGElement>(null)) as React.RefObject<SVGGElement>[];
+  const gRefs = useRef<Array<React.RefObject<SVGGElement>>>(
+    Array.from({ length: 6 }, () => React.createRef<SVGGElement>() as React.RefObject<SVGGElement>)
+  );
 
+  const [mouseX, setMouseX] = useState(0);
+  const [mouseY, setMouseY] = useState(0);
 
+  useEffect(() => {
+    const handleMouseMove = (event: MouseEvent) => {
+      setMouseX(event.clientX);
+      setMouseY(event.clientY);
+    };
+
+    window.addEventListener("mousemove", handleMouseMove);
+    return () => window.removeEventListener("mousemove", handleMouseMove);
+  }, []);
+
+  const itemsWithSpring = ITEMS.map((item, index) => ({
+    ...item,
+    // eslint-disable-next-line react-hooks/rules-of-hooks
+    spring: svgRef.current ? useDynamicSpring(mouseX, mouseY, gRefs.current[index], svgRef as React.RefObject<SVGSVGElement>) : undefined,
+  }));
 
   const [activeIndexes, setActiveIndexes] = useState<number[]>([]);
-
-  const isHoveredElements = ITEMS.find(({ spring }) => spring?.isActive);
+  const isHoveredElements = itemsWithSpring.find(({ spring }) => spring?.isActive);
 
   useEffect(() => {
     setActiveIndexes(() => {
@@ -133,10 +149,7 @@ const ParallaxVocabulary: React.FC<ParallaxVocabularyProps> = ({
         let randomIndex;
         do {
           randomIndex = Math.floor(Math.random() * 6);
-        } while (
-          indexesCopy.includes(randomIndex) ||
-          randomIndex === lastIndex
-        );
+        } while (indexesCopy.includes(randomIndex) || randomIndex === lastIndex);
         return [randomIndex, ...indexesCopy];
       });
     }, 4000);
@@ -161,7 +174,7 @@ const ParallaxVocabulary: React.FC<ParallaxVocabularyProps> = ({
           fill="none"
           xmlns="http://www.w3.org/2000/svg"
         >
-          {ITEMS.map(({ spring, x, y, label, defaultAnimation }, index) => {
+          {itemsWithSpring.map(({ spring, x, y, label, defaultAnimation }, index) => {
             const isActive = isHoveredElements
               ? spring?.isActive
               : activeIndexes.includes(index);
@@ -169,7 +182,7 @@ const ParallaxVocabulary: React.FC<ParallaxVocabularyProps> = ({
               <m.g
                 className="relative mix-blend-hard-light transition-transform duration-200"
                 style={spring ? { x: spring.x, y: spring.y } : undefined}
-                ref={gRefs[index]}
+                ref={gRefs.current[index]}
                 key={index}
               >
                 <m.text

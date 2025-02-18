@@ -1,10 +1,11 @@
 "use client";
 import { useSearchParams } from "next/navigation";
 import ContactListComponent from "@/app/components/ContactListComponent/Contactlist";
+import { Suspense } from "react";
 
-const ContactList = () => {
+const ContactListContent = () => {
   const searchParams = useSearchParams();
-  const projectTitle = searchParams.get("project_title"); // Get project_title from URL
+  const projectTitle = searchParams.get("project_title");
 
   if (!projectTitle) {
     return (
@@ -18,6 +19,14 @@ const ContactList = () => {
     <div>
       <ContactListComponent projectTitle={projectTitle} />
     </div>
+  );
+};
+
+const ContactList = () => {
+  return (
+    <Suspense fallback={<div>Loading...</div>}>
+      <ContactListContent />
+    </Suspense>
   );
 };
 

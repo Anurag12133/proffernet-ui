@@ -17,8 +17,8 @@ const RevealCard = () => {
           Where Students Meet Opportunities.
         </TextRevealCardTitle>
         <TextRevealCardDescription>
-          "Great things are never done by one person. They’re done by a team of
-          people."
+          &quot;Great things are never done by one person. They’re done by a team of
+          people.&quot;
         </TextRevealCardDescription>
       </TextRevealCard>
     </div>

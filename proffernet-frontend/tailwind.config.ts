@@ -1,10 +1,8 @@
 import { nextui } from "@nextui-org/theme";
 import type { Config } from "tailwindcss";
-
-const {
-  default: flattenColorPalette,
-} = require("tailwindcss/lib/util/flattenColorPalette");
 import svgToDataUri from "mini-svg-data-uri";
+import flattenColorPalette from "tailwindcss/lib/util/flattenColorPalette";
+
 const config: Config = {
   content: [
     "./pages/**/*.{js,ts,jsx,tsx,mdx}",
@@ -12,9 +10,8 @@ const config: Config = {
     "./app/**/*.{js,ts,jsx,tsx,mdx}",
     "./node_modules/@nextui-org/theme/dist/components/input.js",
   ],
-  
+
   theme: {
-  
     extend: {
       animation: {
         spotlight: "spotlight 2s ease .75s 1 forwards",
@@ -91,15 +88,8 @@ const config: Config = {
     },
   },
   plugins: [
-    
     addVariablesForColors,
-    function ({
-      matchUtilities,
-      theme,
-    }: {
-      matchUtilities: (utilities: Record<string, (value: string) => { backgroundImage: string }>) => void;
-      theme: (path: string) => string | number | undefined;
-    }) {
+    function ({ matchUtilities, theme }: any) {
       matchUtilities(
         {
           "bg-grid": (value: string) => ({
@@ -118,7 +108,7 @@ const config: Config = {
             )}")`,
           }),
         },
-        { values: flattenColorPalette(theme("backgroundColor")), type: "color" }
+        { values: flattenColorPalette(theme("backgroundColor")) }
       );
     },
     nextui(),

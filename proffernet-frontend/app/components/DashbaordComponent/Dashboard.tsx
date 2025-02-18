@@ -47,7 +47,6 @@ export default function DashboardPage() {
       try {
         const token = localStorage.getItem("accessToken");
 
-        // Fetch user projects
         const projectsResponse = await axios.get(
           `${process.env.NEXT_PUBLIC_BACKEND_URI}/project/user-projects/`,
           {
@@ -82,7 +81,7 @@ export default function DashboardPage() {
     };
 
     fetchUserData();
-  }, []);
+  }, [router]);
 
   const getFirstImageUrl = (files: { file: string }[] | string[]) => {
     if (!files || files.length === 0) return null;
