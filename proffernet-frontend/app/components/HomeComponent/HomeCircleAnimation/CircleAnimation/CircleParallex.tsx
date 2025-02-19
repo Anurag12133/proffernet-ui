@@ -51,32 +51,32 @@ const ITEMS: Item[] = [
   {
     x: '19%',
     y: '19%',
-    label: 'Reliable',
+    label: 'Create',
   },
   {
     x: '67.5%',
     y: '25%',
-    label: 'Scalability',
+    label: 'Collaborate',
   },
   {
     x: '9%',
     y: '41%',
-    label: 'High compatibility',
+    label: 'Contribute'
   },
   {
     x: '71.5%',
     y: '41%',
-    label: 'Blazingly fast search',
+    label: 'Network',
   },
   {
     x: '17%',
     y: '76%',
-    label: 'Works with PGVECTOR',
+    label: 'Works with Team',
   },
   {
     x: '68%',
     y: '81%',
-    label: 'Works with langchain',
+    label: 'Synergy',
   },
 ].map((item) => ({ ...item, defaultAnimation: generateRandomAnimation() }));
 
@@ -193,7 +193,7 @@ const ParallaxVocabulary: React.FC<ParallaxVocabularyProps> = ({ className }) =>
       <LazyMotion features={domAnimation}>
         <svg
           ref={svgRef}
-          className="w-full"
+          className="w-full mt-[60rem]"
           width="1280"
           height="768"
           viewBox="0 0 1280 768"
